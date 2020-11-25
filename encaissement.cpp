@@ -2,6 +2,7 @@
 #include<QMessageBox>
 #include <QDebug>
 #include<QSqlQuery>
+//testgit
 encaissement ::encaissement()
 {
     code_encaissement=0;
