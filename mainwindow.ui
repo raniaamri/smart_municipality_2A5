@@ -312,7 +312,7 @@ QSlider::handle:vertical:pressed {
          <string notr="true">background: transparent;</string>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="RH">
          <widget class="QFrame" name="frame_4">
@@ -1053,7 +1053,7 @@ border-radius: 5px;
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-	background-image: url(c:/Users/user/Documents/Municipality_Project/icons/16x16/cil-description.png);
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-description.png);
 	background-position: center;
 	background-repeat: no-reperat;
 	border: none;
@@ -1506,7 +1506,7 @@ QLineEdit:focus {
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
-	background-image: url(c:/Users/user/Documents/Municipality_Project/icons/16x16/cil-user.png);
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-user.png);
 	background-position: center;
 	background-repeat: no-reperat;
 	border: none;
@@ -1553,7 +1553,7 @@ QPushButton:pressed {
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
-	background-image: url(c:/Users/user/Documents/Municipality_Project/icons/16x16/cil-file.png);
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-file.png);
 	background-position: center;
 	background-repeat: no-reperat;
 	border: none;
@@ -1697,7 +1697,7 @@ background-repeat: no-repeat;
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
-	background-image: url(c:/Users/user/Documents/Municipality_Project/icons/16x16/cil-x.png);
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-x.png);
 	background-position: center;
 	background-repeat: no-reperat;
 	border: none;
@@ -1725,7 +1725,7 @@ QPushButton:pressed {
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
-	background-image: url(c:/Users/user/Documents/Municipality_Project/icons/16x16/cil-window-maximize.png);
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-window-maximize.png);
 	background-position: center;
 	background-repeat: no-reperat;
 	border: none;
@@ -1753,7 +1753,7 @@ QPushButton:pressed {
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
-	background-image: url(c:/Users/user/Documents/Municipality_Project/icons/16x16/cil-window-minimize.png);
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-window-minimize.png);
 	background-position: center;
 	background-repeat: no-reperat;
 	border: none;
@@ -1807,7 +1807,7 @@ QPushButton:pressed {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-	background-image: url(c:/Users/user/Documents/Municipality_Project/icons/16x16/cil-menu.png);
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-menu.png);
 	background-position: center;
 	background-repeat: no-reperat;
 	border: none;
