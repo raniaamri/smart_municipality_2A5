@@ -25,6 +25,12 @@ private slots:
 
     void on_pushButton_Supprimer_clicked();
 
+    void on_Ajouter_d_clicked();
+
+    void on_modifier_d_clicked();
+
+    void on_supprimer_d_clicked();
+
 private:
     Ui::MainWindow *ui;
     naissance naissance_temporaire;
