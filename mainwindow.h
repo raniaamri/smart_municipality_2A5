@@ -55,6 +55,10 @@ private slots:
 
     void on_export_2_clicked();
 
+    void on_pushButton_12_clicked();
+
+    void on_pushButton_6_clicked();
+
 private:
 
     Ui::MainWindow *ui;

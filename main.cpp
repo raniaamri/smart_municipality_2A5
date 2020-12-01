@@ -4,7 +4,6 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "connection.h"
-#include <QMediaPlayer>
 
 
 int main(int argc, char *argv[])

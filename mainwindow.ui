@@ -1461,9 +1461,9 @@ QLineEdit:focus {
           <widget class="QLineEdit" name="le_searchformation">
            <property name="geometry">
             <rect>
-             <x>30</x>
+             <x>20</x>
              <y>40</y>
-             <width>251</width>
+             <width>211</width>
              <height>22</height>
             </rect>
            </property>
@@ -1492,24 +1492,74 @@ QLineEdit:focus {
             <string>Tableau de formation</string>
            </property>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QComboBox" name="combo_boxtri">
            <property name="geometry">
             <rect>
-             <x>320</x>
-             <y>40</y>
-             <width>181</width>
-             <height>22</height>
+             <x>271</x>
+             <y>1</y>
+             <width>152</width>
+             <height>32</height>
             </rect>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QPushButton" name="pushButton_12">
-              <property name="text">
-               <string>trier</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <item>
+            <property name="text">
+             <string>IDFORMATION</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>IDFORMATEUR</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>DATEFORMATION</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>DUREE</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QCheckBox" name="cbdsc">
+           <property name="geometry">
+            <rect>
+             <x>280</x>
+             <y>40</y>
+             <width>51</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>ASC</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="cbasc">
+           <property name="geometry">
+            <rect>
+             <x>360</x>
+             <y>40</y>
+             <width>51</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>DSC</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_12">
+           <property name="geometry">
+            <rect>
+             <x>431</x>
+             <y>10</y>
+             <width>71</width>
+             <height>51</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>trier</string>
+           </property>
           </widget>
          </widget>
          <widget class="QFrame" name="frame_17">
@@ -1527,6 +1577,34 @@ QLineEdit:focus {
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>281</width>
+             <height>81</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-description.png);
+	background-position: center;
+	background-repeat: no-reperat;
+	border: none;
+	background-color: rgb(40, 44, 52);
+}
+QPushButton:hover {
+	background-color: rgb(33, 37, 43);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </widget>
         </widget>
        </widget>

@@ -21,7 +21,7 @@ void formation::setduree(int duree){this->duree=duree;}
 
 bool formation::ajouter()
 {
-
+    /*CRUD AJOUTER*/
     QSqlQuery query;
   QString idformation_string= QString::number(idformation);
   QString idformateur_string=QString::number(idformateur);
@@ -39,6 +39,7 @@ bool formation::ajouter()
 }
 bool formation::supprimer(int idformation)
 {
+    /*CRUD SUPPRIMER*/
     QSqlQuery query;
          query.prepare(" Delete from formation where IDFORMATION=:idformation");
          query.bindValue(0, idformation);
@@ -49,6 +50,7 @@ bool formation::supprimer(int idformation)
 }
 QSqlQueryModel* formation::afficher()
 {
+    /*CRUD AFFICHER*/
   QSqlQueryModel* model=new QSqlQueryModel();
 
 
@@ -66,6 +68,7 @@ QSqlQueryModel* formation::afficher()
 
 bool formation::modifier(int idformation, int idformateur, QDateTime dateformation, int duree)
 {
+    /*CURD MODIFIER*/
     QSqlQuery query;
     QString res= QString::number(idformation);
     QString sl= QString::number(idformateur);
@@ -92,18 +95,15 @@ QSqlQueryModel * formation::rechercher (const QString &aux)
 
     return model;
 }
-QSqlQueryModel* formation::trie()
+
+QSqlQueryModel *  formation::trie(const QString &critere, const QString &mode )
 {
-    QSqlQueryModel* model = new QSqlQueryModel();
+    QSqlQueryModel * model= new QSqlQueryModel();
 
-        model->setQuery("select *FROM formation ORDER BY salaire ASC");
-
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("idformation"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("idformateur"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("dateformation"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("duree"));
-
-
-
+model->setQuery("select * from FORMATION order by "+critere+" "+mode+"");
+model->setHeaderData(0, Qt::Horizontal, QObject::tr("IDFORMATION"));
+model->setHeaderData(1, Qt::Horizontal, QObject::tr("IDFORMATEUR "));
+model->setHeaderData(2, Qt::Horizontal, QObject::tr("DATEFORMATION"));
+model->setHeaderData(3, Qt::Horizontal, QObject::tr("DUREE"));
     return model;
 }

@@ -23,7 +23,7 @@ public:
     QSqlQueryModel * rechercher (const QString &aux);
     bool supprimer(int);
     bool modifier(int,int,QDateTime,int);
-    QSqlQueryModel* trie();
+    QSqlQueryModel *  trie(const QString &critere, const QString &mode );
 
 
 private:

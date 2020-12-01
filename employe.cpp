@@ -49,6 +49,7 @@ bool Employe::supprimer(int id)
 QSqlQueryModel* Employe::afficher()
 {
   QSqlQueryModel* model=new QSqlQueryModel();
+  /*QSqlQueryModel is a high level of QSqlQuery nestaamlouh l affichage quoi*/
 
 
    model->setQuery("SELECT* FROM employe");
@@ -90,21 +91,7 @@ QSqlQueryModel * Employe::rechercher (const QString &aux)
 
     return model;
 }
-/*QSqlQueryModel* Employe::trie()
-{
-    QSqlQueryModel* model = new QSqlQueryModel();
 
-        model->setQuery("select *FROM employe ORDER BY salaire ASC");
-
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("salaire"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("nom"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("prenom"));
-
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("date_de_naissaince"));
-
-    return model;
-}*/
 
 QSqlQueryModel *  Employe::trie(const QString &critere, const QString &mode )
 {
