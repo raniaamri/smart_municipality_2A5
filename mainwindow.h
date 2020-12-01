@@ -31,6 +31,32 @@ private slots:
 
     void on_supprimer_d_clicked();
 
+
+
+    void on_pushButton_tri_parNom_clicked();
+
+    void on_pushButton_tri_parPrenom_clicked();
+
+
+
+    void on_lineEdit_recherche_dynamique_textChanged(const QString &arg1);
+
+
+
+
+
+    void on_pushButton_pdf_clicked();
+
+
+
+    void on_pushButton_tri_clicked();
+
+    void on_pushButton_13_clicked();
+
+    void on_pushButton_14_clicked();
+
+    void on_lineEdit_recherche_dynamique_deces_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     naissance naissance_temporaire;

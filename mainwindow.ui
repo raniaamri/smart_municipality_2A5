@@ -11,12 +11,251 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Notre application</string>
+   <string>SM+</string>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">
+QWidget
+{
+	background-color: #232430;
+	color: #000000;
+	border-color: #000000;
+
+}
+
+
+/*-----QLabel-----*/
+QLabel
+{
+	background-color: #232430;
+	color: #c1c1c1;
+	border-color: #000000;
+
+}
+
+
+/*-----QPushButton-----*/
+QPushButton
+{
+	background-color: #ff9c2b;
+	color: #000000;
+	font-weight: bold;
+	border-style: solid;
+	border-color: #000000;
+	padding: 6px;
+
+}
+
+
+QPushButton::hover
+{
+	background-color: #ffaf5d;
+
+}
+
+
+QPushButton::pressed
+{
+	background-color: #dd872f;
+
+}
+
+
+/*-----QToolButton-----*/
+QToolButton
+{
+	background-color: #ff9c2b;
+	color: #000000;
+	font-weight: bold;
+	border-style: solid;
+	border-color: #000000;
+	padding: 6px;
+
+}
+
+
+QToolButton::hover
+{
+	background-color: #ffaf5d;
+
+}
+
+
+QToolButton::pressed
+{
+	background-color: #dd872f;
+
+}
+
+
+/*-----QLineEdit-----*/
+QLineEdit
+{
+	background-color: #38394e;
+	color: #c1c1c1;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #4a4c68;
+
+}
+
+
+/*-----QTableView-----*/
+QTableView, 
+QHeaderView, 
+QTableView::item 
+{
+	background-color: #232430;
+	color: #c1c1c1;
+	border: none;
+
+}
+
+
+QTableView::item:selected 
+{ 
+    background-color: #41424e;
+    color: #c1c1c1;
+
+}
+
+
+QHeaderView::section:horizontal 
+{
+    background-color: #232430;
+	border: 1px solid #37384d;
+	padding: 5px;
+
+}
+
+
+QTableView::indicator{
+	background-color: #1d1d28;
+	border: 1px solid #37384d;
+
+}
+
+
+QTableView::indicator:checked{
+	image:url(&quot;./ressources/check.png&quot;); /*To replace*/
+	background-color: #1d1d28;
+
+}
+
+/*-----QTabWidget-----*/
+QTabWidget::pane 
+{ 
+    border: none;
+
+}
+
+
+QTabWidget::tab-bar 
+{
+    left: 5px; 
+
+}
+
+
+QTabBar::tab 
+{
+    color: #c1c1c1;
+    min-width: 1px;
+	padding-left: 25px;
+	margin-left:-22px;
+    height: 28px;
+	border: none;
+
+}
+
+
+QTabBar::tab:selected 
+{
+    color: #c1c1c1;
+	font-weight: bold;
+    height: 28px;
+
+}
+
+
+QTabBar::tab:!first 
+{
+    margin-left: -20px;
+
+}
+
+
+QTabBar::tab:hover 
+{
+    color: #DDD;
+
+}
+
+
+/*-----QScrollBar-----*/
+QScrollBar:horizontal 
+{
+    background-color: transparent;
+    height: 8px;
+    margin: 0px;
+    padding: 0px;
+
+}
+
+
+QScrollBar::handle:horizontal 
+{
+    border: none;
+	min-width: 100px;
+    background-color: #56576c;
+
+}
+
+
+QScrollBar::add-line:horizontal, 
+QScrollBar::sub-line:horizontal,
+QScrollBar::add-page:horizontal, 
+QScrollBar::sub-page:horizontal 
+{
+    width: 0px;
+    background-color: transparent;
+
+}
+
+
+QScrollBar:vertical 
+{
+    background-color: transparent;
+    width: 8px;
+    margin: 0;
+
+}
+
+
+QScrollBar::handle:vertical 
+{
+    border: none;
+	min-height: 100px;
+    background-color: #56576c;
+
+}
+
+
+QScrollBar::add-line:vertical, 
+QScrollBar::sub-line:vertical,
+QScrollBar::add-page:vertical, 
+QScrollBar::sub-page:vertical 
+{
+    height: 0px;
+    background-color: transparent;
+
+}
+</string>
+   </property>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
@@ -26,12 +265,24 @@
       <height>601</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <strikeout>false</strikeout>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
     <property name="currentIndex">
      <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Services Municipalité</string>
+      <string>      Services Municipalité      </string>
      </attribute>
      <widget class="QTabWidget" name="tabWidget_2">
       <property name="geometry">
@@ -47,7 +298,7 @@
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
-        <string>Naissance</string>
+        <string>   Naissance   </string>
        </attribute>
        <widget class="QTabWidget" name="tabWidget_3">
         <property name="geometry">
@@ -59,11 +310,11 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab_6">
          <attribute name="title">
-          <string>Ajouter + modifier</string>
+          <string>      Ajouter + Modifier    </string>
          </attribute>
          <widget class="QLabel" name="label">
           <property name="geometry">
@@ -73,6 +324,9 @@
             <width>54</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Nom</string>
@@ -87,6 +341,9 @@
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Prenom</string>
           </property>
@@ -99,6 +356,9 @@
             <width>121</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Date de naissance</string>
@@ -113,6 +373,9 @@
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Lieu de naissance</string>
           </property>
@@ -125,6 +388,9 @@
             <width>121</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Nom de père</string>
@@ -139,6 +405,9 @@
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Prenom de père</string>
           </property>
@@ -151,6 +420,9 @@
             <width>121</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Nom de la mère</string>
@@ -165,6 +437,9 @@
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Prenom de la mère</string>
           </property>
@@ -177,6 +452,9 @@
             <width>101</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Nationalitée</string>
@@ -193,34 +471,77 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="QLineEdit" name="lineEdit_Nom"/>
+            <widget class="QLineEdit" name="lineEdit_Nom">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_Prenom"/>
+            <widget class="QLineEdit" name="lineEdit_Prenom">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QDateEdit" name="dateEdit_2"/>
+            <widget class="QDateEdit" name="dateEdit_2">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(255, 170, 127);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_lieu_de_naissance"/>
+            <widget class="QLineEdit" name="lineEdit_lieu_de_naissance">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_nom_du_pere"/>
+            <widget class="QLineEdit" name="lineEdit_nom_du_pere">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_prenom_du_pere"/>
+            <widget class="QLineEdit" name="lineEdit_prenom_du_pere">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_nom_de_mere"/>
+            <widget class="QLineEdit" name="lineEdit_nom_de_mere">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_prenom_de_mere"/>
+            <widget class="QLineEdit" name="lineEdit_prenom_de_mere">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_nationalite"/>
+            <widget class="QLineEdit" name="lineEdit_nationalite">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit"/>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -229,13 +550,15 @@
            <rect>
             <x>270</x>
             <y>470</y>
-            <width>81</width>
-            <height>31</height>
+            <width>91</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="font">
            <font>
             <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
            </font>
           </property>
           <property name="text">
@@ -247,13 +570,15 @@
            <rect>
             <x>450</x>
             <y>470</y>
-            <width>81</width>
-            <height>31</height>
+            <width>101</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="font">
            <font>
             <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
            </font>
           </property>
           <property name="text">
@@ -269,6 +594,9 @@
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>sexe</string>
           </property>
@@ -281,6 +609,9 @@
             <width>131</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Date de la declaration</string>
@@ -295,6 +626,9 @@
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>le tribunal</string>
           </property>
@@ -308,6 +642,9 @@
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>identité de l'officier de l'état civil</string>
           </property>
@@ -320,6 +657,9 @@
             <width>431</width>
             <height>191</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
           </property>
           <property name="html">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -337,6 +677,9 @@ p, li { white-space: pre-wrap; }
             <width>431</width>
             <height>87</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
           </property>
           <property name="html">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -356,6 +699,9 @@ p, li { white-space: pre-wrap; }
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>OBSERVATIONS</string>
           </property>
@@ -369,6 +715,9 @@ p, li { white-space: pre-wrap; }
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>NOTE</string>
           </property>
@@ -378,12 +727,15 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>30</x>
             <y>420</y>
-            <width>54</width>
+            <width>131</width>
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
-           <string>CIN</string>
+           <string>Numéro de naissance</string>
           </property>
          </widget>
          <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -397,35 +749,54 @@ p, li { white-space: pre-wrap; }
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QLineEdit" name="lineEdit_3"/>
+            <widget class="QLineEdit" name="lineEdit_3">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QDateEdit" name="dateEdit"/>
+            <widget class="QDateEdit" name="dateEdit">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(255, 170, 127);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_TRIBUNAL"/>
+            <widget class="QLineEdit" name="lineEdit_TRIBUNAL">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_OFFICIER"/>
+            <widget class="QLineEdit" name="lineEdit_OFFICIER">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
         </widget>
         <widget class="QWidget" name="tab_9">
          <attribute name="title">
-          <string>supprimer</string>
+          <string>   Supprimer    </string>
          </attribute>
          <widget class="QLabel" name="label_26">
           <property name="geometry">
            <rect>
             <x>100</x>
             <y>50</y>
-            <width>54</width>
+            <width>131</width>
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
-           <string>CIN</string>
+           <string>Numéro de naissance</string>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEdit_Suppression">
@@ -436,6 +807,9 @@ p, li { white-space: pre-wrap; }
             <width>381</width>
             <height>26</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
           </property>
          </widget>
          <widget class="QPushButton" name="pushButton_Supprimer">
@@ -454,114 +828,105 @@ p, li { white-space: pre-wrap; }
         </widget>
         <widget class="QWidget" name="tab_7">
          <attribute name="title">
-          <string>Afficher</string>
+          <string>  Afficher    </string>
          </attribute>
          <widget class="QTableView" name="tableView">
           <property name="geometry">
            <rect>
-            <x>-5</x>
-            <y>1</y>
-            <width>1301</width>
-            <height>511</height>
+            <x>210</x>
+            <y>80</y>
+            <width>1081</width>
+            <height>301</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
+          </property>
          </widget>
-        </widget>
-        <widget class="QWidget" name="tab_8">
-         <attribute name="title">
-          <string>rechercher</string>
-         </attribute>
-         <widget class="QPushButton" name="pushButton_Recherche">
+         <widget class="QPushButton" name="pushButton_pdf">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>260</y>
-            <width>131</width>
-            <height>51</height>
+            <x>30</x>
+            <y>240</y>
+            <width>161</width>
+            <height>29</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>pdf</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_recherche_dynamique">
+          <property name="geometry">
+           <rect>
+            <x>490</x>
+            <y>40</y>
+            <width>531</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_tri_parNom">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>140</y>
+            <width>161</width>
+            <height>29</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>tri par nom</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_tri_parPrenom">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>190</y>
+            <width>161</width>
+            <height>29</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>tri par prénom</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_tri">
+          <property name="geometry">
+           <rect>
+            <x>32</x>
+            <y>90</y>
+            <width>161</width>
+            <height>29</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>tri par numéro</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_10">
+          <property name="geometry">
+           <rect>
+            <x>410</x>
+            <y>40</y>
+            <width>54</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>10</pointsize>
            </font>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
-           <string>recherche </string>
-          </property>
-         </widget>
-         <widget class="QGroupBox" name="groupBox">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>201</width>
-            <height>221</height>
-           </rect>
-          </property>
-          <property name="title">
-           <string>choix</string>
-          </property>
-          <widget class="QRadioButton" name="radioButton">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>30</y>
-             <width>98</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>CIN</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="radioButton_2">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>80</y>
-             <width>141</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Date de naissance</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="radioButton_3">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>130</y>
-             <width>98</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Nom</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="radioButton_4">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>180</y>
-             <width>98</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Prenom</string>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QTableView" name="tableView_2">
-          <property name="geometry">
-           <rect>
-            <x>220</x>
-            <y>20</y>
-            <width>1061</width>
-            <height>461</height>
-           </rect>
+           <string>filtrer</string>
           </property>
          </widget>
         </widget>
@@ -569,7 +934,7 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
-        <string>Deces</string>
+        <string> Deces  </string>
        </attribute>
        <widget class="QTabWidget" name="tabWidget_4">
         <property name="geometry">
@@ -581,11 +946,11 @@ p, li { white-space: pre-wrap; }
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab_10">
          <attribute name="title">
-          <string>Ajouter + modifier</string>
+          <string>    Ajouter + Modifier    </string>
          </attribute>
          <widget class="QLabel" name="label_Nomd">
           <property name="geometry">
@@ -595,6 +960,9 @@ p, li { white-space: pre-wrap; }
             <width>54</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Nom</string>
@@ -609,6 +977,9 @@ p, li { white-space: pre-wrap; }
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Prenom</string>
           </property>
@@ -621,6 +992,9 @@ p, li { white-space: pre-wrap; }
             <width>121</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Date de naissance</string>
@@ -635,6 +1009,9 @@ p, li { white-space: pre-wrap; }
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Lieu de naissance</string>
           </property>
@@ -647,6 +1024,9 @@ p, li { white-space: pre-wrap; }
             <width>121</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Nom de père</string>
@@ -661,6 +1041,9 @@ p, li { white-space: pre-wrap; }
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Prenom de père</string>
           </property>
@@ -673,6 +1056,9 @@ p, li { white-space: pre-wrap; }
             <width>121</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Nom de la mère</string>
@@ -687,6 +1073,9 @@ p, li { white-space: pre-wrap; }
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Prenom de la mère</string>
           </property>
@@ -700,6 +1089,9 @@ p, li { white-space: pre-wrap; }
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Nationalitée</string>
           </property>
@@ -709,13 +1101,15 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>270</x>
             <y>470</y>
-            <width>81</width>
+            <width>91</width>
             <height>31</height>
            </rect>
           </property>
           <property name="font">
            <font>
             <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
            </font>
           </property>
           <property name="text">
@@ -725,19 +1119,21 @@ p, li { white-space: pre-wrap; }
          <widget class="QPushButton" name="modifier_d">
           <property name="geometry">
            <rect>
-            <x>450</x>
+            <x>430</x>
             <y>470</y>
-            <width>81</width>
+            <width>101</width>
             <height>31</height>
            </rect>
           </property>
           <property name="font">
            <font>
             <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
            </font>
           </property>
           <property name="text">
-           <string>modifier</string>
+           <string>  Modifier </string>
           </property>
          </widget>
          <widget class="QLabel" name="label_27">
@@ -748,6 +1144,9 @@ p, li { white-space: pre-wrap; }
             <width>54</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Sexe</string>
@@ -762,6 +1161,9 @@ p, li { white-space: pre-wrap; }
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Date de la declaration</string>
           </property>
@@ -774,6 +1176,9 @@ p, li { white-space: pre-wrap; }
             <width>81</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Le tribunal</string>
@@ -788,6 +1193,9 @@ p, li { white-space: pre-wrap; }
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
            <string>Identité de l'officier de l'état civil</string>
           </property>
@@ -796,10 +1204,13 @@ p, li { white-space: pre-wrap; }
           <property name="geometry">
            <rect>
             <x>760</x>
-            <y>340</y>
+            <y>300</y>
             <width>91</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>OBSERVATIONS</string>
@@ -809,10 +1220,13 @@ p, li { white-space: pre-wrap; }
           <property name="geometry">
            <rect>
             <x>760</x>
-            <y>420</y>
+            <y>400</y>
             <width>54</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>NOTE</string>
@@ -823,12 +1237,15 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>30</x>
             <y>410</y>
-            <width>54</width>
+            <width>101</width>
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
-           <string>CIN</string>
+           <string>numéro de deces</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_35">
@@ -839,6 +1256,9 @@ p, li { white-space: pre-wrap; }
             <width>111</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Date de deces</string>
@@ -852,6 +1272,9 @@ p, li { white-space: pre-wrap; }
             <width>91</width>
             <height>20</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
           </property>
           <property name="text">
            <string>Lieu de deces</string>
@@ -868,34 +1291,74 @@ p, li { white-space: pre-wrap; }
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QLineEdit" name="lineEdit_Nom_2"/>
+            <widget class="QLineEdit" name="lineEdit_Nom_2">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_Prenomd"/>
+            <widget class="QLineEdit" name="lineEdit_Prenomd">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QDateEdit" name="dateEdit_3"/>
+            <widget class="QDateEdit" name="dateEdit_3">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(255, 170, 127);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_lieu_de_naissanced"/>
+            <widget class="QLineEdit" name="lineEdit_lieu_de_naissanced">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_nompered"/>
+            <widget class="QLineEdit" name="lineEdit_nompered">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_prenom_du_pere_2"/>
+            <widget class="QLineEdit" name="lineEdit_prenom_du_pere_2">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_nom_de_mere_2"/>
+            <widget class="QLineEdit" name="lineEdit_nom_de_mere_2">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_prenom_de_mere_2"/>
+            <widget class="QLineEdit" name="lineEdit_prenom_de_mere_2">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_nationalite_2"/>
+            <widget class="QLineEdit" name="lineEdit_nationalite_2">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_2"/>
+            <widget class="QLineEdit" name="lineEdit_cin">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -910,22 +1373,46 @@ p, li { white-space: pre-wrap; }
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
-            <widget class="QLineEdit" name="lineEdit_5"/>
+            <widget class="QLineEdit" name="lineEdit_5">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QDateEdit" name="dateEdit_4"/>
+            <widget class="QDateEdit" name="dateEdit_4">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(255, 170, 127);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_TRIBUNAL_2"/>
+            <widget class="QLineEdit" name="lineEdit_TRIBUNAL_2">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_OFFICIER_2"/>
+            <widget class="QLineEdit" name="lineEdit_OFFICIER_2">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QDateEdit" name="dateEdit_5"/>
+            <widget class="QDateEdit" name="dateEdit_5">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(255, 170, 127);</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_6"/>
+            <widget class="QLineEdit" name="lineEdit_6">
+             <property name="styleSheet">
+              <string notr="true">color:rgb(243, 185, 255);</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -937,6 +1424,9 @@ p, li { white-space: pre-wrap; }
             <width>291</width>
             <height>91</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
           </property>
           <property name="html">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -955,6 +1445,9 @@ p, li { white-space: pre-wrap; }
             <height>91</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
+          </property>
           <property name="html">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -966,19 +1459,22 @@ p, li { white-space: pre-wrap; }
         </widget>
         <widget class="QWidget" name="tab_11">
          <attribute name="title">
-          <string>supprimer</string>
+          <string>  Supprimer  </string>
          </attribute>
          <widget class="QLabel" name="label_34">
           <property name="geometry">
            <rect>
             <x>100</x>
             <y>50</y>
-            <width>54</width>
+            <width>111</width>
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
-           <string>CIN</string>
+           <string>numéro de deces</string>
           </property>
          </widget>
          <widget class="QLineEdit" name="lineEdit_4">
@@ -989,6 +1485,9 @@ p, li { white-space: pre-wrap; }
             <width>381</width>
             <height>26</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
           </property>
          </widget>
          <widget class="QPushButton" name="supprimer_d">
@@ -1007,127 +1506,79 @@ p, li { white-space: pre-wrap; }
         </widget>
         <widget class="QWidget" name="tab_12">
          <attribute name="title">
-          <string>Afficher</string>
+          <string>   Afficher    </string>
          </attribute>
          <widget class="QTableView" name="tableView_3">
           <property name="geometry">
            <rect>
-            <x>-5</x>
-            <y>1</y>
-            <width>1301</width>
-            <height>511</height>
+            <x>390</x>
+            <y>50</y>
+            <width>831</width>
+            <height>351</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
+          </property>
          </widget>
-        </widget>
-        <widget class="QWidget" name="tab_13">
-         <attribute name="title">
-          <string>rechercher</string>
-         </attribute>
-         <widget class="QPushButton" name="pushButton_8">
+         <widget class="QLineEdit" name="lineEdit_recherche_dynamique_deces">
           <property name="geometry">
            <rect>
-            <x>20</x>
-            <y>330</y>
-            <width>131</width>
-            <height>51</height>
+            <x>590</x>
+            <y>10</y>
+            <width>531</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(243, 185, 255);</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_13">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>100</y>
+            <width>161</width>
+            <height>29</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>tri par nom</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_14">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>150</y>
+            <width>161</width>
+            <height>29</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>tri par prénom</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_37">
+          <property name="geometry">
+           <rect>
+            <x>510</x>
+            <y>10</y>
+            <width>54</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>10</pointsize>
            </font>
           </property>
+          <property name="styleSheet">
+           <string notr="true">color:rgb(255, 170, 127);</string>
+          </property>
           <property name="text">
-           <string>recherche </string>
-          </property>
-         </widget>
-         <widget class="QGroupBox" name="groupBox_2">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>201</width>
-            <height>291</height>
-           </rect>
-          </property>
-          <property name="title">
-           <string>choix</string>
-          </property>
-          <widget class="QRadioButton" name="radioButton_5">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>30</y>
-             <width>98</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>CIN</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="radioButton_6">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>80</y>
-             <width>141</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Date de naissance</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="radioButton_7">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>130</y>
-             <width>98</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Nom</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="radioButton_8">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>180</y>
-             <width>98</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Prenom</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="radioButton_9">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>240</y>
-             <width>98</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Date de deces</string>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QTableView" name="tableView_4">
-          <property name="geometry">
-           <rect>
-            <x>220</x>
-            <y>20</y>
-            <width>1061</width>
-            <height>461</height>
-           </rect>
+           <string>filtrer</string>
           </property>
          </widget>
         </widget>
@@ -1135,15 +1586,10 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
-        <string>Travail Exterieur</string>
+        <string>    Travail Exterieur       </string>
        </attribute>
       </widget>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
     </widget>
    </widget>
   </widget>

@@ -11,10 +11,10 @@ private:
     int CINd;
     QString nomd,prenomd,lieu_de_naissanced,nom_pered,prenom_pered,nom_dela_mered,prenom_dela_mered,nationalited,sexed,identite_de_declarantd;
     QString    identite_de_officierd,observationsd,noted,lieu_de_deces;
-    QDate date_de_naissanced,date_de_declaration_dedeces,date_de_deces;
+    QDate date_de_naissanced,date_de_declarations_dedeces,date_de_deces;
 public:
     deces();
-    deces(int CINd,QString nomd,QString prenomd,QString lieu_de_naissanced,QString nom_pered,QString prenom_pered,QString nom_dela_mered,QString prenom_dela_mered,QString nationalited,QString sexed,QString identite_de_declarantd,QString identite_de_officierd,QString observationsd,QString noted,QString lieu_de_deces,QDate date_de_naissanced,QDate date_de_declaration_dedeces,QDate date_de_deces);
+    deces(int CINd,QString nomd,QString prenomd,QString lieu_de_naissanced,QString nom_pered,QString prenom_pered,QString nom_dela_mered,QString prenom_dela_mered,QString nationalited,QString sexed,QString identite_de_declarantd,QString identite_de_officierd,QString observationsd,QString noted,QString lieu_de_deces,QDate date_de_naissanced,QDate date_de_declarations_dedeces,QDate date_de_deces);
 
     //les getters
     int getCINd(){return CINd;}
@@ -31,10 +31,11 @@ public:
     QString getidentite_de_officierd(){return identite_de_officierd;}
     QString getobservationsd(){return observationsd;}
     QString getnoted(){return noted;}
-    QDate getdate_de_naissanced(){return date_de_naissanced;}
-    QDate getdate_de_declarationd(){return date_de_declaration_dedeces;}
-    QDate getdate_de_deces(){return date_de_deces;}
     QString getlieu_de_deces(){return lieu_de_deces;}
+    QDate getdate_de_naissanced(){return date_de_naissanced;}
+    QDate getdate_de_declarations_dedeces(){return date_de_declarations_dedeces;}
+    QDate getdate_de_deces(){return date_de_deces;}
+
 
     /*------------------------------------------------------------------------------------------------------*/
 
@@ -53,10 +54,10 @@ public:
     void setidentite_de_officierd(QString identite_de_officierd){this->identite_de_officierd=identite_de_officierd;}
     void setobservationsd(QString observationsd){this->observationsd=observationsd;}
     void setnoted(QString noted){this->noted=noted;}
-    void setdate_de_naissanced(QDate date_de_naissanced){this->date_de_naissanced=date_de_naissanced;}
-    void setdate_de_declarationd(QDate date_de_declaration_dedeces){this->date_de_declaration_dedeces=date_de_declaration_dedeces;}
-    void setdate_de_deces(QDate date_de_deces){this->date_de_deces=date_de_deces;}
     void setlieu_de_deces(QString lieu_de_deces){this->lieu_de_deces=lieu_de_deces;}
+    void setdate_de_naissanced(QDate date_de_naissanced){this->date_de_naissanced=date_de_naissanced;}
+    void setdate_de_declarations_dedeces(QDate date_de_declarations_dedeces){this->date_de_declarations_dedeces=date_de_declarations_dedeces;}
+    void setdate_de_deces(QDate date_de_deces){this->date_de_deces=date_de_deces;}
     /*------------------------------------------------------------------------------------------------------*/
 
     //les methodes
@@ -64,6 +65,10 @@ public:
     QSqlQueryModel * afficher_deces();
     bool supprimer_deces(int);
     bool modifier_deces();
+
+    QSqlQueryModel * afficher_tri_nom();
+    QSqlQueryModel * afficher_tri_prenom();
+    QSqlQueryModel * recherche_dynamique(QString);
 
 
 };

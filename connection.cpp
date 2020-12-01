@@ -7,7 +7,7 @@ connection::connection()
 }
 bool connection::createConnection()
 {
-    qDebug()<<"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm";
+    //qDebug()<<"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm";
     bool test=false;
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
     db.setDatabaseName("projet_2A");

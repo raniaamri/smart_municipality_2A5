@@ -60,6 +60,10 @@ public:
     QSqlQueryModel * afficher();
     bool supprimer(int);
     bool modifier();
+    QSqlQueryModel * afficher_tri_nom();
+    QSqlQueryModel * afficher_tri_prenom();
+    QSqlQueryModel * tri_tri();
+    QSqlQueryModel * recherche_dynamique(QString);
 
 
 };

@@ -71,22 +71,22 @@ QSqlQueryModel * naissance::afficher(){
 
     QSqlQueryModel * query = new QSqlQueryModel();
     query->setQuery("select * from naissance");
-
+    query->setHeaderData(0,Qt::Horizontal,QObject::tr("Numéro de naissance"));
     query->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom"));
     query->setHeaderData(2,Qt::Horizontal,QObject::tr("Prenom"));
-    query->setHeaderData(3,Qt::Horizontal,QObject::tr("lieu_de_naissance"));
-    query->setHeaderData(4,Qt::Horizontal,QObject::tr("nom_pere"));
-    query->setHeaderData(5,Qt::Horizontal,QObject::tr("prenom_pere"));
-    query->setHeaderData(6,Qt::Horizontal,QObject::tr("nom_dela_mere"));
-    query->setHeaderData(7,Qt::Horizontal,QObject::tr("prenom_dela_mere"));
-    query->setHeaderData(8,Qt::Horizontal,QObject::tr("nationalite"));
-    query->setHeaderData(9,Qt::Horizontal,QObject::tr("sexe"));
-    query->setHeaderData(10,Qt::Horizontal,QObject::tr("identite_de_declarant"));
-    query->setHeaderData(11,Qt::Horizontal,QObject::tr("identite_de_officier"));
+    query->setHeaderData(3,Qt::Horizontal,QObject::tr("lieu de naissance"));
+    query->setHeaderData(4,Qt::Horizontal,QObject::tr("nom père"));
+    query->setHeaderData(5,Qt::Horizontal,QObject::tr("prénom père"));
+    query->setHeaderData(6,Qt::Horizontal,QObject::tr("nom de la mère"));
+    query->setHeaderData(7,Qt::Horizontal,QObject::tr("prénom de la mère"));
+    query->setHeaderData(8,Qt::Horizontal,QObject::tr("nationalité"));
+    query->setHeaderData(9,Qt::Horizontal,QObject::tr("Sexe"));
+    query->setHeaderData(10,Qt::Horizontal,QObject::tr("identité de declarant"));
+    query->setHeaderData(11,Qt::Horizontal,QObject::tr("identité d'officier"));
     query->setHeaderData(12,Qt::Horizontal,QObject::tr("observations"));
     query->setHeaderData(13,Qt::Horizontal,QObject::tr("note"));
-    query->setHeaderData(14,Qt::Horizontal,QObject::tr("date_de_naissance"));
-    query->setHeaderData(15,Qt::Horizontal,QObject::tr("date_de_declaration"));
+    query->setHeaderData(14,Qt::Horizontal,QObject::tr("date de naissance"));
+    query->setHeaderData(15,Qt::Horizontal,QObject::tr("date de déclaration"));
 
     return query;
 
@@ -104,7 +104,7 @@ bool naissance::supprimer(int cingiven)
 bool naissance::modifier(){
     QSqlQuery query1;
     query1.prepare("UPDATE naissance set nom=:nom,prenom=:prenom,lieu_de_naissance=:lieu_de_naissance,nom_pere=:nom_pere,prenom_pere=:prenom_pere,nom_dela_mere=:nom_dela_mere,prenom_dela_mere=:prenom_dela_mere,nationalite=:nationalite,sexe=:sexe,identite_de_declarant=:identite_de_declarant,identite_de_officier=:identite_de_officier,observations=:observations,note=:note,date_de_naissance=:date_de_naissance,date_de_declaration=:date_de_declaration WHERE CIN=:CIN");
-
+    query1.bindValue(":CIN",CIN);
     query1.bindValue(":nom",nom);
     query1.bindValue(":prenom",prenom);
     query1.bindValue(":lieu_de_naissance",lieu_de_naissance);
@@ -125,3 +125,104 @@ bool naissance::modifier(){
 
     return (query1.exec());
 }
+QSqlQueryModel * naissance::afficher_tri_nom(){
+
+    QSqlQueryModel * query = new QSqlQueryModel();
+    query->setQuery("select * from naissance ORDER BY nom");
+
+    query->setHeaderData(0,Qt::Horizontal,QObject::tr("Numéro de naissance"));
+    query->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom"));
+    query->setHeaderData(2,Qt::Horizontal,QObject::tr("Prenom"));
+    query->setHeaderData(3,Qt::Horizontal,QObject::tr("lieu de naissance"));
+    query->setHeaderData(4,Qt::Horizontal,QObject::tr("nom père"));
+    query->setHeaderData(5,Qt::Horizontal,QObject::tr("prénom père"));
+    query->setHeaderData(6,Qt::Horizontal,QObject::tr("nom de la mère"));
+    query->setHeaderData(7,Qt::Horizontal,QObject::tr("prénom de la mère"));
+    query->setHeaderData(8,Qt::Horizontal,QObject::tr("nationalité"));
+    query->setHeaderData(9,Qt::Horizontal,QObject::tr("Sexe"));
+    query->setHeaderData(10,Qt::Horizontal,QObject::tr("identité de declarant"));
+    query->setHeaderData(11,Qt::Horizontal,QObject::tr("identité d'officier"));
+    query->setHeaderData(12,Qt::Horizontal,QObject::tr("observations"));
+    query->setHeaderData(13,Qt::Horizontal,QObject::tr("note"));
+    query->setHeaderData(14,Qt::Horizontal,QObject::tr("date de naissance"));
+    query->setHeaderData(15,Qt::Horizontal,QObject::tr("date de déclaration"));
+
+    return query;
+
+}
+QSqlQueryModel * naissance::afficher_tri_prenom()
+{
+    QSqlQueryModel * query = new QSqlQueryModel();
+    query->setQuery("select * from naissance ORDER BY prenom");
+
+    query->setHeaderData(0,Qt::Horizontal,QObject::tr("Numéro de naissance"));
+    query->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom"));
+    query->setHeaderData(2,Qt::Horizontal,QObject::tr("Prenom"));
+    query->setHeaderData(3,Qt::Horizontal,QObject::tr("lieu de naissance"));
+    query->setHeaderData(4,Qt::Horizontal,QObject::tr("nom père"));
+    query->setHeaderData(5,Qt::Horizontal,QObject::tr("prénom père"));
+    query->setHeaderData(6,Qt::Horizontal,QObject::tr("nom de la mère"));
+    query->setHeaderData(7,Qt::Horizontal,QObject::tr("prénom de la mère"));
+    query->setHeaderData(8,Qt::Horizontal,QObject::tr("nationalité"));
+    query->setHeaderData(9,Qt::Horizontal,QObject::tr("Sexe"));
+    query->setHeaderData(10,Qt::Horizontal,QObject::tr("identité de declarant"));
+    query->setHeaderData(11,Qt::Horizontal,QObject::tr("identité d'officier"));
+    query->setHeaderData(12,Qt::Horizontal,QObject::tr("observations"));
+    query->setHeaderData(13,Qt::Horizontal,QObject::tr("note"));
+    query->setHeaderData(14,Qt::Horizontal,QObject::tr("date de naissance"));
+    query->setHeaderData(15,Qt::Horizontal,QObject::tr("date de déclaration"));
+
+    return query;
+
+}
+QSqlQueryModel *naissance::tri_tri()
+{
+    QSqlQueryModel * query = new QSqlQueryModel();
+    query->setQuery("select * from naissance ORDER BY CIN");
+
+    query->setHeaderData(0,Qt::Horizontal,QObject::tr("Numéro de naissance"));
+    query->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom"));
+    query->setHeaderData(2,Qt::Horizontal,QObject::tr("Prenom"));
+    query->setHeaderData(3,Qt::Horizontal,QObject::tr("lieu de naissance"));
+    query->setHeaderData(4,Qt::Horizontal,QObject::tr("nom père"));
+    query->setHeaderData(5,Qt::Horizontal,QObject::tr("prénom père"));
+    query->setHeaderData(6,Qt::Horizontal,QObject::tr("nom de la mère"));
+    query->setHeaderData(7,Qt::Horizontal,QObject::tr("prénom de la mère"));
+    query->setHeaderData(8,Qt::Horizontal,QObject::tr("nationalité"));
+    query->setHeaderData(9,Qt::Horizontal,QObject::tr("Sexe"));
+    query->setHeaderData(10,Qt::Horizontal,QObject::tr("identité de declarant"));
+    query->setHeaderData(11,Qt::Horizontal,QObject::tr("identité d'officier"));
+    query->setHeaderData(12,Qt::Horizontal,QObject::tr("observations"));
+    query->setHeaderData(13,Qt::Horizontal,QObject::tr("note"));
+    query->setHeaderData(14,Qt::Horizontal,QObject::tr("date de naissance"));
+    query->setHeaderData(15,Qt::Horizontal,QObject::tr("date de déclaration"));
+
+    return query;
+}
+QSqlQueryModel * naissance::recherche_dynamique(QString nom){
+
+    QSqlQueryModel * query = new QSqlQueryModel();
+    query->setQuery("select * from naissance where nom like '"+nom+"%' ");
+
+
+    query->setHeaderData(0,Qt::Horizontal,QObject::tr("Numéro de naissance"));
+    query->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom"));
+    query->setHeaderData(2,Qt::Horizontal,QObject::tr("Prenom"));
+    query->setHeaderData(3,Qt::Horizontal,QObject::tr("lieu de naissance"));
+    query->setHeaderData(4,Qt::Horizontal,QObject::tr("nom père"));
+    query->setHeaderData(5,Qt::Horizontal,QObject::tr("prénom père"));
+    query->setHeaderData(6,Qt::Horizontal,QObject::tr("nom de la mère"));
+    query->setHeaderData(7,Qt::Horizontal,QObject::tr("prénom de la mère"));
+    query->setHeaderData(8,Qt::Horizontal,QObject::tr("nationalité"));
+    query->setHeaderData(9,Qt::Horizontal,QObject::tr("Sexe"));
+    query->setHeaderData(10,Qt::Horizontal,QObject::tr("identité de declarant"));
+    query->setHeaderData(11,Qt::Horizontal,QObject::tr("identité d'officier"));
+    query->setHeaderData(12,Qt::Horizontal,QObject::tr("observations"));
+    query->setHeaderData(13,Qt::Horizontal,QObject::tr("note"));
+    query->setHeaderData(14,Qt::Horizontal,QObject::tr("date de naissance"));
+    query->setHeaderData(15,Qt::Horizontal,QObject::tr("date de déclaration"));
+
+    return query;
+
+}
+
