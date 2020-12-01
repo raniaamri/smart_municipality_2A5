@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>resources/ajouter.png</file>
+        <file>resources/modifier.png</file>
+        <file>resources/remove.png</file>
+        <file>resources/b6ce200fec0ebe98d1ccd69a7adb7796.png</file>
+        <file>resources/pdf-flat.png</file>
+        <file>resources/xls.png</file>
+        <file>resources/growth-statistics-circle-icon-vector-18958392.png</file>
+        <file>resources/5ca6bb4b-456b-4ce1-a59d-7e5cbc3755e1.png</file>
+        <file>resources/Circle-icons-mail.svg.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>resources/Circle-icons-mail.svg.png</file>
+    </qresource>
+</RCC>
