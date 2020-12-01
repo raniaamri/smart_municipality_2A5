@@ -3,9 +3,7 @@
 #include "employe.h"
 #include "formation.h"
 #include <QMainWindow>
-
-
-
+#include<QLabel>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -18,7 +16,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
+
     void on_pushButton_7_clicked();
 
     void on_pushButton_8_clicked();
@@ -35,12 +35,9 @@ private slots:
     void on_pushButton_9_clicked();
 
 
-    void on_export_2_clicked();
 
 
     void on_pushButton_10_clicked();
-
-
 
     void on_pb_ajouterformation_clicked();
 
@@ -52,10 +49,18 @@ private slots:
 
     void on_pb_supprimerformation_clicked();
 
+
+
+
+
+    void on_export_2_clicked();
+
 private:
+
     Ui::MainWindow *ui;
     Employe E;
     formation F;
-
 };
+
+
 #endif // MAINWINDOW_H

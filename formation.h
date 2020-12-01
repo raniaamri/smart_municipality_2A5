@@ -3,28 +3,33 @@
 
 #include <QString>
 #include <QSqlQueryModel>
+#include<QDateTime>
+#include<QTime>
 class formation
 {
 public:
     formation();
-    formation(int,int,QString);
+    formation(int,int,QDateTime,int);
     int getidformation();
     int getidformateur();
-    QString getdateformation();
+    QDateTime getdateformation();
+    int getduree();
     void setidformation(int);
     void setidformateur(int);
-    void setdateformation(QString);
+    void setdateformation(QDateTime);
+    void setduree(int);
     bool ajouter();
     QSqlQueryModel* afficher();
     QSqlQueryModel * rechercher (const QString &aux);
     bool supprimer(int);
-    bool modifier(int,int,QString);
+    bool modifier(int,int,QDateTime,int);
     QSqlQueryModel* trie();
 
 
 private:
     int idformation,idformateur;
-    QString dateformation;
+    QDateTime dateformation;
+    int duree;
 };
 
 

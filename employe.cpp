@@ -2,23 +2,24 @@
 #include <QSqlQuery>
 #include <QtDebug>
 #include <QObject>
+#include <QDate>
 Employe::Employe()
 {
-id=0; salaire=0; nom=" "; prenom=""; date_de_naissance="";
+id=0; salaire=0; nom=" "; prenom="";
 }
 
-Employe::Employe(int id,int salaire, QString nom, QString prenom, QString date_de_naissance)
+Employe::Employe(int id,int salaire, QString nom, QString prenom, QDate date_de_naissance)
 {this->id=id;this->salaire=salaire; this->nom=nom; this->prenom=prenom; this->date_de_naissance=date_de_naissance;}
 int Employe::getid(){return id;}
 int Employe::getsalaire(){return salaire;}
 QString Employe::getnom(){return  nom;}
 QString Employe::getprenom(){return prenom;}
-QString Employe::getdate(){return date_de_naissance;}
+QDate Employe::getdate(){return date_de_naissance;}
 void Employe::setid(int id){this->id=id;}
 void Employe::setsalaire(int salaire){this->salaire=salaire;}
 void Employe::setnom(QString nom){this->nom=nom;}
 void Employe::setprenom(QString prenom){this->prenom=prenom;}
-void Employe::setdate(QString date_de_naissance){this->date_de_naissance=date_de_naissance;}
+void Employe::setdate(QDate date_de_naissance){this->date_de_naissance=date_de_naissance;}
 bool Employe::ajouter()
 {
 
@@ -61,7 +62,7 @@ QSqlQueryModel* Employe::afficher()
 }
 
 
-bool Employe::modifier(int id, int salaire, QString nom, QString prenom,QString date_de_naissance)
+bool Employe::modifier(int id, int salaire, QString nom, QString prenom,QDate date_de_naissance)
 {
     QSqlQuery query;
     QString res= QString::number(id);
@@ -89,7 +90,7 @@ QSqlQueryModel * Employe::rechercher (const QString &aux)
 
     return model;
 }
-QSqlQueryModel* Employe::trie()
+/*QSqlQueryModel* Employe::trie()
 {
     QSqlQueryModel* model = new QSqlQueryModel();
 
@@ -103,4 +104,25 @@ QSqlQueryModel* Employe::trie()
     model->setHeaderData(4, Qt::Horizontal, QObject::tr("date_de_naissaince"));
 
     return model;
+}*/
+
+QSqlQueryModel *  Employe::trie(const QString &critere, const QString &mode )
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+
+model->setQuery("select * from EMPLOYE order by "+critere+" "+mode+"");
+model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+model->setHeaderData(1, Qt::Horizontal, QObject::tr("SALAIRE "));
+model->setHeaderData(2, Qt::Horizontal, QObject::tr("NOM"));
+model->setHeaderData(3, Qt::Horizontal, QObject::tr("PRENOM"));
+model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_DE_NAISSANCE"));
+    return model;
 }
+QSqlQueryModel * Employe::afficher_employe(){
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("select ID from employe");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("employe"));
+    return model;
+}
+
+
