@@ -3,6 +3,7 @@
 #include "encaissement.h"
 #include <QMainWindow>
 #include "decaissement.h"
+#include "statistique.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -25,8 +26,6 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButton_13_clicked();
-
-    void on_pushButton_12_clicked();
 
     void on_pushButton_5_clicked();
 
@@ -52,9 +51,50 @@ private slots:
 
     void on_tableau_en_doubleClicked(const QModelIndex &index);
 
+
+
+    void on_pushButton_16_clicked();
+
+    void on_radioButton_8_clicked();
+
+    void on_radioButton_clicked();
+
+    void on_radioButton_5_clicked();
+
+    void on_radioButton_4_clicked();
+
+    void on_radioButton_7_clicked();
+
+    void on_radioButton_2_clicked();
+
+    void on_radioButton_6_clicked();
+
+    void on_radioButton_3_clicked();
+
+    void on_radioButton_16_clicked();
+
+    void on_radioButton_12_clicked();
+
+    void on_radioButton_13_clicked();
+
+    void on_radioButton_9_clicked();
+
+    void on_radioButton_15_clicked();
+
+    void on_radioButton_11_clicked();
+
+    void on_radioButton_14_clicked();
+
+    void on_radioButton_10_clicked();
+
+
+
+
+
 private:
     Ui::MainWindow *ui;
     encaissement tab_encaissement;
     decaissement tab_decaissement;
+    statistique *stat;
 };
 #endif // MAINWINDOW_H

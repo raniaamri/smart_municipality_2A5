@@ -1,4 +1,4 @@
-#include "decaissement.h"
+ #include "decaissement.h"
 #include<QMessageBox>
 #include <QDebug>
 #include<QSqlQuery>
@@ -110,7 +110,7 @@ QSqlQueryModel *decaissement:: rechercher(QString q)
 {
 
     QSqlQueryModel *model=new QSqlQueryModel();
-    model-> setQuery("select * from decaissement where code_decaissement like '%"+q+"%'");
+    model-> setQuery("select * from decaissement where code_decaissement like '%"+q+"%' or methode like '%"+q+"%' or id_employe like '%"+q+"%'");
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("montant"));
@@ -120,4 +120,76 @@ QSqlQueryModel *decaissement:: rechercher(QString q)
     return model ;
 
 
+}
+QSqlQueryModel *decaissement:: afficher_asc_id()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from decaissement order by id_employe  ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("employé"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+return model ;
+}
+QSqlQueryModel *decaissement::afficher_dec_id()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from decaissement order by id_employe desc");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("employé"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+return model ;
+}
+QSqlQueryModel *decaissement::afficher_asc_methode()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from decaissement order by methode ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("employé"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+return model ;
+}
+QSqlQueryModel *decaissement::afficher_dec_methode()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from decaissement order by methode desc  ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("employé"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+return model ;
+}
+QSqlQueryModel *decaissement::afficher_asc_date()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from decaissement order by date_decaissement  ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("employé"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+return model ;
+}
+QSqlQueryModel *decaissement::afficher_dec_date()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from decaissement order by date_decaissement desc  ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("employé"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+return model ;
 }

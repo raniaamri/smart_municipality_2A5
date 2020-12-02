@@ -22,6 +22,12 @@ public :
     QSqlQueryModel *afficher_dec();
     bool supprimer(QString);
     QSqlQueryModel *rechercher(QString);
+    QSqlQueryModel *afficher_asc_id();
+    QSqlQueryModel *afficher_dec_id();
+    QSqlQueryModel *afficher_asc_methode();
+    QSqlQueryModel *afficher_dec_methode();
+    QSqlQueryModel *afficher_asc_date();
+    QSqlQueryModel *afficher_dec_date();
 private :
     int code_encaissement, id_employe ;
     QString methode_encaissement  , remarque_encaissement;

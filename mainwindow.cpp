@@ -5,8 +5,6 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QPrinter>
-#include <QPrintDialog>
-#include <QFileDialog>
 #include <QDebug>
 #include <QPainter>
 MainWindow::MainWindow(QWidget *parent)
@@ -18,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableau_en->setModel(tab_encaissement.afficher());
     ui->tab_de->setModel(tab_decaissement.afficher());
     ui->stackedWidget->setCurrentIndex(1);
-
+     ui->stackedWidget_3->setCurrentIndex(1);
+    ui->stackedWidget_4->setCurrentIndex(1);
 }
 
 MainWindow::~MainWindow()
@@ -30,12 +29,17 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     int code_encaissement=ui->code_encaissement->text().toInt() ;
-    int id_employe=ui->id_employe_en->text().toInt() ;
+    int id_employe=ui->comboBox->currentText().toInt();
     QString methode_encaissement=ui->methode_encaissement->currentText();
     QString remarque_encaissement=ui->remarque_encaissement->text();
     QString montant_encaissement=ui->montant_encaissement->text();
     encaissement en(code_encaissement,methode_encaissement, montant_encaissement ,id_employe , remarque_encaissement);
     bool test=en.ajouter();
+    if(ui->code_encaissement->text().isEmpty()||ui->comboBox->currentText()=="choix id"||ui->code_encaissement->text().contains(QRegExp("^[1-9]"))==0||ui->montant_encaissement->text().isEmpty()||ui->methode_encaissement->currentText()=="choix")
+    {QMessageBox::warning(nullptr, QObject::tr("erreur"),
+                              QObject::tr("verifier les champs.\n"
+                              "Click Cancel to exit."), QMessageBox::Cancel);}
+    else{
     if(test)
     {
        ui->tableau_en->setModel(tab_encaissement.afficher());
@@ -44,17 +48,23 @@ void MainWindow::on_pushButton_clicked()
        "Click Cancel to exit."), QMessageBox::Cancel);
 
     }
+    }
 }
 
 void MainWindow::on_pushButton_11_clicked()
 {
     int code_decaissement=ui->code_decaissement->text().toInt() ;
-    int id_em_dec=ui->id_em_dec->text().toInt() ;
-    QString methode_decaissement=ui->methode_decaissement->currentText();
+   int id_em_dec=ui->comboBox_4->currentText().toInt();
+   QString methode_decaissement=ui->methode_decaissement->currentText();
     QString remarque_decaissement=ui->remarque_decaissement->text();
     QString montant_decaissement=ui->montant_decaissement->text();
     decaissement de(code_decaissement,methode_decaissement, montant_decaissement ,id_em_dec , remarque_decaissement);
     bool test=de.ajouter();
+    if(ui->code_decaissement->text().isEmpty()||ui->code_decaissement->text().contains(QRegExp("^[1-9]"))==0||ui->comboBox_4->currentText()=="choix id"||ui->montant_decaissement->text().isEmpty()||ui->methode_decaissement->currentText()=="choix")
+    {QMessageBox::warning(nullptr, QObject::tr("erreur"),
+                              QObject::tr("verifier les champs.\n"
+                              "Click Cancel to exit."), QMessageBox::Cancel);}
+    else{
     if(test)
     {
        ui->tab_de->setModel(tab_decaissement.afficher());
@@ -63,11 +73,16 @@ void MainWindow::on_pushButton_11_clicked()
        "Click Cancel to exit."), QMessageBox::Cancel);
 
     }
+    }
 }
 
 void MainWindow::on_pushButton_6_clicked()
 {
-ui->stackedWidget->setCurrentIndex(2);
+stat=new statistique(this);
+stat->show();
+
+
+
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -94,44 +109,26 @@ void MainWindow::on_pushButton_13_clicked()
     }
 }
 
-void MainWindow::on_pushButton_12_clicked()
-{
-    int code_decaissement=ui->code_decaissement_2->text().toInt() ;
-    int id_em_dec=ui->id_em_dec_2->text().toInt() ;
-    QString methode_decaissement=ui->methode_decaissement_3->currentText();
-    QString remarque_decaissement=ui->remarque_decaissement_2->text();
-    QString montant_decaissement=ui->montant_decaissement_2->text();
-    decaissement de(code_decaissement,methode_decaissement, montant_decaissement ,id_em_dec , remarque_decaissement);
-    bool test=de.modifier();
-    if(test)
-    {
-       ui->tab_de->setModel(tab_decaissement.afficher());
-       QMessageBox::information(nullptr, QObject::tr("modifier decaissement"),
-       QObject::tr("decaissement modifiée.\n"
-       "Click Cancel to exit."), QMessageBox::Cancel);
-
-    }
-}
 
 void MainWindow::on_pushButton_5_clicked()
 {
-   ui->tableau_en->setModel(tab_encaissement.afficher_asc());
+   ui->stackedWidget_3->setCurrentIndex(0);
 }
 
 void MainWindow::on_pushButton_15_clicked()
 {
-    ui->tableau_en->setModel(tab_encaissement.afficher_dec());
+    ui->stackedWidget_3->setCurrentIndex(2);
 }
 
 void MainWindow::on_pushButton_10_clicked()
 {
-     ui->tab_de->setModel(tab_decaissement.afficher_asc());
+     ui->stackedWidget_4->setCurrentIndex(0);
 }
 
 
 void MainWindow::on_pushButton_14_clicked()
 {
-     ui->tab_de->setModel(tab_decaissement.afficher_dec());
+    ui->stackedWidget_4->setCurrentIndex(2);
 }
 
 void MainWindow::on_pdf_clicked()
@@ -146,7 +143,7 @@ void MainWindow::on_pdf_clicked()
             }
 
             QSqlQuery   query ;
-            qDebug() << query.prepare("select sysdate from dual  ");
+            qDebug() << query.prepare("select sysdate from dual  "); //date systeme
             if ( query.exec() )
             {
 
@@ -169,6 +166,7 @@ void MainWindow::on_pdf_clicked()
             int i =50;
             int k=0;
             qDebug() << qry.prepare("select * from encaissement ");
+            painter.drawPixmap(600,10,100,100,QPixmap::fromImage(QImage("C:/Users/asus/Desktop/smart-muni/logo")));//chemin mta3 il logo
 
             if ( qry.exec() )
             {
@@ -247,6 +245,7 @@ if(test)
 void MainWindow::on_pdf_dec_clicked()
 {
     {
+
         QPrinter printer;
                 printer.setOutputFormat(QPrinter::PdfFormat);
                 printer.setOutputFileName("C://Users//asus//Desktop//smart-muni//decaissement.pdf");//badel i chemin win t7eb t7ot il fichier ya2melek creation
@@ -280,6 +279,7 @@ void MainWindow::on_pdf_dec_clicked()
                 int i =50;
                 int k=0;
                 qDebug() << qry.prepare("select * from decaissement ");
+                painter.drawPixmap(600,10,100,100,QPixmap::fromImage(QImage("C:/Users/asus/Desktop/smart-muni/logo")));//chemin mta3 il logo
 
                 if ( qry.exec() )
                 {
@@ -389,7 +389,9 @@ void MainWindow::on_tab_de_doubleClicked(const QModelIndex &index)
        if(query.exec())
        {
            while(query.next())
-           {ui->code_decaissement_2->setText(query.value(0).toString());
+           {
+               ui->code_decaissement_2->setText(query.value(0).toString());
+                ui->id_em_dec_2->setText(query.value(4).toString());
 
            }
       }
@@ -412,3 +414,116 @@ void MainWindow::on_tableau_en_doubleClicked(const QModelIndex &index)
       }
 
 }
+
+void MainWindow::on_pushButton_16_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    int code_decaissement=ui->code_decaissement_2->text().toInt() ;
+    int id_em_dec=ui->id_em_dec_2->text().toInt() ;
+    QString methode_decaissement=ui->methode_decaissement_3->currentText();
+    QString remarque_decaissement=ui->remarque_decaissement_2->text();
+    QString montant_decaissement=ui->montant_decaissement_2->text();
+    decaissement de(code_decaissement,methode_decaissement, montant_decaissement ,id_em_dec , remarque_decaissement);
+    bool test=de.modifier();
+    if (code_decaissement==0||id_em_dec||methode_decaissement.isEmpty()||remarque_decaissement.isEmpty()||montant_decaissement.isEmpty())
+    {
+        QMessageBox::information(nullptr, QObject::tr("modifier decaissement"),
+        QObject::tr("remplir les champs.\n"
+        "Click Cancel to exit."), QMessageBox::Cancel);
+    }
+    else
+    {
+    if(test)
+    {
+       ui->tab_de->setModel(tab_decaissement.afficher());
+       QMessageBox::information(nullptr, QObject::tr("modifier decaissement"),
+       QObject::tr("decaissement modifiée.\n"
+       "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+    }
+}
+
+void MainWindow::on_radioButton_8_clicked()
+{
+    ui->tableau_en->setModel(tab_encaissement.afficher_asc());
+}
+
+void MainWindow::on_radioButton_clicked()
+{
+     ui->tableau_en->setModel(tab_encaissement.afficher_dec());
+}
+
+void MainWindow::on_radioButton_5_clicked()
+{
+     ui->tableau_en->setModel(tab_encaissement.afficher_asc_id());
+}
+
+void MainWindow::on_radioButton_4_clicked()
+{
+     ui->tableau_en->setModel(tab_encaissement.afficher_dec_id());
+}
+
+void MainWindow::on_radioButton_7_clicked()
+{
+    ui->tableau_en->setModel(tab_encaissement.afficher_asc_methode());
+}
+
+void MainWindow::on_radioButton_2_clicked()
+{
+     ui->tableau_en->setModel(tab_encaissement.afficher_dec_methode());
+}
+
+void MainWindow::on_radioButton_6_clicked()
+{
+  ui->tableau_en->setModel(tab_encaissement.afficher_asc_date());
+}
+
+void MainWindow::on_radioButton_3_clicked()
+{
+    ui->tableau_en->setModel(tab_encaissement.afficher_dec_date());
+}
+
+void MainWindow::on_radioButton_16_clicked()
+{
+      ui->tab_de->setModel(tab_decaissement.afficher_asc());
+}
+
+void MainWindow::on_radioButton_12_clicked()
+{
+      ui->tab_de->setModel(tab_decaissement.afficher_dec());
+}
+
+void MainWindow::on_radioButton_13_clicked()
+{
+     ui->tab_de->setModel(tab_decaissement.afficher_asc_id());
+}
+
+void MainWindow::on_radioButton_9_clicked()
+{
+     ui->tab_de->setModel(tab_decaissement.afficher_dec_id());
+}
+
+void MainWindow::on_radioButton_15_clicked()
+{
+      ui->tab_de->setModel(tab_decaissement.afficher_asc_methode());
+}
+
+void MainWindow::on_radioButton_11_clicked()
+{
+    ui->tab_de->setModel(tab_decaissement.afficher_dec_methode());
+}
+
+void MainWindow::on_radioButton_14_clicked()
+{
+     ui->tab_de->setModel(tab_decaissement.afficher_asc_date());
+}
+
+void MainWindow::on_radioButton_10_clicked()
+{
+     ui->tab_de->setModel(tab_decaissement.afficher_dec_date());
+}
+
+
+
+

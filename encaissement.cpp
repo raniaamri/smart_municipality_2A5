@@ -110,7 +110,7 @@ QSqlQueryModel *encaissement:: rechercher(QString q)
 {
 
     QSqlQueryModel *model=new QSqlQueryModel();
-    model-> setQuery("select * from encaissement where code_encaissement like '%"+q+"%'");
+    model-> setQuery("select * from encaissement where code_encaissement like '%"+q+"%' or methode_encaissement like '%"+q+"%' or id_employe like '%"+q+"%'");
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("methode"));
@@ -120,4 +120,78 @@ QSqlQueryModel *encaissement:: rechercher(QString q)
     return model ;
 
 
+}
+
+QSqlQueryModel *encaissement:: afficher_asc_id()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from encaissement order by id_employe ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("id_employe"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+    return model ;
+
+}
+QSqlQueryModel *encaissement::afficher_dec_id()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from encaissement order by id_employe desc ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("id_employe"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+    return model ;
+}
+QSqlQueryModel *encaissement::afficher_asc_methode()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from encaissement order by methode_encaissement  ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("id_employe"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+    return model ;
+}
+QSqlQueryModel *encaissement::afficher_dec_methode()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from encaissement order by methode_encaissement  ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("id_employe"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+    return model ;
+}
+QSqlQueryModel *encaissement::afficher_asc_date()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from encaissement order by date_encaissement  ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("id_employe"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+    return model ;
+}
+QSqlQueryModel *encaissement::afficher_dec_date()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model-> setQuery("select * from encaissement order by date_encaissement desc ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("methode"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("id_employe"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("remarque"));
+    return model ;
 }

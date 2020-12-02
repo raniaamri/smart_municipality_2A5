@@ -16,16 +16,19 @@ SOURCES += \
     decaissement.cpp \
     encaissement.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    statistique.cpp
 
 HEADERS += \
     connection.h \
     decaissement.h \
     encaissement.h \
-    mainwindow.h
+    mainwindow.h \
+    statistique.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    statistique.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
