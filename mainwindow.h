@@ -4,6 +4,11 @@
 #include <QMainWindow>
 #include "decaissement.h"
 #include "statistique.h"
+#include <QMediaPlayer>
+#include <QFile>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QFileDialog>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,7 +22,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_valider_clicked();
 
     void on_pushButton_11_clicked();
 
@@ -25,7 +30,7 @@ private slots:
 
     void on_pushButton_2_clicked();
 
-    void on_pushButton_13_clicked();
+    void on_confirmer_la_modification_clicked();
 
     void on_pushButton_5_clicked();
 
@@ -89,6 +94,14 @@ private slots:
 
 
 
+    void on_on_anglais_en_clicked();
+
+    void on_pushButton_7_clicked();
+
+    void on_on_anglais_dec_clicked();
+
+    void on_pushButton_9_clicked();
+
 
 
 private:
@@ -96,5 +109,7 @@ private:
     encaissement tab_encaissement;
     decaissement tab_decaissement;
     statistique *stat;
+    QMediaPlayer *click;
+    QString lang="fr";
 };
 #endif // MAINWINDOW_H

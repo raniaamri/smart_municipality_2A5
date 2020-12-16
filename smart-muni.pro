@@ -1,7 +1,12 @@
 QT       += core gui \
     quick
 QT+= sql
+QT += multimedia
 QT       += core gui printsupport
+QT       += core gui network
+QT       +=  network
+QT       += core gui widgets texttospeech
+QT += core gui widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

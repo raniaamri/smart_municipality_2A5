@@ -4,7 +4,7 @@
 #include<QSqlQuery>
 decaissement :: decaissement()
 {
-    code_decaissement=0;
+
     id_em_dec=0 ;
     methode_decaissement="";
     remarque_decaissement="";
@@ -13,16 +13,16 @@ decaissement :: decaissement()
 
 }
 
-decaissement ::decaissement(int code_decaissement ,QString methode_decaissement ,QString montant_decaissement,int id_em_dec,QString remarque_decaissement)
+decaissement ::decaissement(QString methode_decaissement ,QString montant_decaissement,int id_em_dec,QString remarque_decaissement)
 {
-    this -> code_decaissement=code_decaissement;
+
     this -> methode_decaissement=methode_decaissement;
     this -> montant_decaissement=montant_decaissement;
     this -> id_em_dec=id_em_dec;
     this -> remarque_decaissement=remarque_decaissement;
 
 }
-int decaissement :: get_code_decaissement(){return code_decaissement;}
+
 int decaissement :: get_id_em_dec(){return id_em_dec;}
 QString decaissement :: get_methode_decaissement(){return methode_decaissement;}
 QString decaissement :: get_remarque_decaissement(){return remarque_decaissement;}
@@ -30,8 +30,7 @@ QString decaissement :: get_montant_decaissement(){return montant_decaissement;}
 bool decaissement :: ajouter()
 {
    QSqlQuery query;
-   query.prepare("insert into decaissement (code_decaissement,date_decaissement,methode,id_employe,montant_decaissement,remarque_decaissement) values(:code_decaissement,sysdate,:methode_decaissement,:id_em_dec,:montant_decaissement,:remarque_decaissement)");
-   query.bindValue(":code_decaissement",code_decaissement);
+   query.prepare("insert into decaissement (date_decaissement,methode,id_employe,montant_decaissement,remarque_decaissement) values(sysdate,:methode_decaissement,:id_em_dec,:montant_decaissement,:remarque_decaissement)");
    query.bindValue(":id_em_dec",id_em_dec);
    query.bindValue(":methode_decaissement",methode_decaissement);
    query.bindValue(":remarque_decaissement",remarque_decaissement);
@@ -58,8 +57,7 @@ QSqlQueryModel *decaissement:: afficher()
 bool decaissement :: modifier()
 {
    QSqlQuery query;
-   query.prepare("update decaissement set code_decaissement=:code_decaissement ,id_employe=:id_em_dec , methode=:methode_decaissement , remarque_decaissement=:remarque_decaissement , montant_decaissement=:montant_decaissement where code_decaissement=:code_decaissement ");
-   query.bindValue(":code_decaissement",code_decaissement);
+   query.prepare("update decaissement set id_employe=:id_em_dec , methode=:methode_decaissement , remarque_decaissement=:remarque_decaissement , montant_decaissement=:montant_decaissement where code_decaissement=:code_decaissement ");
    query.bindValue(":id_em_dec",id_em_dec);
    query.bindValue(":methode_decaissement",methode_decaissement);
    query.bindValue(":remarque_decaissement",remarque_decaissement);

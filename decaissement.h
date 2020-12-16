@@ -10,8 +10,7 @@ class decaissement
 {
 public :
     decaissement();
-   decaissement(int,QString,QString,int,QString);
-    int get_code_decaissement();
+   decaissement(QString,QString,int,QString);
     int get_id_em_dec();
     QString get_methode_decaissement();
     QString get_remarque_decaissement();
@@ -30,7 +29,7 @@ public :
      QSqlQueryModel *afficher_asc_date();
      QSqlQueryModel *afficher_dec_date();
 private :
-    int code_decaissement, id_em_dec ;
+    int id_em_dec ;
     QString methode_decaissement  , remarque_decaissement;
     QString montant_decaissement;
 };

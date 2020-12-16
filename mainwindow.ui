@@ -48,48 +48,11 @@
       <property name="title">
        <string>ENCAISSEMENT</string>
       </property>
-      <widget class="QLineEdit" name="code_encaissement">
-       <property name="geometry">
-        <rect>
-         <x>140</x>
-         <y>90</y>
-         <width>151</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit{
-
-background-color:#25283b;
-
-
-
-border:1px solid rgb(255, 250, 250);
-
-color:rgb(255, 255, 255);
-
-padding-left:16px;
-
-border:1px solid rgb(255, 250, 250);
-
-border-top-right-radius:10px;
-
-border-down-right-radius:10px;
-
-}
-
-QLineEdit:focus{
-
-border: 1px solid rgb(180, 180, 180);
-
-}</string>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="montant_encaissement">
        <property name="geometry">
         <rect>
          <x>140</x>
-         <y>130</y>
+         <y>90</y>
          <width>161</width>
          <height>31</height>
         </rect>
@@ -126,7 +89,7 @@ border: 1px solid rgb(180, 180, 180);
        <property name="geometry">
         <rect>
          <x>140</x>
-         <y>170</y>
+         <y>130</y>
          <width>161</width>
          <height>31</height>
         </rect>
@@ -159,51 +122,11 @@ border: 1px solid rgb(180, 180, 180);
 }</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="montant">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>90</y>
-         <width>91</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-
-background-color:#25283b;
-
-
-
-border:1px solid rgb(255, 250, 250);
-
-color:rgb(255, 255, 255);
-
-padding-left:16px;
-
-border:1px solid rgb(255, 250, 250);
-
-border-top-right-radius:10px;
-
-border-down-right-radius:10px;
-
-}
-
-QLabel:focus{
-
-border: 1px solid rgb(180, 180, 180);
-
-}</string>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>130</y>
          <width>101</width>
          <height>31</height>
         </rect>
@@ -238,11 +161,11 @@ border: 1px solid rgb(180, 180, 180);
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;montant&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="remarque">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>170</y>
+         <y>130</y>
          <width>121</width>
          <height>31</height>
         </rect>
@@ -279,11 +202,11 @@ border: 1px solid rgb(180, 180, 180);
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;remarque&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="valider">
        <property name="geometry">
         <rect>
          <x>240</x>
-         <y>260</y>
+         <y>220</y>
          <width>141</width>
          <height>41</height>
         </rect>
@@ -449,7 +372,7 @@ background-color: rgb(0, 255,0);
        <property name="geometry">
         <rect>
          <x>210</x>
-         <y>221</y>
+         <y>180</y>
          <width>111</width>
          <height>21</height>
         </rect>
@@ -502,7 +425,7 @@ QListView
         </property>
        </item>
       </widget>
-      <widget class="QLabel" name="label_11">
+      <widget class="QLabel" name="id_en">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -691,7 +614,7 @@ border: 1px solid rgb(180, 180, 180);
        <widget class="QWidget" name="page_5"/>
        <widget class="QWidget" name="page_6"/>
        <widget class="QWidget" name="page_7">
-        <widget class="QLabel" name="label_16">
+        <widget class="QLabel" name="employe">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -769,7 +692,7 @@ border: 1px solid rgb(180, 180, 180);
 }</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_18">
+        <widget class="QLabel" name="code">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -809,7 +732,7 @@ border: 1px solid rgb(180, 180, 180);
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="pushButton_13">
+        <widget class="QPushButton" name="confirmer_la_modification">
          <property name="geometry">
           <rect>
            <x>220</x>
@@ -817,6 +740,9 @@ border: 1px solid rgb(180, 180, 180);
            <width>151</width>
            <height>31</height>
           </rect>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;confirmation modification&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="styleSheet">
           <string notr="true">QPushButton{font:10pt &quot;MS Shell Dlg 2&quot;;
@@ -921,7 +847,7 @@ border: 1px solid rgb(180, 180, 180);
 }</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_20">
+        <widget class="QLabel" name="remarque_mod">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -998,7 +924,7 @@ border: 1px solid rgb(180, 180, 180);
 }</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_19">
+        <widget class="QLabel" name="methode_mod">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -1036,7 +962,7 @@ border: 1px solid rgb(180, 180, 180);
 </string>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;methode de paiement&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;méthode de paiement&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
         <widget class="QComboBox" name="methode_encaissement_4">
@@ -1096,7 +1022,7 @@ QListView
           </property>
          </item>
         </widget>
-        <widget class="QLabel" name="label_17">
+        <widget class="QLabel" name="montant_mod">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -1138,11 +1064,11 @@ border: 1px solid rgb(180, 180, 180);
         </widget>
        </widget>
       </widget>
-      <widget class="QLabel" name="label_14">
+      <widget class="QLabel" name="methode">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>210</y>
+         <y>170</y>
          <width>191</width>
          <height>31</height>
         </rect>
@@ -1175,7 +1101,7 @@ border: 1px solid rgb(180, 180, 180);
 }</string>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;methode de paiement&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;méthode de paiement&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QStackedWidget" name="stackedWidget_3">
@@ -1188,7 +1114,7 @@ border: 1px solid rgb(180, 180, 180);
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page_8">
         <widget class="QRadioButton" name="radioButton_5">
@@ -1482,7 +1408,7 @@ QPushButton:hover::pressed
         <string/>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="id_em_en">
        <property name="geometry">
         <rect>
          <x>140</x>
@@ -1513,46 +1439,6 @@ QListView
   color: white;
 }</string>
        </property>
-       <item>
-        <property name="text">
-         <string>choix id</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>12</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>54</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>82</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>88</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>7</string>
-        </property>
-       </item>
       </widget>
       <widget class="QPushButton" name="pushButton_6">
        <property name="geometry">
@@ -1587,6 +1473,38 @@ background-color: rgb(0, 255,0);
         <string/>
        </property>
       </widget>
+      <widget class="QPushButton" name="pushButton_7">
+       <property name="geometry">
+        <rect>
+         <x>1050</x>
+         <y>50</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-image:url(C:/Users/asus/Desktop/smart-muni/frensh);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="on_anglais_en">
+       <property name="geometry">
+        <rect>
+         <x>1050</x>
+         <y>20</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-image:url(C:/Users/asus/Desktop/smart-muni/english);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="Decaissement">
@@ -1605,83 +1523,6 @@ background-color: rgb(0, 255,0);
       <property name="title">
        <string>Decaissement</string>
       </property>
-      <widget class="QLabel" name="label_6">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>81</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-
-background-color:#25283b;
-
-
-
-border:1px solid rgb(255, 250, 250);
-
-color:rgb(255, 255, 255);
-
-padding-left:16px;
-
-border:1px solid rgb(255, 250, 250);
-
-border-top-right-radius:10px;
-
-border-down-right-radius:10px;
-
-}
-
-QLabel:focus{
-
-border: 1px solid rgb(180, 180, 180);
-
-}</string>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="code_decaissement">
-       <property name="geometry">
-        <rect>
-         <x>120</x>
-         <y>70</y>
-         <width>151</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit{
-
-background-color:#25283b;
-
-
-
-border:1px solid rgb(255, 250, 250);
-
-color:rgb(255, 255, 255);
-
-padding-left:16px;
-
-border:1px solid rgb(255, 250, 250);
-
-border-top-right-radius:10px;
-
-border-down-right-radius:10px;
-
-}
-
-QLineEdit:focus{
-
-border: 1px solid rgb(180, 180, 180);
-
-}</string>
-       </property>
-      </widget>
       <widget class="QPushButton" name="pushButton_10">
        <property name="geometry">
         <rect>
@@ -1717,11 +1558,11 @@ background-color: rgb(0, 255,0);
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_8">
+      <widget class="QLabel" name="montant_dec">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>110</y>
+         <y>70</y>
          <width>101</width>
          <height>31</height>
         </rect>
@@ -1757,7 +1598,7 @@ border: 1px solid rgb(180, 180, 180);
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Montant&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_10">
+      <widget class="QLabel" name="employe_dec">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1797,11 +1638,11 @@ border: 1px solid rgb(180, 180, 180);
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;employé&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_9">
+      <widget class="QLabel" name="methode_dec">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>150</y>
+         <y>110</y>
          <width>191</width>
          <height>31</height>
         </rect>
@@ -1837,11 +1678,11 @@ border: 1px solid rgb(180, 180, 180);
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;methode de paiement&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_11">
+      <widget class="QPushButton" name="ajouter">
        <property name="geometry">
         <rect>
          <x>270</x>
-         <y>290</y>
+         <y>270</y>
          <width>111</width>
          <height>41</height>
         </rect>
@@ -1906,7 +1747,7 @@ QPushButton:hover::pressed
        <property name="geometry">
         <rect>
          <x>120</x>
-         <y>110</y>
+         <y>70</y>
          <width>151</width>
          <height>31</height>
         </rect>
@@ -1943,7 +1784,7 @@ border: 1px solid rgb(180, 180, 180);
        <property name="geometry">
         <rect>
          <x>210</x>
-         <y>160</y>
+         <y>110</y>
          <width>91</width>
          <height>21</height>
         </rect>
@@ -1996,11 +1837,11 @@ QListView
         </property>
        </item>
       </widget>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="remarque_dec">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>190</y>
+         <y>150</y>
          <width>131</width>
          <height>31</height>
         </rect>
@@ -2040,7 +1881,7 @@ border: 1px solid rgb(180, 180, 180);
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>230</y>
+         <y>190</y>
          <width>301</width>
          <height>51</height>
         </rect>
@@ -2269,7 +2110,7 @@ border: 1px solid rgb(180, 180, 180);
 }</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_12">
+        <widget class="QLabel" name="employe_dec_mod">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -2346,7 +2187,7 @@ border: 1px solid rgb(180, 180, 180);
 }</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_13">
+        <widget class="QLabel" name="montant_dec_mod">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -2387,7 +2228,7 @@ border: 1px solid rgb(180, 180, 180);
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Montant&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="code_dec_mod">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -2427,7 +2268,7 @@ border: 1px solid rgb(180, 180, 180);
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_15">
+        <widget class="QLabel" name="methode_dec_mod">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -2525,7 +2366,7 @@ QListView
           </property>
          </item>
         </widget>
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="remarque_dec_mod">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -2565,7 +2406,7 @@ border: 1px solid rgb(180, 180, 180);
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;remarque&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="pushButton_12">
+        <widget class="QPushButton" name="confirmer_dec">
          <property name="geometry">
           <rect>
            <x>240</x>
@@ -3049,7 +2890,7 @@ QPushButton:hover::pressed
         <string/>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox_4">
+      <widget class="QComboBox" name="id_em_dec">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -3080,75 +2921,34 @@ QListView
   color: white;
 }</string>
        </property>
-       <item>
-        <property name="text">
-         <string>choix id</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>12</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>82</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>88</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>54</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>7</string>
-        </property>
-       </item>
       </widget>
-      <widget class="QPushButton" name="pushButton_7">
+      <widget class="QPushButton" name="pushButton_9">
        <property name="geometry">
         <rect>
-         <x>900</x>
-         <y>570</y>
-         <width>51</width>
-         <height>51</height>
+         <x>1060</x>
+         <y>40</y>
+         <width>31</width>
+         <height>31</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton{font:10pt &quot;MS Shell Dlg 2&quot;;
-background-image:url(C:/Users/asus/Desktop/copie1/stat);
-background-color:rgb(255,250,250);}
-QPushButton:hover:!pressed
-{
-
-	 border: 1px solid blue;
-background-color: rgb(0, 0, 255);
-}
-
-
-
-QPushButton:hover::pressed
-{
-
-	 border: 1px solid green;
-background-color: rgb(0, 255,0);
-}</string>
+        <string notr="true">background-image:url(C:/Users/asus/Desktop/smart-muni/frensh);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="on_anglais_dec">
+       <property name="geometry">
+        <rect>
+         <x>1060</x>
+         <y>10</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-image:url(C:/Users/asus/Desktop/smart-muni/english);</string>
        </property>
        <property name="text">
         <string/>
