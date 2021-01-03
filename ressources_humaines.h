@@ -11,6 +11,8 @@
 #include"rec.h"
 #include"naissance.h"
 #include"deces.h"
+#include"cadastre.h"
+#include"demandes.h"
 #include <QMainWindow>
 #include<QLabel>
 
@@ -178,6 +180,60 @@ private slots:
 
     void on_Ajouterdeces_pb_clicked();
 
+    void on_decesside_clicked();
+
+    void on_aj_mf_dec_clicked();
+
+    void on_modifierdeces_pb_clicked();
+
+    void on_recherche_deces_textChanged(const QString &arg1);
+
+    void on_supprimerdeces_pb_clicked();
+
+    void on_pushButton_14_clicked();
+
+    void on_pushButton_16_clicked();
+
+    void on_pushButton_15_clicked();
+
+    void on_Ajouter_demande_pb_clicked();
+
+    void on_pushButton_17_clicked();
+
+    void on_pushButton_21_clicked();
+
+    void on_pushButton_27_clicked();
+
+    void on_pushButton_26_clicked();
+
+    void on_pushButton_22_clicked();
+
+
+
+    void on_recherche_dem_textChanged(const QString &arg1);
+
+    void on_AjouterC_clicked();
+
+    void on_supprimerC_clicked();
+
+    void on_modifierC_clicked();
+
+    void on_pdfC_pb_clicked();
+
+    void on_pushButton_31_clicked();
+
+    void on_pushButton_32_clicked();
+
+    void on_pushButton_33_clicked();
+
+    void on_pushButton_18_clicked();
+
+    void on_demande_clicked();
+
+    void on_cadastre_clicked();
+
+    void on_RRETOUR_clicked();
+
 private:
     Ui::Ressources_Humaines *ui;
     Employe E;
@@ -189,6 +245,8 @@ private:
     Cit C;
     naissance na;
     deces de;
+    cadastre ca ;
+    demandes dem;
 };
 
 #endif // RESSOURCES_HUMAINES_H

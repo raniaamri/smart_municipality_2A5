@@ -133,11 +133,11 @@ background-position: center;</string>
          <string notr="true">QFrame {
 	background-image: url(:/Avatar/Images/avatar.png);
 	border-radius: 60px;
-	border: 10px solid rgb(255, 207, 0);
+	border: 10px solid white;
 	background-position: center;
 }
 QFrame:hover {
-	border: 10px solid rgb(255, 225, 0);
+	border: 10px solid rgb(40, 44, 52);
 }
 
 </string>
@@ -166,18 +166,20 @@ QFrame:hover {
         </property>
         <property name="styleSheet">
          <string notr="true">QLineEdit {
-	border: 2px solid rgb(45, 45, 45);
+	border: 2px solid white;
 	border-radius: 5px;
 	padding: 15px;
 	background-color: rgb(30, 30, 30);	
 	color: rgb(100, 100, 100);
 }
 QLineEdit:hover {
-	border: 2px solid rgb(55, 55, 55);
+	border: 2px solid rgb(40, 44, 52);
 }
 QLineEdit:focus {
 	border: 2px solid rgb(255, 207, 0);	
-	color: rgb(200, 200, 200);
+	border: 2px solid rgb(40, 44, 52);
+
+
 }</string>
         </property>
         <property name="maxLength">
@@ -204,18 +206,18 @@ QLineEdit:focus {
         </property>
         <property name="styleSheet">
          <string notr="true">QLineEdit {
-	border: 2px solid rgb(45, 45, 45);
+	border: 2px solid white;
 	border-radius: 5px;
 	padding: 15px;
 	background-color: rgb(30, 30, 30);	
 	color: rgb(100, 100, 100);
 }
 QLineEdit:hover {
-	border: 2px solid rgb(55, 55, 55);
+	border: 2px solid rgb(40, 44, 52);
 }
 QLineEdit:focus {
 	border: 2px solid rgb(255, 207, 0);	
-	color: rgb(200, 200, 200);
+	border: 2px solid rgb(40, 44, 52);
 }</string>
         </property>
         <property name="maxLength">
@@ -248,9 +250,11 @@ QPushButton:hover {
 	border: 2px solid rgb(70, 70, 70);
 }
 QPushButton:pressed {	
-	background-color: rgb(250, 230, 0);
+	background-color: 2px solid rgb(40, 44, 52);
+
 	border: 2px solid rgb(255, 165, 24);	
-	color: rgb(35, 35, 35);
+	color: 2px solid rgb(40, 44, 52);
+
 }</string>
         </property>
         <property name="text">

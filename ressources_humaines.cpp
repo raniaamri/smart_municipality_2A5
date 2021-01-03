@@ -1,3 +1,5 @@
+#include"cadastre.h"
+#include"demandes.h"
 #include"encaissement.h"
 #include "ressources_humaines.h"
 #include "ui_ressources_humaines.h"
@@ -31,6 +33,18 @@
 #include<QMenu>
 #include<QDialogButtonBox>
 #include <QFile>
+#include <QFileDialog>
+#include <QDesktopWidget>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QHorizontalStackedBarSeries>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QCategoryAxis>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
 
 
 Ressources_Humaines::Ressources_Humaines(QWidget *parent) :
@@ -63,15 +77,33 @@ ui->retour_menu->setIcon(QIcon("C:/Users/user/Documents/smartM/icons/16x16/cil-a
 ui->encaissement_pb_2->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/encaissementOUI.png"));
 ui->decaissement_pb->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/decaissementNON.png"));
 ui->stat_encaissement->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/statistiques.png"));
-
-auto movie = new QMovie(this);
+ui->pushButton_15->setIcon(QIcon("C:/Users/user/Documents/smartM/icons/16x16/cil-arrow-left.png"));
+ui->retourmenu->setIcon(QIcon("C:/Users/user/Documents/smartM/icons/16x16/cil-arrow-left.png"));
+ui->RRETOUR->setIcon(QIcon("C:/Users/user/Documents/smartM/icons/16x16/cil-arrow-left.png"));
+ui->recla_pb->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/reclaOUI.png"));
+ui->cit_pb->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/citoy_NON.png"));
+ui->naissanceside->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/naissanceOUI.png"));
+ui->decesside->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/deathNON.png"));
+ui->demande->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/demandeOUI.png"));
+ui->cadastre->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/cadastreNON.png"));
+/*auto movie = new QMovie(this);
 movie->setFileName("C:/Users/user/Documents/smartMunicipality/iconet/Mfinnances.gif");
 connect(movie, &QMovie::frameChanged, [=]{
  ui->menu_fn->setIcon(movie->currentPixmap());
 });
 movie->start();
 
+auto movie2 = new QMovie(this);
+movie2->setFileName("C:/Users/user/Desktop/giphy.gif");
+connect(movie2, &QMovie::frameChanged, [=]{
+ ui->menu_rh->setIcon(movie2->currentPixmap());
+    movie2->setScaledSize(this->size());
+
+});
+movie2->start();
+*/
 }
+
 
 
 Ressources_Humaines::~Ressources_Humaines()
@@ -551,7 +583,7 @@ void Ressources_Humaines::on_pushButton_6_clicked()
                 // headers
                     out << "<thead><tr bgcolor=#f0f0f0>";
                     for (int column = 0; column < columnCount; column++)
-                        if (!ui->tableView->isColumnHidden(column))
+                        if (!ui->tableView_2->isColumnHidden(column))
                             out << QString("<th>%1</th>").arg(ui->tableView_2->model()->headerData(column, Qt::Horizontal).toString());
                     out << "</tr></thead>\n";
                     // data table
@@ -780,178 +812,116 @@ void Ressources_Humaines::on_trier_decaissement_clicked()
 
 void Ressources_Humaines::on_pdf_decaissement_clicked()
 {
-    QPrinter printer;
-            printer.setOutputFormat(QPrinter::PdfFormat);
-            printer.setOutputFileName("C://Users//user//document//smartMunicipality//decaissement.pdf");//badel i chemin win t7eb t7ot il fichier ya2melek creation
-            QPainter painter;
+    /*impression pdf*/
 
-            if (! painter.begin(&printer)) { // failed to open file
-                qWarning("failed to open file, is it writable?");
-            }
+    {
+        QString strStream;
+                QTextStream out(&strStream);
+                const int rowCount = ui->tabe_decaissement->model()->rowCount();
+                const int columnCount =ui->tabe_decaissement->model()->columnCount();
 
-            QSqlQuery   query ;
-            qDebug() << query.prepare("select sysdate from dual  "); //date systeme
-            if ( query.exec() )
-            {
+                out <<  "<html>\n"
+                        "<head>\n"
+                        "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                        <<  QString("<title>%1</title>\n").arg("decaissement")
+                        <<  "</head>\n"
+                        "<body bgcolor=#D3D3D3 link=#5000A0>\n"
+                            "<img src='C:/Users/user/Documents/Ressources_Humaines/icons/logo.jpg' width='100' height='100'>\n"
+                            "<h1>Liste de decaissement</h1>"
 
-                QString S= QDate::currentDate().toString();
-                painter.drawText(850,50,S);
-                QPen penred(Qt::black);
 
-                painter.setFont(QFont("Arial", 30));
-                penred.setWidth(1);
-                painter.setPen(penred);
 
-                painter.drawText(250,100," Decaissement ");
-                painter.setFont(QFont("Arial",30));
-                painter.setPen(Qt::black);
+                            "<table border=1 cellspacing=0 cellpadding=2>\n";
 
-            }
 
-            QString code_decaissement,date_decaissement,methode_decaissement ,id_employe,montant_decaissement, remarque_decaissement;
-            QSqlQuery   qry ;
-            int i =50;
-            int k=0;
-            qDebug() << qry.prepare("select * from DECAISSEMENT ");
-            painter.drawPixmap(600,10,100,100,QPixmap::fromImage(QImage("C:/Users/asus/Desktop/smartMunicipality/logo")));//chemin mta3 il logo
+                // headers
+                    out << "<thead><tr bgcolor=#f0f0f0>";
+                    for (int column = 0; column < columnCount; column++)
+                        if (!ui->tabe_decaissement->isColumnHidden(column))
+                            out << QString("<th>%1</th>").arg(ui->tabe_decaissement->model()->headerData(column, Qt::Horizontal).toString());
+                    out << "</tr></thead>\n";
+                    // data table
+                       for (int row = 0; row < rowCount; row++) {
+                           out << "<tr>";
+                           for (int column = 0; column < columnCount; column++) {
+                               if (!ui->tabe_decaissement->isColumnHidden(column)) {
+                                   QString data = ui->tabe_decaissement->model()->data(ui->tabe_decaissement->model()->index(row, column)).toString().simplified();
+                                   out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                               }
+                           }
+                           out << "</tr>\n";
+                       }
+                       out <<  "</table>\n"
+                           "</body>\n"
+                           "</html>\n";
 
-            if ( qry.exec() )
-            {
+                       QTextDocument *document = new QTextDocument();
+                       document->setHtml(strStream);
 
-                while(qry.next())
-                {
+                       QPrinter printer;
 
-                    if ( k % 13 ==0)
-                    {   i=250;
-                        painter.setFont(QFont("Arial",10));
-                        QPen penblack(Qt::black);
-
-                        painter.setPen(penblack);
-        painter.drawText (0,150,"code");
-        painter.drawText (130,150,"date");
-        painter.drawText (290,150,"methode");
-        painter.drawText (400,150,"id_employe");
-        painter.drawText (500,150,"montant");
-        painter.drawText(620,150,"remarque ");
+                       QPrintDialog *dialog = new QPrintDialog(&printer, NULL);
+                       if (dialog->exec() == QDialog::Accepted) {
+                           document->print(&printer);
                     }
-
-                    painter.setFont(QFont("Arial",10));
-                    QPen penblack(Qt::black);
-
-                    painter.setPen(penblack);
-                    int j=0;
-                    code_decaissement= qry.value(0).toString();
-                    painter.drawText(j*20,i, code_decaissement);
-                    j++;
-                    date_decaissement=qry.value(1).toString();
-                    painter.drawText(j*120,i, date_decaissement);
-                    j++;
-                   methode_decaissement=qry.value(2).toString();
-                    painter.drawText(j*150,i, methode_decaissement);
-                    j++;
-                    id_employe=qry.value(3).toString();
-                    painter.drawText(j*133,i, id_employe);
-                    j++;
-                   montant_decaissement=qry.value(4).toString();
-                    painter.drawText(j*125,i, montant_decaissement);
-                    j++;
-                   remarque_decaissement=qry.value(5).toString();
-                     painter.drawText(j*124,i, remarque_decaissement);
-                    i+=80;
-                    k++;
-
-                }
-            }
-
-            painter.end();
+    }
 }
 
 void Ressources_Humaines::on_pdf_encaisssement_clicked()
 {
-    QPrinter printer;
-            printer.setOutputFormat(QPrinter::PdfFormat);
-            printer.setOutputFileName("C://Users//user//document//smartMunicipality//encaissement.pdf");//badel i chemin win t7eb t7ot il fichier ya2melek creation
-            QPainter painter;
+    /*impression pdf*/
 
-            if (! painter.begin(&printer)) { // failed to open file
-                qWarning("failed to open file, is it writable?");
-            }
+    {
+        QString strStream;
+                QTextStream out(&strStream);
+                const int rowCount = ui->tabe_encaissement->model()->rowCount();
+                const int columnCount =ui->tabe_encaissement->model()->columnCount();
 
-            QSqlQuery   query ;
-            qDebug() << query.prepare("select sysdate from dual  "); //date systeme
-            if ( query.exec() )
-            {
+                out <<  "<html>\n"
+                        "<head>\n"
+                        "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                        <<  QString("<title>%1</title>\n").arg("encaissement")
+                        <<  "</head>\n"
+                        "<body bgcolor=#D3D3D3 link=#5000A0>\n"
+                            "<img src='C:/Users/user/Documents/Ressources_Humaines/icons/logo.jpg' width='100' height='100'>\n"
+                            "<h1>Liste d'encaissement</h1>"
 
-                QString S= QDate::currentDate().toString();
-                painter.drawText(850,50,S);
-                QPen penred(Qt::black);
 
-                painter.setFont(QFont("Arial", 30));
-                penred.setWidth(1);
-                painter.setPen(penred);
 
-                painter.drawText(250,100," Encaissement ");
-                painter.setFont(QFont("Arial",30));
-                painter.setPen(Qt::black);
+                            "<table border=1 cellspacing=0 cellpadding=2>\n";
 
-            }
 
-            QString code_encaissement,date_encaissement,methode_encaissement ,id_employe,montant_encaissement, remarque_encaissement;
-            QSqlQuery   qry ;
-            int i =50;
-            int k=0;
-            qDebug() << qry.prepare("select * from encaissement ");
-            painter.drawPixmap(600,10,100,100,QPixmap::fromImage(QImage("C:/Users/asus/Desktop/smart-muni/logo")));//chemin mta3 il logo
+                // headers
+                    out << "<thead><tr bgcolor=#f0f0f0>";
+                    for (int column = 0; column < columnCount; column++)
+                        if (!ui->tabe_encaissement->isColumnHidden(column))
+                            out << QString("<th>%1</th>").arg(ui->tabe_encaissement->model()->headerData(column, Qt::Horizontal).toString());
+                    out << "</tr></thead>\n";
+                    // data table
+                       for (int row = 0; row < rowCount; row++) {
+                           out << "<tr>";
+                           for (int column = 0; column < columnCount; column++) {
+                               if (!ui->tabe_encaissement->isColumnHidden(column)) {
+                                   QString data = ui->tabe_encaissement->model()->data(ui->tabe_encaissement->model()->index(row, column)).toString().simplified();
+                                   out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                               }
+                           }
+                           out << "</tr>\n";
+                       }
+                       out <<  "</table>\n"
+                           "</body>\n"
+                           "</html>\n";
 
-            if ( qry.exec() )
-            {
+                       QTextDocument *document = new QTextDocument();
+                       document->setHtml(strStream);
 
-                while(qry.next())
-                {
+                       QPrinter printer;
 
-                    if ( k % 13 ==0)
-                    {   i=250;
-                        painter.setFont(QFont("Arial",10));
-                        QPen penblack(Qt::black);
-
-                        painter.setPen(penblack);
-        painter.drawText (0,150,"code");
-        painter.drawText (130,150,"date");
-        painter.drawText (290,150,"methode");
-        painter.drawText (400,150,"id_employe");
-        painter.drawText (500,150,"montant");
-        painter.drawText(620,150,"remarque ");
+                       QPrintDialog *dialog = new QPrintDialog(&printer, NULL);
+                       if (dialog->exec() == QDialog::Accepted) {
+                           document->print(&printer);
                     }
-
-                    painter.setFont(QFont("Arial",10));
-                    QPen penblack(Qt::black);
-
-                    painter.setPen(penblack);
-                    int j=0;
-                    code_encaissement= qry.value(0).toString();
-                    painter.drawText(j*20,i, code_encaissement);
-                    j++;
-                    date_encaissement=qry.value(1).toString();
-                    painter.drawText(j*120,i, date_encaissement);
-                    j++;
-                   methode_encaissement=qry.value(2).toString();
-                    painter.drawText(j*150,i, methode_encaissement);
-                    j++;
-                    id_employe=qry.value(3).toString();
-                    painter.drawText(j*133,i, id_employe);
-                    j++;
-                   montant_encaissement=qry.value(4).toString();
-                    painter.drawText(j*125,i, montant_encaissement);
-                    j++;
-                   remarque_encaissement=qry.value(5).toString();
-                     painter.drawText(j*124,i, remarque_encaissement);
-                    i+=80;
-                    k++;
-
-                }
-            }
-
-            painter.end();
+    }
 }
 
 void Ressources_Humaines::on_modifier_encaissement_clicked()
@@ -1317,12 +1287,16 @@ void Ressources_Humaines::on_export_cit_clicked()
 void Ressources_Humaines::on_recla_pb_clicked()
 {
     ui->stackedWidget_2->setCurrentIndex(4);
+    ui->recla_pb->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/reclaOUI.png"));
+    ui->cit_pb->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/citoy_NON.png"));
 
 }
 
 void Ressources_Humaines::on_cit_pb_clicked()
 {
     ui->stackedWidget_2->setCurrentIndex(5);
+    ui->recla_pb->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/reclaNON.png"));
+    ui->cit_pb->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/citoy_OUI.png"));
 }
 
 void Ressources_Humaines::on_Aj_mf_pb_clicked()
@@ -1488,7 +1462,7 @@ void Ressources_Humaines::on_pdf_pb01_clicked()
         out << "<tr>";
         for (int column = 0; column < columnCount; column++) {
             if (!ui->tabbaladia->isColumnHidden(column)) {
-                QString data = ui->tableView->model()->data(ui->tabbaladia->model()->index(row, column)).toString().simplified();
+                QString data = ui->tabbaladia->model()->data(ui->tabbaladia->model()->index(row, column)).toString().simplified();
                 out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
             }
         }
@@ -1515,11 +1489,14 @@ void Ressources_Humaines::on_pdf_pb01_clicked()
 void Ressources_Humaines::on_naissanceside_clicked()
 {
     ui->stackedWidget_2->setCurrentIndex(6);
+    ui->naissanceside->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/naissanceOUI.png"));
+    ui->decesside->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/deathNON.png"));
 }
 
 void Ressources_Humaines::on_retourmenu_clicked()
 {
     ui->main_stacked->setCurrentIndex(0);
+    ui->side_stacked->setCurrentIndex(0);
 }
 
 void Ressources_Humaines::on_pushButton_13_clicked()
@@ -1557,9 +1534,431 @@ void Ressources_Humaines::on_Ajouterdeces_pb_clicked()
     {
         QMessageBox::information(nullptr, QObject::tr("Ajout deces"),
                                  QObject::tr("ajout avec succès.\n""Click Cancel to exit."), QMessageBox::Cancel);
-        ui->tab_deces->setModel(de.afficher_deces());
+        ui->stackedWidget_2->setCurrentIndex(8);
+
     }
     else
         QMessageBox::critical(nullptr, QObject::tr("Ajout deces"),
                               QObject::tr("ajout échoué.\n""Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void Ressources_Humaines::on_decesside_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(8);
+    ui->naissanceside->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/naissanceNON.png"));
+    ui->decesside->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/deathOUI.png"));
+
+}
+
+void Ressources_Humaines::on_aj_mf_dec_clicked()
+{
+   ui->stackedWidget_2->setCurrentIndex(9);
+    ui->tab_deces->setModel(de.afficher_deces());
+
+}
+
+void Ressources_Humaines::on_modifierdeces_pb_clicked()
+{
+    QString nomed=ui->nomdeces->text();
+    QString prenomed=ui->le_prenomdeces->text();
+    QString lieu_de_naissanced=ui->le_lieudeces->text();
+
+    QString nomPered=ui->le_nomperedeces->text();
+    QString prenompered=ui->le_prenomperedeces->text();
+    QString nommered=ui->le_nommeredeces->text();
+    QString prenommered=ui->le_prenommeredeces->text();
+    QString nationalited=ui->le_nationalite_2->text();
+    QString sexed=ui->le_sexe_deces->text();
+    QString tribunald=ui->le_tribunaldeces->text();
+    QString officierd=ui->le_idcdeces->text();
+    QString noted=ui->notedeces->toPlainText();
+    QString observationsd=ui->observationdeces->toPlainText();
+    QString lieu_de_deces=ui->le_lieudeces_2->text();
+
+
+
+    if(de.modifier_deces())
+    {
+        QMessageBox::information(nullptr, QObject::tr("modifier une deces"),
+                                 QObject::tr("modification avec succès !!.\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);
+        ui->stackedWidget_2->setCurrentIndex(8);
+    }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("modifier une deces"),
+                              QObject::tr("modification échoué.\n""Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+
+void Ressources_Humaines::on_recherche_deces_textChanged(const QString &arg1)
+{
+    QString nom = ui->recherche_deces->text();
+        ui->tab_deces->setModel(de.recherche_dynamique(nom));
+}
+
+void Ressources_Humaines::on_supprimerdeces_pb_clicked()
+{
+    int cin=ui->supprimer_deces->text().toInt();
+    bool test=de.supprimer_deces(cin);
+    if(test){
+        QMessageBox::information(nullptr, QObject::tr("suppression deces"),
+                                 QObject::tr("suppression avec succès.\n""Click Cancel to exit."), QMessageBox::Cancel);
+        ui->tab_deces->setModel(de.afficher_deces());
+
+    }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("suppression deces"),
+                              QObject::tr("suppression échouée.\n""Click Cancel to exit."), QMessageBox::Cancel);
+
+
+}
+
+void Ressources_Humaines::on_pushButton_14_clicked()
+{
+    ui->tab_deces->setModel(de.afficher_tri_nom());
+
+}
+
+void Ressources_Humaines::on_pushButton_16_clicked()
+{
+    ui->tab_deces->setModel(de.afficher_tri_prenom());
+
+}
+
+void Ressources_Humaines::on_pushButton_15_clicked()
+{
+    ui->main_stacked->setCurrentIndex(0);
+    ui->side_stacked->setCurrentIndex(0);
+}
+
+void Ressources_Humaines::on_Ajouter_demande_pb_clicked()
+{
+    int id_demande=ui->le_idD->text().toInt();
+    QString nom = ui->le_nomD->text();
+    QString prenom = ui->le_prenomD->text();
+    QString etat = ui->le_etatD->text();
+       bool test=dem.ajouter();
+       if (test)
+       {
+           QMessageBox::information(nullptr, QObject::tr("Ajout demande"),
+                                    QObject::tr("ajout avec succès.\n""Click Cancel to exit."), QMessageBox::Cancel);
+
+           ui->tabdemandes->setModel(dem.afficher());
+
+       }
+       else
+           QMessageBox::critical(nullptr, QObject::tr("Ajout demande"),
+                                 QObject::tr("ajout échoué.\n""Click Cancel to exit."), QMessageBox::Cancel);
+
+
+}
+
+void Ressources_Humaines::on_pushButton_17_clicked()
+{
+    int id_demande=ui->le_idD->text().toInt();
+    QString nom = ui->le_nomD->text();
+    QString prenom = ui->le_prenomD->text();
+    QString etat = ui->le_etatD->text();
+
+               if((nom !=  "")&&(prenom!=""))
+               {
+                   QMessageBox::information(this, "Modification", "Modifié");
+               }
+               else
+               {
+                   QMessageBox::warning(this,"Modification", "Verifié(e) svp ");
+               }
+
+               demandes o(id_demande,nom,prenom,etat);
+               bool test=o.Modifier();
+              // notif->showMessage(tr("Ouvrier Modifié "),tr(nom.toUtf8().constData()));
+               ui->tabdemandes->setModel(dem.afficher());
+     QMessageBox::information(this, "Demande", "Modifié(e)");
+}
+
+void Ressources_Humaines::on_pushButton_21_clicked()
+{
+    int id_demande=ui->le_idD->text().toInt();
+        //qDebug()<<id_demande;
+        QString nom;
+        QString prenom;
+        QString etat;
+      demandes dem(id_demande,nom,prenom,etat);
+        bool test=dem.supprimer(id_demande);
+         // notif->showMessage(tr("ouvrier Supprimé "),tr(prenom.toUtf8().constData()));
+        QMessageBox::information(this, "Supprimée", "Supression reussi");
+        ui->tabdemandes->setModel(dem.afficher());
+}
+
+void Ressources_Humaines::on_pushButton_27_clicked()
+{
+    ui->tabdemandes->setModel(dem.sortid_up());
+}
+
+void Ressources_Humaines::on_pushButton_26_clicked()
+{
+    ui->tabdemandes->setModel(dem.sortid_down());
+
+}
+
+void Ressources_Humaines::on_pushButton_22_clicked()
+{
+    {
+        QString strStream;
+                QTextStream out(&strStream);
+                const int rowCount = ui->tabdemandes->model()->rowCount();
+                const int columnCount =ui->tabdemandes->model()->columnCount();
+
+                out <<  "<html>\n"
+                        "<head>\n"
+                        "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                        <<  QString("<title>%1</title>\n").arg("demandes")
+                        <<  "</head>\n"
+                        "<body bgcolor=#D3D3D3 link=#5000A0>\n"
+                            "<img src='C:/Users/user/Documents/Ressources_Humaines/icons/logo.jpg' width='100' height='100'>\n"
+                            "<h1>Liste des employes</h1>"
+
+
+
+                            "<table border=1 cellspacing=0 cellpadding=2>\n";
+
+
+                // headers
+                    out << "<thead><tr bgcolor=#f0f0f0>";
+                    for (int column = 0; column < columnCount; column++)
+                        if (!ui->tabdemandes->isColumnHidden(column))
+                            out << QString("<th>%1</th>").arg(ui->tabdemandes->model()->headerData(column, Qt::Horizontal).toString());
+                    out << "</tr></thead>\n";
+                    // data table
+                       for (int row = 0; row < rowCount; row++) {
+                           out << "<tr>";
+                           for (int column = 0; column < columnCount; column++) {
+                               if (!ui->tabdemandes->isColumnHidden(column)) {
+                                   QString data = ui->tabdemandes->model()->data(ui->tabdemandes->model()->index(row, column)).toString().simplified();
+                                   out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                               }
+                           }
+                           out << "</tr>\n";
+                       }
+                       out <<  "</table>\n"
+                           "</body>\n"
+                           "</html>\n";
+
+                       QTextDocument *document = new QTextDocument();
+                       document->setHtml(strStream);
+
+                       QPrinter printer;
+
+                       QPrintDialog *dialog = new QPrintDialog(&printer, NULL);
+                       if (dialog->exec() == QDialog::Accepted) {
+                           document->print(&printer);
+                    }
+    }
+
+}
+
+
+
+
+
+void Ressources_Humaines::on_recherche_dem_textChanged(const QString &arg1)
+{
+    if(ui->recherche_dem->text() == "")
+        {
+            ui->tabdemandes->setModel(dem.afficher());
+        }
+        else
+        {
+             ui->tabdemandes->setModel(dem.rechercher(ui->recherche_dem->text()));
+        }
+}
+
+void Ressources_Humaines::on_AjouterC_clicked()
+{
+    int id=ui->numparcelleC->text().toInt();
+    QString nom = ui->nomC->text();
+    QString prenom = ui->prenomC->text();
+    float surface = ui->surfaceC->text().toFloat();
+    cadastre ca(id,nom,prenom,surface);
+           if((nom !=  "")&&(prenom != "")) {
+               QMessageBox::information(this, "Ajout", "Ajout reussi");
+               ca.ajouter();
+
+}
+           else {
+               QMessageBox::warning(this,"Ajout", "Ajouter svp ");
+           }
+}
+
+void Ressources_Humaines::on_supprimerC_clicked()
+{
+    int id_cadastre=ui->supp_numPC->text().toInt();
+        //qDebug()<<id_cadastre;
+        QString nom;
+        QString prenom;
+        float surface;
+      cadastre ca(id_cadastre,nom,prenom,surface);
+        bool test=ca.supprimer(id_cadastre);
+         // notif->showMessage(tr("ouvrier Supprimé "),tr(prenom.toUtf8().constData()));
+        QMessageBox::information(this, "Supprimée", "Supression reussi");
+        ui->tabcadastre->setModel(ca.afficher());
+}
+
+void Ressources_Humaines::on_modifierC_clicked()
+{
+    int id=ui->numparcelleC->text().toInt();
+    QString nom = ui->nomC->text();
+    QString prenom = ui->prenomC->text();
+    float surface = ui->surfaceC->text().toFloat();
+
+
+               if((nom !=  "")&&(prenom!=""))
+               {
+                   QMessageBox::information(this, "Modification", "Modifié");
+               }
+               else
+               {
+                   QMessageBox::warning(this,"Modification", "Verifié(e) svp ");
+               }
+
+               cadastre ca(id,nom,prenom,surface);
+               bool test=ca.Modifier();
+              // notif->showMessage(tr("cadastre Modifié "),tr(nom.toUtf8().constData()));
+               ui->tabcadastre->setModel(ca.afficher());
+}
+
+void Ressources_Humaines::on_pdfC_pb_clicked()
+{
+    {
+        QString strStream;
+                QTextStream out(&strStream);
+                const int rowCount = ui->tabcadastre->model()->rowCount();
+                const int columnCount =ui->tabcadastre->model()->columnCount();
+
+                out <<  "<html>\n"
+                        "<head>\n"
+                        "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                        <<  QString("<title>%1</title>\n").arg("cadastre")
+                        <<  "</head>\n"
+                        "<body bgcolor=#D3D3D3 link=#5000A0>\n"
+                            "<img src='C:/Users/user/Documents/Ressources_Humaines/icons/logo.jpg' width='100' height='100'>\n"
+                            "<h1>Liste de cadastre</h1>"
+
+
+
+                            "<table border=1 cellspacing=0 cellpadding=2>\n";
+
+
+                // headers
+                    out << "<thead><tr bgcolor=#f0f0f0>";
+                    for (int column = 0; column < columnCount; column++)
+                        if (!ui->tabcadastre->isColumnHidden(column))
+                            out << QString("<th>%1</th>").arg(ui->tabcadastre->model()->headerData(column, Qt::Horizontal).toString());
+                    out << "</tr></thead>\n";
+                    // data table
+                       for (int row = 0; row < rowCount; row++) {
+                           out << "<tr>";
+                           for (int column = 0; column < columnCount; column++) {
+                               if (!ui->tabcadastre->isColumnHidden(column)) {
+                                   QString data = ui->tabcadastre->model()->data(ui->tabcadastre->model()->index(row, column)).toString().simplified();
+                                   out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                               }
+                           }
+                           out << "</tr>\n";
+                       }
+                       out <<  "</table>\n"
+                           "</body>\n"
+                           "</html>\n";
+
+                       QTextDocument *document = new QTextDocument();
+                       document->setHtml(strStream);
+
+                       QPrinter printer;
+
+                       QPrintDialog *dialog = new QPrintDialog(&printer, NULL);
+                       if (dialog->exec() == QDialog::Accepted) {
+                           document->print(&printer);
+                    }
+    }
+}
+
+void Ressources_Humaines::on_pushButton_31_clicked()
+{
+    QTableView *table;
+            table = ui->tabcadastre;
+
+            QString filters("CSV files (.csv);;All files (.*)");
+            QString defaultFilter("CSV files (*.csv)");
+            QString fileName = QFileDialog::getSaveFileName(0, "Save file", QCoreApplication::applicationDirPath(),
+                               filters, &defaultFilter);
+            QFile file(fileName);
+
+            QAbstractItemModel *model =  table->model();
+            if (file.open(QFile::WriteOnly | QFile::Truncate)) {
+                QTextStream data(&file);
+                QStringList strList;
+                for (int i = 0; i < model->columnCount(); i++) {
+                    if (model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString().length() > 0)
+                        strList.append("\"" + model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString() + "\"");
+                    else
+                        strList.append("");
+                }
+                data << strList.join(";") << "\n";
+                for (int i = 0; i < model->rowCount(); i++) {
+                    strList.clear();
+                    for (int j = 0; j < model->columnCount(); j++) {
+
+                        if (model->data(model->index(i, j)).toString().length() > 0)
+                            strList.append("\"" + model->data(model->index(i, j)).toString() + "\"");
+                        else
+                            strList.append("");
+                    }
+                    data << strList.join(";") + "\n";
+                }
+                file.close();
+                QMessageBox::information(this,"Exporter To Excel","Exporter En Excel Avec Succées ");
+            }
+}
+
+void Ressources_Humaines::on_pushButton_32_clicked()
+{
+    ui->tabcadastre->setModel(ca.sortid_up());
+
+}
+
+void Ressources_Humaines::on_pushButton_33_clicked()
+{
+    ui->tabcadastre->setModel(ca.sortid_down());
+
+}
+
+void Ressources_Humaines::on_pushButton_18_clicked()
+{
+    ui->main_stacked->setCurrentIndex(1);
+    ui->stackedWidget_2->setCurrentIndex(10);
+    ui->side_stacked->setCurrentIndex(5);
+
+}
+
+void Ressources_Humaines::on_demande_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(10);
+    ui->demande->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/demandeOUI.png"));
+    ui->cadastre->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/cadastreNON.png"));
+}
+
+void Ressources_Humaines::on_cadastre_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(11);
+    ui->demande->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/demandeNON.png"));
+    ui->cadastre->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/cadastreOUI.png"));
+
+}
+
+void Ressources_Humaines::on_RRETOUR_clicked()
+{
+
+    ui->main_stacked->setCurrentIndex(0);
+    ui->side_stacked->setCurrentIndex(0);
+
 }

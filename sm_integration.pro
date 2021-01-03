@@ -17,10 +17,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    cadastre.cpp \
     citoyens.cpp \
     connection.cpp \
     decaissement.cpp \
     deces.cpp \
+    demandes.cpp \
     employe.cpp \
     encaissement.cpp \
     formation.cpp \
@@ -32,10 +34,12 @@ SOURCES += \
     statistique.cpp
 
 HEADERS += \
+    cadastre.h \
     citoyens.h \
     connection.h \
     decaissement.h \
     deces.h \
+    demandes.h \
     employe.h \
     encaissement.h \
     formation.h \
