@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "ressources_humaines.h"
 #include <QApplication>
 #include <QHBoxLayout>
 #include <QTextEdit>
@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "connection.h"
+#include <QtCharts/QChartView>
 
 
 int main(int argc, char *argv[])
@@ -15,7 +16,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     Connection c;
     bool test=c.ouvrirConnection();
-    MainWindow w;
+    Ressources_Humaines rh;
 
 
 
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
          if(test)
          {
 
-             w.show();
+             rh.show();
              QMessageBox::information(nullptr, QObject::tr("database is open"),
                          QObject::tr("connection successful.\n""Click Cancel to exit."), QMessageBox::Cancel);
 

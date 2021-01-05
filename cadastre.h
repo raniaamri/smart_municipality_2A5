@@ -11,11 +11,13 @@ public:
     cadastre(int,QString,QString,float);
     QString get_nom(){return nom;}
     bool ajouter();
-    bool Modifier();
+    bool Modifier(int id_cadastre,QString nom,QString prenom,float surface);
     QSqlQueryModel *sortid_up();
     QSqlQueryModel *sortid_down();
     bool supprimer(int);
     QSqlQueryModel *afficher();
+    QSqlQueryModel * rechercher (const QString &aux);
+
 private:
     int id_cadastre;
     QString prenom;

@@ -1,3 +1,8 @@
+#include"vehicule.h"
+#include"email.h"
+#include"equipement.h"
+#include"arduino.h"
+#include"stat2.h"
 #include"cadastre.h"
 #include"demandes.h"
 #include"encaissement.h"
@@ -45,10 +50,10 @@
 #include <QtCharts/QCategoryAxis>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
-
+#include<QBarSet>
 
 Ressources_Humaines::Ressources_Humaines(QWidget *parent) :
-    QDialog(parent),
+    QMainWindow(parent),
     ui(new Ui::Ressources_Humaines)
 {
     ui->setupUi(this);
@@ -65,9 +70,11 @@ ui->le_nom->setMaxLength(10);
 ui->le_prenom->setMaxLength(10);
 ui->le_idformation->setValidator(new QIntValidator(100,999, this));
 ui->le_duree->setValidator(new QIntValidator(1,10, this));
-
+//affichage tab
+ui->tabdemandes->setModel(dem.afficher());
+ui->tabcadastre->setModel(ca.afficher());
 /*setting up the widget page + les icones*/
-ui->main_stacked->setCurrentIndex(0);
+ui->main_stacked->setCurrentIndex(2);
 ui->side_stacked->setCurrentIndex(0);
 ui->stackedWidget_2->setCurrentIndex(0);
 ui->pushButton_7->setIcon(QIcon("c:/Users/user/Documents/Ressources_Humaines/icons/16x16/icons8-change-userclicked-64.png"));
@@ -102,16 +109,34 @@ connect(movie2, &QMovie::frameChanged, [=]{
 });
 movie2->start();
 */
+int ret=A.connect_arduino();
+   switch(ret)
+   {
+   case(0):qDebug()<<"arduino is available and connected to :"<<A.getarduino_port_name();
+       break;
+   case(1):qDebug()<<"arduino is available but not connected to :"<<A.getarduino_port_name();
+       break;
+   case(-1):qDebug()<<"arduino is not available";
+   }
+   QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label()));
+
+
 }
 
 
+
+
+void Ressources_Humaines::update_label(){
+data=A.read_from_arduino();
+if(data=="1") ui->labelArduino/*arduino*/->setText("ON");
+else if (data=="0") ui->labelArduino/*arduino*/->setText("OFF");
+}
 
 Ressources_Humaines::~Ressources_Humaines()
 {
 
     delete ui;
 }
-
 
 
 
@@ -1342,7 +1367,8 @@ void Ressources_Humaines::on_ajout1_pb_clicked()
 void Ressources_Humaines::on_pushButton_20_clicked()
 {
     ui->main_stacked->setCurrentIndex(1);
-    ui->stackedWidget_2->setCurrentIndex(6);
+    ui->stackedWidget_2->setCurrentIndex(12);
+    ui->side_stacked->setCurrentIndex(6);
 }
 
 void Ressources_Humaines::on_test_clicked()
@@ -1633,58 +1659,54 @@ void Ressources_Humaines::on_pushButton_15_clicked()
 
 void Ressources_Humaines::on_Ajouter_demande_pb_clicked()
 {
-    int id_demande=ui->le_idD->text().toInt();
-    QString nom = ui->le_nomD->text();
-    QString prenom = ui->le_prenomD->text();
-    QString etat = ui->le_etatD->text();
-       bool test=dem.ajouter();
-       if (test)
-       {
-           QMessageBox::information(nullptr, QObject::tr("Ajout demande"),
-                                    QObject::tr("ajout avec succès.\n""Click Cancel to exit."), QMessageBox::Cancel);
 
-           ui->tabdemandes->setModel(dem.afficher());
+        int id_demande = ui->IdD->text().toInt();
+        QString nom = ui->le_nomD->text();
+        QString prenom = ui->le_prenomD->text();
+        QString etat = ui->le_etatD->text();
 
-       }
-       else
-           QMessageBox::critical(nullptr, QObject::tr("Ajout demande"),
-                                 QObject::tr("ajout échoué.\n""Click Cancel to exit."), QMessageBox::Cancel);
+    demandes dem(id_demande,prenom,nom,etat);
+    bool test=dem.ajouter();
+    QMessageBox msgBox;
+
+    if(test)
+      {  msgBox.setText("Ajout avec succes.");
+        ui->tabdemandes->setModel(dem.afficher());
+    }
+
+
 
 
 }
 
 void Ressources_Humaines::on_pushButton_17_clicked()
-{
-    int id_demande=ui->le_idD->text().toInt();
+{   int id_demande= ui->IdD->text().toInt();
     QString nom = ui->le_nomD->text();
-    QString prenom = ui->le_prenomD->text();
-    QString etat = ui->le_etatD->text();
+    QString prenom= ui->le_prenomD->text();
+    QString etat= ui->le_etatD->text();
+    demandes dem(id_demande,prenom,nom,etat);
 
-               if((nom !=  "")&&(prenom!=""))
-               {
-                   QMessageBox::information(this, "Modification", "Modifié");
-               }
-               else
-               {
-                   QMessageBox::warning(this,"Modification", "Verifié(e) svp ");
-               }
-
-               demandes o(id_demande,nom,prenom,etat);
-               bool test=o.Modifier();
-              // notif->showMessage(tr("Ouvrier Modifié "),tr(nom.toUtf8().constData()));
-               ui->tabdemandes->setModel(dem.afficher());
-     QMessageBox::information(this, "Demande", "Modifié(e)");
+    bool test =dem.Modifier(id_demande,prenom,nom,etat);
+    if(test)
+    {ui->tabdemandes->setModel(dem.afficher());
+        QMessageBox::information(nullptr, QObject::tr("modifier une demande"),
+                                 QObject::tr("demande  modifié.\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);}
+    else
+        QMessageBox::critical(nullptr, QObject::tr("Modifier une demande"),
+                              QObject::tr("Erreur !.\n"
+                                          "Click Cancel to exit."), QMessageBox::Cancel);
 }
 
 void Ressources_Humaines::on_pushButton_21_clicked()
 {
-    int id_demande=ui->le_idD->text().toInt();
+    int id_demande=ui->lineEdit_8->text().toInt();
         //qDebug()<<id_demande;
         QString nom;
         QString prenom;
         QString etat;
-      demandes dem(id_demande,nom,prenom,etat);
-        bool test=dem.supprimer(id_demande);
+      demandes o(id_demande,nom,prenom,etat);
+        bool test=o.supprimer(id_demande);
          // notif->showMessage(tr("ouvrier Supprimé "),tr(prenom.toUtf8().constData()));
         QMessageBox::information(this, "Supprimée", "Supression reussi");
         ui->tabdemandes->setModel(dem.afficher());
@@ -1761,33 +1783,23 @@ void Ressources_Humaines::on_pushButton_22_clicked()
 
 
 
-void Ressources_Humaines::on_recherche_dem_textChanged(const QString &arg1)
-{
-    if(ui->recherche_dem->text() == "")
-        {
-            ui->tabdemandes->setModel(dem.afficher());
-        }
-        else
-        {
-             ui->tabdemandes->setModel(dem.rechercher(ui->recherche_dem->text()));
-        }
-}
+
 
 void Ressources_Humaines::on_AjouterC_clicked()
 {
+
+    QMessageBox msgBox;
+
     int id=ui->numparcelleC->text().toInt();
     QString nom = ui->nomC->text();
     QString prenom = ui->prenomC->text();
     float surface = ui->surfaceC->text().toFloat();
     cadastre ca(id,nom,prenom,surface);
-           if((nom !=  "")&&(prenom != "")) {
-               QMessageBox::information(this, "Ajout", "Ajout reussi");
-               ca.ajouter();
-
-}
-           else {
-               QMessageBox::warning(this,"Ajout", "Ajouter svp ");
-           }
+    bool test=ca.ajouter();
+    if(test)
+      {  msgBox.setText("Ajout avec succes.");
+        ui->tabcadastre->setModel(ca.afficher());
+    }
 }
 
 void Ressources_Humaines::on_supprimerC_clicked()
@@ -1806,25 +1818,27 @@ void Ressources_Humaines::on_supprimerC_clicked()
 
 void Ressources_Humaines::on_modifierC_clicked()
 {
+
+
+
+
+
     int id=ui->numparcelleC->text().toInt();
     QString nom = ui->nomC->text();
     QString prenom = ui->prenomC->text();
     float surface = ui->surfaceC->text().toFloat();
+       cadastre ca(id,nom,prenom,surface);
+       bool test =ca.Modifier(id,nom,prenom,surface);
+       if(test)
+       {ui->tabcadastre->setModel(ca.afficher());
+           QMessageBox::information(nullptr, QObject::tr("modifier une cadastre"),
+                                    QObject::tr("cadastre  modifié.\n"
+                                                "Click Cancel to exit."), QMessageBox::Cancel);}
+       else
+           QMessageBox::critical(nullptr, QObject::tr("Modifier une cadastre"),
+                                 QObject::tr("Erreur !.\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);
 
-
-               if((nom !=  "")&&(prenom!=""))
-               {
-                   QMessageBox::information(this, "Modification", "Modifié");
-               }
-               else
-               {
-                   QMessageBox::warning(this,"Modification", "Verifié(e) svp ");
-               }
-
-               cadastre ca(id,nom,prenom,surface);
-               bool test=ca.Modifier();
-              // notif->showMessage(tr("cadastre Modifié "),tr(nom.toUtf8().constData()));
-               ui->tabcadastre->setModel(ca.afficher());
 }
 
 void Ressources_Humaines::on_pdfC_pb_clicked()
@@ -1961,4 +1975,427 @@ void Ressources_Humaines::on_RRETOUR_clicked()
     ui->main_stacked->setCurrentIndex(0);
     ui->side_stacked->setCurrentIndex(0);
 
+}
+
+void Ressources_Humaines::on_login_pb_clicked()
+{
+    QString login=ui->login->text();
+       QString mdp=ui->password->text();
+       QSqlQuery qry;
+       qry.prepare("select * from compte where login=:login and MDP=:mdp");
+        qry.bindValue(":login",login);
+        qry.bindValue(":mdp",mdp);
+       qry.exec();
+   qry.next();
+   if(login.isEmpty()&& mdp.isEmpty())
+   {QMessageBox :: critical(nullptr,QObject::tr("Erreur "),
+                            QObject::tr("Vérifier votre login ou mot de passe\n"
+                                        "click cancel to exit "),QMessageBox ::Cancel);}
+   else
+   {
+   if(login==qry.value(0).toString() && mdp==qry.value(1).toString())
+   {
+       if(qry.value(0).toString()=="admin")
+       {
+           ui->main_stacked->setCurrentIndex(0);
+           ui->login->clear();
+           ui->password->clear();
+           ui->menu_rh->setEnabled(1);
+           ui->menu_fn->setEnabled(1);
+           ui->pushButton_19->setEnabled(1);
+           ui->test->setEnabled(1);
+           ui->pushButton_18->setEnabled(1);
+       ui->pushButton_20->setEnabled(1);
+
+
+
+       }
+       else
+           if(qry.value(0).toString()=="ressources_humaines")
+   {
+
+           ui->main_stacked->setCurrentIndex(0);
+           ui->menu_rh->setEnabled(1);
+           ui->menu_fn->setDisabled(1);
+           ui->menu_fn->setStyleSheet("border: 1px solid white");
+           ui->pushButton_19->setDisabled(1);
+           ui->pushButton_19->setStyleSheet("border: 1px solid white");
+           ui->test->setDisabled(1);
+           ui->test->setStyleSheet("border: 1px solid white");
+       ui->pushButton_18->setDisabled(1);
+           ui->pushButton_18->setStyleSheet("border: 1px solid white");
+       ui->pushButton_20->setDisabled(1);
+           ui->pushButton_20->setStyleSheet("border: 1px solid white");
+
+           ui->login->clear();
+           ui->password->clear();
+           }
+       else if(qry.value(0).toString()=="caissier")
+           {   ui->main_stacked->setCurrentIndex(0);
+               ui->menu_rh->setDisabled(1);
+               ui->menu_rh->setStyleSheet("border: 1px solid white");
+               ui->menu_fn->setEnabled(1);
+               ui->pushButton_19->setDisabled(1);
+               ui->pushButton_19->setStyleSheet("border: 1px solid white");
+               ui->pushButton_18->setDisabled(1);
+               ui->pushButton_18->setStyleSheet("border: 1px solid white");
+           ui->pushButton_20->setDisabled(1);
+               ui->pushButton_20->setStyleSheet("border: 1px solid white");
+               ui->test->setDisabled(1);
+               ui->test->setStyleSheet("border: 1px solid white");
+               ui->login->clear();
+               ui->password->clear();}
+
+       else if(qry.value(0).toString()=="relation_publiques")
+           {ui->main_stacked->setCurrentIndex(0);
+               ui->menu_rh->setDisabled(1);
+               ui->menu_rh->setStyleSheet("border: 1px solid white");
+               ui->menu_fn->setDisabled(1);
+               ui->menu_fn->setStyleSheet("border: 1px solid white");
+           ui->pushButton_18->setDisabled(1);
+               ui->pushButton_18->setStyleSheet("border: 1px solid white");
+           ui->pushButton_20->setDisabled(1);
+               ui->pushButton_20->setStyleSheet("border: 1px solid white");
+               ui->test->setDisabled(1);
+               ui->test->setStyleSheet("border: 1px solid white");
+
+               ui->pushButton_19->setEnabled(1);
+
+               ui->login->clear();
+               ui->password->clear();}
+
+   else if(qry.value(0).toString()=="municipalite")
+           {ui->main_stacked->setCurrentIndex(0);
+               ui->menu_rh->setDisabled(1);
+               ui->menu_rh->setStyleSheet("border: 1px solid white");
+               ui->menu_fn->setDisabled(1);
+               ui->menu_fn->setStyleSheet("border: 1px solid white");
+               ui->pushButton_19->setDisabled(1);
+               ui->pushButton_19->setStyleSheet("border: 1px solid white");
+               ui->pushButton_20->setDisabled(1);
+               ui->pushButton_20->setStyleSheet("border: 1px solid white");
+           ui->pushButton_18->setDisabled(1);
+               ui->pushButton_18->setStyleSheet("border: 1px solid white");
+               ui->test->setEnabled(1);
+               ui->login->clear();
+               ui->password->clear();}
+       else if(qry.value(0).toString()=="urbanisme")
+           {ui->main_stacked->setCurrentIndex(0);
+               ui->menu_rh->setDisabled(1);
+               ui->menu_rh->setStyleSheet("border: 1px solid white");
+               ui->menu_fn->setDisabled(1);
+               ui->menu_fn->setStyleSheet("border: 1px solid white");
+               ui->pushButton_19->setDisabled(1);
+               ui->pushButton_19->setStyleSheet("border: 1px solid white");
+               ui->test->setDisabled(1);
+               ui->test->setStyleSheet("border: 1px solid white");
+           ui->pushButton_20->setDisabled(1);
+               ui->pushButton_20->setStyleSheet("border: 1px solid white");
+               ui->pushButton_18->setEnabled(1);
+               ui->login->clear();
+               ui->password->clear();}
+
+
+   }
+
+       else
+       { QMessageBox :: critical(nullptr,QObject::tr("Erreur "),
+                                 QObject::tr("Vérifier votre login ou mot de passe\n"
+                                             "click cancel to exit "),QMessageBox ::Cancel);}
+
+
+
+   }
+}
+
+void Ressources_Humaines::on_disconnect_clicked()
+{
+    ui->main_stacked->setCurrentIndex(2);
+}
+
+void Ressources_Humaines::on_searching_clicked()
+{
+    QString chercher= ui->searching->text();
+    QString nom;
+
+        QSqlQuery q;
+        QSqlQueryModel *modal=new QSqlQueryModel();
+        if(chercher != "")
+        {q.prepare("select * from cadastre where nom like '%"+chercher+"%'");
+            q.bindValue(":nom",chercher);
+            q.exec();
+            modal->setQuery(q);
+            ui->tabcadastre->setModel(modal);
+            ui->tabcadastre->setModel(modal);
+    }
+        else
+        {QMessageBox::warning(this,"Probléme","recherche invalide");
+
+}
+}
+
+void Ressources_Humaines::on_searchingAgain_clicked()
+{
+    QString chercher= ui->searchingAgain->text();
+    QString nom;
+
+        QSqlQuery q;
+        QSqlQueryModel *modal=new QSqlQueryModel();
+        if(chercher != "")
+        {q.prepare("select * from cadastre where nom like '%"+chercher+"%'");
+            q.bindValue(":nom",chercher);
+            q.exec();
+            modal->setQuery(q);
+            ui->tabcadastre->setModel(modal);
+            ui->tabcadastre->setModel(modal);
+    }
+        else
+        {QMessageBox::warning(this,"Probléme","recherche invalide");
+
+}
+}
+
+void Ressources_Humaines::on_recherche_dem_textChanged(const QString &arg1)
+{
+    if(ui->recherche_dem->text() == "")
+        {
+            ui->tabdemandes->setModel(dem.afficher());
+        }
+        else
+        {
+             ui->tabdemandes->setModel(dem.rechercher(ui->recherche_dem->text()));
+        }
+}
+
+
+void Ressources_Humaines::on_rechercheC_textChanged(const QString &arg1)
+{
+    if(ui->rechercheC->text() == "")
+        {
+            ui->tabcadastre->setModel(ca.afficher());
+        }
+        else
+        {
+             ui->tabcadastre->setModel(ca.rechercher(ui->rechercheC->text()));
+        }
+}
+
+
+
+void Ressources_Humaines::on_xxx_clicked()
+{
+    stat02=new stat2(this);
+    stat02->show();
+}
+
+void Ressources_Humaines::on_ArduinoON_2_clicked()
+{
+    A.write_to_arduino("1");
+}
+
+void Ressources_Humaines::on_ArduinoOFF_2_clicked()
+{
+    A.write_to_arduino("0");
+}
+
+void Ressources_Humaines::on_ajouterequi_clicked()
+{
+
+ int ID_E=ui->IDA->text().toInt();
+QString NOM=ui->NOMA->text();
+QString REFERENCE=ui->REFA->text();
+equipement e(ID_E,NOM,REFERENCE);
+bool test=e.ajouter();
+if(test)
+{
+    ui->TABA->setModel(e.Afficher());
+
+    QMessageBox::information(nullptr, QObject::tr("Ajout equipement"),
+                QObject::tr("ajout avec succès.\n"
+                            "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+else
+    QMessageBox::critical(nullptr, QObject::tr("Ajout equipement"),
+                QObject::tr("Ajout échoué.\n"
+                            "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void Ressources_Humaines::on_pushButton_25_clicked()
+{
+    int ID_E=ui->IDASUPP ->text().toInt();
+
+
+
+            bool test=e.supprimer(ID_E);
+            if(test)
+               {
+                ui->TABA->setModel(e.Afficher());
+
+               QMessageBox::information(nullptr,"SUPRESSION","supprimé.");}
+            else
+               QMessageBox::information(nullptr,"SUPRESSION","probleme suppresion");
+}
+
+void Ressources_Humaines::on_modifierequi_clicked()
+{
+    int ID_E=ui->IDA ->text().toInt();
+    QString NOM=ui->NOMA->text();
+    QString REFERENCE=ui->REFA ->text();
+    equipement e(ID_E,NOM,REFERENCE);
+    bool test=e.modifier(ID_E,NOM,REFERENCE);
+    if(test)
+    {
+        ui->TABA->setModel(e.Afficher());
+
+        QMessageBox::information(nullptr, QObject::tr("modifier equipement"),
+                    QObject::tr("modification avec succès.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("modifier equipement"),
+                    QObject::tr("modification échoué.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void Ressources_Humaines::on_PDFA_clicked()
+{
+    /*impression pdf*/
+
+    {
+        QString strStream;
+                QTextStream out(&strStream);
+                const int rowCount = ui->TABA->model()->rowCount();
+                const int columnCount =ui->TABA->model()->columnCount();
+
+                out <<  "<html>\n"
+                        "<head>\n"
+                        "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                        <<  QString("<title>%1</title>\n").arg("equipement")
+                        <<  "</head>\n"
+                        "<body bgcolor=#D3D3D3 link=#5000A0>\n"
+                            "<img src='C:/Users/user/Documents/Ressources_Humaines/icons/logo.jpg' width='100' height='100'>\n"
+                            "<h1>Liste des equipement</h1>"
+
+
+
+                            "<table border=1 cellspacing=0 cellpadding=2>\n";
+
+
+                // headers
+                    out << "<thead><tr bgcolor=#f0f0f0>";
+                    for (int column = 0; column < columnCount; column++)
+                        if (!ui->TABA->isColumnHidden(column))
+                            out << QString("<th>%1</th>").arg(ui->TABA->model()->headerData(column, Qt::Horizontal).toString());
+                    out << "</tr></thead>\n";
+                    // data table
+                       for (int row = 0; row < rowCount; row++) {
+                           out << "<tr>";
+                           for (int column = 0; column < columnCount; column++) {
+                               if (!ui->TABA->isColumnHidden(column)) {
+                                   QString data = ui->TABA->model()->data(ui->TABA->model()->index(row, column)).toString().simplified();
+                                   out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                               }
+                           }
+                           out << "</tr>\n";
+                       }
+                       out <<  "</table>\n"
+                           "</body>\n"
+                           "</html>\n";
+
+                       QTextDocument *document = new QTextDocument();
+                       document->setHtml(strStream);
+
+                       QPrinter printer;
+
+                       QPrintDialog *dialog = new QPrintDialog(&printer, NULL);
+                       if (dialog->exec() == QDialog::Accepted) {
+                           document->print(&printer);
+                    }
+    }
+}
+
+void Ressources_Humaines::on_MAILINGA_clicked()
+{
+    email e;
+    e.exec();
+}
+
+void Ressources_Humaines::on_comboV_activated(const QString &arg1)
+{
+    ui->searchV->setDisabled(false);
+         QString champ=arg1;
+    ui->checkV->setDisabled(false);
+}
+
+void Ressources_Humaines::on_ajouterV_clicked()
+{
+    int ID_V=ui->idV ->text().toInt();
+    QString NOM=ui->nomV->text();
+    QString REFERENCE=ui->refV ->text();
+    vehicule v(ID_V,NOM,REFERENCE);
+    bool test=v.ajouter();
+    if(test)
+    {
+        ui->tabV->setModel(v.Afficher());
+
+        QMessageBox::information(nullptr, QObject::tr("Ajout vehicule"),
+                    QObject::tr("ajout avec succès.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("Ajout vehicule"),
+                    QObject::tr("Ajout échoué.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+
+void Ressources_Humaines::on_supprimerV_clicked()
+{
+    int ID_V=ui->IDVS ->text().toInt();
+
+
+            bool test=v.supprimer(ID_V);
+            if(test)
+               {
+                ui->tabV->setModel(v.Afficher());
+               QMessageBox::information(nullptr,"SUPRESSION","supprimé.");}
+            else
+               QMessageBox::critical(nullptr,"SUPRESSION","probleme suppresion");
+
+}
+
+void Ressources_Humaines::on_modifierV_clicked()
+{
+    int ID_V=ui->idV->text().toInt();
+    QString NOM=ui->nomV->text();
+    QString REFERENCE=ui->refV ->text();
+    vehicule v(ID_V,NOM,REFERENCE);
+    bool test=v.modifier(ID_V,NOM,REFERENCE);
+    if(test)
+    {
+        ui->tabV->setModel(v.Afficher_vehicule());
+
+        QMessageBox::information(nullptr, QObject::tr("modifier vehicule"),
+                    QObject::tr("modification avec succès.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("modifier vehicule"),
+                    QObject::tr("modification échoué.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+
+void Ressources_Humaines::on_toV_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(13);
+}
+
+void Ressources_Humaines::on_toE_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(12);
 }

@@ -6,6 +6,7 @@
 #include "formation.h"
 #include "encaissement.h"
 #include "statistique.h"
+#include"stat2.h"
 #include"decaissement.h"
 #include"citoyens.h"
 #include"rec.h"
@@ -15,12 +16,14 @@
 #include"demandes.h"
 #include <QMainWindow>
 #include<QLabel>
-
+#include "arduino.h"
+#include"equipement.h"
+#include"vehicule.h"
 namespace Ui {
 class Ressources_Humaines;
 }
 
-class Ressources_Humaines : public QDialog
+class Ressources_Humaines : public QMainWindow
 {
     Q_OBJECT
 
@@ -208,10 +211,6 @@ private slots:
 
     void on_pushButton_22_clicked();
 
-
-
-    void on_recherche_dem_textChanged(const QString &arg1);
-
     void on_AjouterC_clicked();
 
     void on_supprimerC_clicked();
@@ -234,6 +233,51 @@ private slots:
 
     void on_RRETOUR_clicked();
 
+    void on_login_pb_clicked();
+
+    void on_disconnect_clicked();
+
+    void on_searching_clicked();
+
+    void on_searchingAgain_clicked();
+
+    void on_recherche_dem_textChanged(const QString &arg1);
+
+    void on_rechercheC_textChanged(const QString &arg1);
+
+
+
+    void on_xxx_clicked();
+private slots :
+    void update_label();
+
+
+    void on_ArduinoON_2_clicked();
+
+    void on_ArduinoOFF_2_clicked();
+
+    void on_ajouterequi_clicked();
+
+    void on_pushButton_25_clicked();
+
+    void on_modifierequi_clicked();
+
+    void on_PDFA_clicked();
+
+    void on_MAILINGA_clicked();
+
+    void on_comboV_activated(const QString &arg1);
+
+    void on_ajouterV_clicked();
+
+    void on_supprimerV_clicked();
+
+    void on_modifierV_clicked();
+
+    void on_toV_clicked();
+
+    void on_toE_clicked();
+
 private:
     Ui::Ressources_Humaines *ui;
     Employe E;
@@ -241,12 +285,18 @@ private:
     encaissement en;
     decaissement dc;
     statistique *stat;
+    stat2 *stat02;
     Rec R;
     Cit C;
     naissance na;
     deces de;
     cadastre ca ;
     demandes dem;
+    arduino A;
+    QByteArray data;
+    equipement e;
+    vehicule v;
+
 };
 
 #endif // RESSOURCES_HUMAINES_H

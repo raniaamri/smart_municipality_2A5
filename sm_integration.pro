@@ -1,6 +1,6 @@
-QT       += core gui sql printsupport multimedia charts texttospeech
+QT       += core gui sql printsupport multimedia  texttospeech
 
-
+QT += charts serialport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -17,41 +17,56 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    arduino.cpp \
     cadastre.cpp \
     citoyens.cpp \
     connection.cpp \
     decaissement.cpp \
     deces.cpp \
     demandes.cpp \
+    email.cpp \
     employe.cpp \
     encaissement.cpp \
+    equipement.cpp \
     formation.cpp \
     main.cpp \
     mainwindow.cpp \
     naissance.cpp \
     rec.cpp \
     ressources_humaines.cpp \
-    statistique.cpp
+    smtp.cpp \
+    stat2.cpp \
+    statistique.cpp \
+    vehicule.cpp
 
 HEADERS += \
+    arduino.h \
     cadastre.h \
     citoyens.h \
     connection.h \
     decaissement.h \
     deces.h \
     demandes.h \
+    email.h \
     employe.h \
     encaissement.h \
+    equipement.h \
     formation.h \
     mainwindow.h \
     naissance.h \
     rec.h \
     ressources_humaines.h \
-    statistique.h
+    smtp.h \
+    stat2.h \
+    state.h \
+    statistique.h \
+    vehicule.h
 
 FORMS += \
+    email.ui \
     mainwindow.ui \
     ressources_humaines.ui \
+    stat2.ui \
     statistique.ui
 
 # Default rules for deployment.

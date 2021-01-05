@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+/*#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include"ressources_humaines.h"
 #include"ui_ressources_humaines.h"
@@ -47,7 +47,8 @@ void MainWindow::on_pushButton_login_clicked()
         QMessageBox::critical(nullptr, QObject::tr("password incorrect"),
                     QObject::tr("Erreur !.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
-        /*  ui->label-setText("false")*/
+         ui->label-setText("false")
     }
     }
 }
+*/

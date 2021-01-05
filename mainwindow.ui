@@ -252,7 +252,7 @@ QPushButton:hover {
 QPushButton:pressed {	
 	background-color: 2px solid rgb(40, 44, 52);
 
-	border: 2px solid rgb(255, 165, 24);	
+border: 2px solid rgb(40, 44, 52);
 	color: 2px solid rgb(40, 44, 52);
 
 }</string>

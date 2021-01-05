@@ -11,7 +11,7 @@ public:
     demandes(int,QString,QString,QString);
     QString get_nom(){return nom;}
     bool ajouter();
-    bool Modifier();
+    bool Modifier(int id_demande, QString prenom, QString nom,QString etat);
     QSqlQueryModel *sortid_up();
     QSqlQueryModel *sortid_down();
     bool supprimer(int);
