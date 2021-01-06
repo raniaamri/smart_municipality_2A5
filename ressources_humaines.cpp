@@ -1,3 +1,5 @@
+#include"statequi.h"
+#include"lestat.h"
 #include"vehicule.h"
 #include"email.h"
 #include"equipement.h"
@@ -93,6 +95,10 @@ ui->naissanceside->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/icon
 ui->decesside->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/deathNON.png"));
 ui->demande->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/demandeOUI.png"));
 ui->cadastre->setIcon(QIcon("C:/Users/user/Documents/smartMunicipality/iconet/cadastreNON.png"));
+ui->toV->setIcon(QIcon("C:/Users/user/Documents/sm_integration/iconet/vehiculeOFF.png"));
+ui->toE->setIcon(QIcon("C:/Users/user/Documents/sm_integration/iconet/EONN.png"));
+ui->backA->setIcon(QIcon("C:/Users/user/Documents/smartM/icons/16x16/cil-arrow-left.png"));
+
 /*auto movie = new QMovie(this);
 movie->setFileName("C:/Users/user/Documents/smartMunicipality/iconet/Mfinnances.gif");
 connect(movie, &QMovie::frameChanged, [=]{
@@ -119,9 +125,48 @@ int ret=A.connect_arduino();
    case(-1):qDebug()<<"arduino is not available";
    }
    QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label()));
-
+ QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label1()));
 
 }
+
+
+void Ressources_Humaines::update_label1()
+{
+
+
+temp=QString::fromStdString(A.read_from_arduino().toStdString());
+if(temp.length()>=4)
+{
+    QStringRef humidity(&temp,2,2);
+
+    QStringRef temperature(&temp,0,2);
+    int tempe=temperature.toInt();
+    int hum=humidity.toInt();
+    qDebug()<<"temperature="<<temperature;
+    qDebug()<<"humidity="<<humidity;
+    QSqlQuery qry;
+    qry.prepare("insert into historique_temp values(sysdate,:tempe ,:hum)");
+    qry.bindValue(":tempe",tempe);
+    qry.bindValue(":hum",hum);
+    qry.exec();
+
+    ui->ard->setModel(A.afficher());
+    ui->ard->setColumnWidth(0,180);
+    ui->ard->setColumnWidth(1,180);
+
+    ui->ard->setColumnWidth(2,180);
+
+
+   if(hum>70)
+   {
+
+       QMessageBox::warning(nullptr, QObject::tr("erreur"),
+                         QObject::tr("Humidité a depassé 70.\n"
+                                     "Click Cancel to exit."), QMessageBox::Cancel);
+   }
+}
+}
+
 
 
 
@@ -228,7 +273,7 @@ void Ressources_Humaines::on_pushButton_3_clicked()
        { msgBox.setText("Suppression avec succes.");
     ui->tableView->setModel(E.afficher());
     ui->comboBox_2->setModel(E.afficher_employe());
-
+    ui->combo_idemp_decaissement->setModel((E.afficher_employe()));
     }
     else{
         /*message d'erreur*/
@@ -2393,9 +2438,778 @@ void Ressources_Humaines::on_modifierV_clicked()
 void Ressources_Humaines::on_toV_clicked()
 {
     ui->stackedWidget_2->setCurrentIndex(13);
+    ui->toV->setIcon(QIcon("C:/Users/user/Documents/sm_integration/iconet/vehiculeON.png"));
+    ui->toE->setIcon(QIcon("C:/Users/user/Documents/sm_integration/iconet/EOFF.png"));
 }
 
 void Ressources_Humaines::on_toE_clicked()
 {
     ui->stackedWidget_2->setCurrentIndex(12);
+    ui->toV->setIcon(QIcon("C:/Users/user/Documents/sm_integration/iconet/vehiculeOFF.png"));
+    ui->toE->setIcon(QIcon("C:/Users/user/Documents/sm_integration/iconet/EONN.png"));
+}
+
+void Ressources_Humaines::on_anglais_clicked()
+{
+    lang="ang";
+    ui->menu_rh->setText("HR");
+    ui->menu_rh->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->menu_fn->setText("Finance");
+    ui->menu_fn->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->pushButton_19->setText("Citizens");
+    ui->pushButton_19->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->test->setText("Minicipality");
+    ui->test->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->code_encaissement->setPlaceholderText("Code");
+    ui->code_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->montant_encaissement->setPlaceholderText("Amount");
+    ui->montant_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->remarque_encaissement->setPlaceholderText("Remark");
+    ui->remarque_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->combo_mehode_encaissement->setCurrentText("Payment method");
+    ui->combo_mehode_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->encaissement_pb->setText("Validate");
+    ui->encaissement_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->modifier_encaissement->setText("Modify");
+    ui->modifier_encaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->supprimer_encaissement->setText("Delete");
+    ui->supprimer_encaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->trier_encaissement->setText("Sort");
+    ui->trier_encaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->chercher_encaissement->setPlaceholderText("research");
+    ui->chercher_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->le_reclamation->setPlaceholderText("Claim");
+    ui->le_reclamation->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->groupBox->setTitle("ADD/Modify Claim");
+    ui->groupBox->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->groupBox_2->setTitle("Delete");
+    ui->groupBox_2->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->groupBox_3->setTitle("Display and Sorting");
+    ui->groupBox_3->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->groupBox_4->setTitle("Export into PDF");
+    ui->groupBox_4->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->modifier_reclam_pb->setText("Modify");
+    ui->modifier_reclam_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->ajouter_reclam_pb->setText("Add");
+    ui->ajouter_reclam_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->supp_reclam_pb->setText("Delete");
+    ui->supp_reclam_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->chercher_reclam_pb->setText("Search");
+    ui->chercher_reclam_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->tri_pb_reclam->setText("Sort");
+    ui->tri_pb_reclam->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->export_reclam->setText("Export");
+    ui->export_reclam->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->ArduinoON->setText("ON");
+    ui->ArduinoON->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->ArduinoOFF->setText("OFF");
+    ui->ArduinoOFF->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->label_7->setText("Location");
+    ui->label_8->setText("reason");
+    ui->code_decaissement->setPlaceholderText("Code");
+    ui->code_decaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->montant_decaissement->setPlaceholderText("Amount");
+    ui->montant_decaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->remarque_decaissement->setPlaceholderText("Remark");
+    ui->remarque_decaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->chercher_decaissement->setPlaceholderText("Research");
+    ui->chercher_decaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->decaissement_pb_valider->setText("Validate");
+    ui->decaissement_pb_valider->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->modifier_decaissement->setText("Modifiy");
+    ui->modifier_decaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->supprimer_decaissement->setText("Delete");
+    ui->supprimer_decaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->trier_decaissement->setText("Sort");
+    ui->trier_decaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->trier_cit->setText("Sort");
+    ui->trier_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->export_cit->setText("Export into PDF");
+    ui->export_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->ajouter_cit->setText("Add");
+    ui->ajouter_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->modifier_cit->setText("Modify");
+    ui->modifier_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->supp_cit->setText("Delete");
+    ui->supp_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->Bshow->setText("Display");
+    ui->Bshow->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->groupBox_6->setTitle("Addition and Modification");
+    ui->groupBox_6->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->groupBox_8->setTitle("Delete");
+    ui->groupBox_8->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->nom_cit->setPlaceholderText("Name");
+    ui->nom_cit->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->prenom_cit->setPlaceholderText("First Name");
+    ui->prenom_cit->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->chercher_cit->setPlaceholderText("Search ID");
+    ui->chercher_cit->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->pb_suprrr->setText("Delete");
+    ui->pb_suprrr->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->Aj_mf_pb->setText("Add/Modify");
+    ui->Aj_mf_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->trinum_pb->setText("Sort by Number");
+    ui->trinum_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->trinom_pb->setText("Sort by Name");
+    ui->trinom_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->triprenompb->setText("Sort by First Name");
+    ui->triprenompb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->le_recherche01->setPlaceholderText("Research");
+    ui->le_recherche01->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->le_supppr->setText("Delete");
+    ui->le_supppr->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->label_2->setText("Add Employee");
+    ui->label_3->setText("Delete Employee");
+    ui->label->setText("Employee Table");
+    ui->label_4->setText("Add Training");
+    ui->label_5->setText("Delete Training");
+    ui->label_6->setText("Training Table");
+     ui->observation->setText("observation");
+     ui->note->setText("note");
+     ui->ajouter->setText("Add");
+     ui->ajouter->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->modifier->setText("Modify");
+     ui->modifier->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_3->setText("Delete");
+     ui->pushButton_3->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_9->setText("Sort");
+     ui->pushButton_9->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pb_ajouterformation->setText("Add");
+     ui->pb_ajouterformation->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pb_modifierformation->setText("Modify");
+     ui->pb_modifierformation->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pb_supprimerformation->setText("Delete");
+     ui->pb_supprimerformation->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_12->setText("Sort");
+     ui->pushButton_12->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->ajout1_pb->setText("Add");
+     ui->ajout1_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->modif1_pb->setText("Modify");
+     ui->modif1_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->supprimerdeces_pb->setText("Delete");
+     ui->supprimerdeces_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->aj_mf_dec->setText("Add/Modify");
+     ui->aj_mf_dec->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_14->setText("Sort by Name");
+     ui->pushButton_14->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_16->setText("Sort by First Name");
+     ui->pushButton_16->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->le_nom->setPlaceholderText("Name");
+     ui->le_nom->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_prenom->setPlaceholderText("First Name");
+     ui->le_prenom->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_salaire->setPlaceholderText("Salary");
+     ui->le_salaire->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_duree->setPlaceholderText("Duration");
+     ui->le_duree->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_searchformation->setPlaceholderText("research");
+     ui->le_searchformation->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_idformation->setPlaceholderText("ID Training");
+     ui->le_idformation->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_supprimerformation->setPlaceholderText("ID Training");
+     ui->le_supprimerformation->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_nom1->setPlaceholderText("Name");
+     ui->le_nom1->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_prenom1->setPlaceholderText("First Name");
+     ui->le_prenom1->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_lieu->setPlaceholderText("Place");
+     ui->le_lieu->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_nomdupere->setPlaceholderText("Fadher's Surname");
+     ui->le_nomdupere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_prenomdupere->setPlaceholderText("Fadher's Name");
+     ui->le_prenomdupere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_nommere->setPlaceholderText("Modher's Surname");
+     ui->le_nommere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_prenommere->setPlaceholderText("Modher's Name");
+     ui->le_prenommere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_nationalite->setPlaceholderText("Nationality");
+     ui->le_nationalite->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_numeronaissance->setPlaceholderText("Birth Number");
+     ui->le_numeronaissance->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_sexe->setPlaceholderText("Gender");
+     ui->le_sexe->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->tribunal->setPlaceholderText("Court");
+     ui->tribunal->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->recherche_deces->setPlaceholderText("Research");
+     ui->recherche_deces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->supprimerdeces_pb->setText("Delete");
+     ui->supprimerdeces_pb->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+     ui->combo_mehode_encaissement->clear();
+        QStringList list1;
+        list1<<"Payment method"<<"choice"<<"transfer"<<"check"<<"credit card";
+        ui->combo_mehode_encaissement->addItems(list1);
+
+        ui->combo_mehode_decaissement->clear();
+           QStringList list2;
+           list1<<"Payment method"<<"choice"<<"transfer"<<"check"<<"credit card";
+           ui->combo_mehode_decaissement->addItems(list2);
+
+           ui->combobox_tri_decaissement->clear();
+              QStringList list3;
+              list3<<"code"<<"date"<<"amount"<<"payment method"<<"ID employe"<<"remark";
+              ui->combobox_tri_decaissement->addItems(list3);
+
+              ui->combobox_tri_encaissement->clear();
+                 QStringList list4;
+                 list4<<"code"<<"date"<<"amount"<<"payment method"<<"ID employe"<<"remark";
+                 ui->combobox_tri_encaissement->addItems(list4);
+
+
+                 ui->nomdeces->setPlaceholderText("Name");
+                 ui->nomdeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_prenomdeces->setPlaceholderText("First Name");
+                 ui->le_prenomdeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_lieudeces->setPlaceholderText("Place");
+                 ui->le_lieudeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_nomperedeces->setPlaceholderText("Fadher's Surname");
+                 ui->le_nomperedeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_prenomperedeces->setPlaceholderText("Fadher's Name");
+                 ui->le_prenomperedeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_nommeredeces->setPlaceholderText("Modher's Surname");
+                 ui->le_nommeredeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_prenommere->setPlaceholderText("Modher's Name");
+                 ui->le_prenommere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_nationalite_2->setPlaceholderText("Nationality");
+                 ui->le_nationalite_2->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_numdeces->setPlaceholderText("Death Number");
+                 ui->le_numdeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_sexe_deces->setPlaceholderText("Gender");
+                 ui->le_sexe_deces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_tribunaldeces->setPlaceholderText("Court");
+                 ui->le_tribunaldeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_idcdeces->setPlaceholderText("registrar's identity");
+                 ui->le_idcdeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_lieudeces_2->setPlaceholderText("place of death");
+                 ui->le_lieudeces_2->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->notedeces->setText("observation");
+                 ui->observationdeces->setText("note");
+                 ui->Ajouterdeces_pb->setText("Add");
+                 ui->Ajouterdeces_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->modifierdeces_pb->setText("Modify");
+                 ui->modifierdeces_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+
+
+                 ui->IdD->setPlaceholderText("ID request");
+                 ui->IdD->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_etatD->setPlaceholderText("request state");
+                 ui->le_etatD->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_prenomD->setPlaceholderText("First Name");
+                 ui->le_prenomD->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_nomD->setPlaceholderText("Name");
+                 ui->le_nomD->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->lineEdit_8->setPlaceholderText("ID request");
+                 ui->lineEdit_8->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->pushButton_21->setText("Delete");
+                 ui->pushButton_21->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->recherche_dem->setPlaceholderText("research");
+                 ui->recherche_dem->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->numparcelleC->setPlaceholderText("plot number");
+                 ui->numparcelleC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->surfaceC->setPlaceholderText("area");
+                 ui->surfaceC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->nomC->setPlaceholderText("Name");
+                 ui->nomC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->prenomC->setPlaceholderText("First Name");
+                 ui->prenomC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->supp_numPC->setPlaceholderText("plote number");
+                 ui->supp_numPC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->rechercheC->setPlaceholderText("research");
+                 ui->rechercheC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+                 ui->pushButton_17->setText("Modify");
+                 ui->pushButton_17->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->Ajouter_demande_pb->setText("Add");
+                 ui->Ajouter_demande_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->pushButton_27->setText("Sort ASC");
+                 ui->pushButton_27->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->pushButton_26->setText("Sort DSC");
+                 ui->pushButton_26->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->AjouterC->setText("Add");
+                 ui->AjouterC->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->modifierC->setText("Modify");
+                 ui->modifierC->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->pushButton_18->setText("Urbanism");
+                 ui->pushButton_18->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+
+                 ui->comboBox->clear();
+                    QStringList list5;
+                    list5<<"Salary"<<"date"<<"Name"<<"ID";
+                    ui->comboBox->addItems(list5);
+
+                    ui->combo_boxtri->clear();
+                       QStringList list6;
+                       list6<<"ID training"<<"ID trainer"<<"Date"<<"Duration";
+                       ui->combo_boxtri->addItems(list6);
+
+                       ui->combobox_tri_encaissement->clear();
+                          QStringList list7;
+                          list7<<"Code"<<"date"<<"Payment Method"<<"Amount"<<"remark<<";
+                          ui->combobox_tri_encaissement->addItems(list7);
+
+                          ui->combobox_tri_decaissement->clear();
+                             QStringList list8;
+                             list8<<"Code"<<"date"<<"Amount"<<"Payment Method"<<"remark<<";
+                             ui->combobox_tri_decaissement->addItems(list8);
+
+                             ui->combo_reclam_tri->clear();
+                                QStringList list9;
+                                list9<<"ID"<<"location<<";
+                                ui->combo_reclam_tri->addItems(list9);
+
+                                ui->combocit->clear();
+                                   QStringList list10;
+                                   list10<<"Name"<<"ID<<";
+                                   ui->combocit->addItems(list10);
+
+                                   ui->combo_mehode_decaissement->clear();
+                                      QStringList list20;
+                                      list20<<"Payment method"<<"choice"<<"virement"<<"check"<<"credit card";
+                                      ui->combo_mehode_decaissement->addItems(list20);
+
+                                      ui->modifierV->setText("Modify");
+                                      ui->modifierV->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                                      ui->ajouterV->setText("Add");
+                                      ui->ajouterV->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+ ui->ajouterequi->setText("Add");
+ui->ajouterequi->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+ui->pushButton_25->setText("Delete");
+ui->pushButton_25->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+
+ui->IDVS->setPlaceholderText("ID vehicle");
+ui->IDVS->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+ui->nomV->setPlaceholderText("vehicle Name");
+ui->nomV->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+ui->refV->setPlaceholderText("reference");
+ui->refV->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+ui->idV->setPlaceholderText("ID vehicle");
+ui->idV->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+ui->NOMA->setPlaceholderText("Name");
+ui->NOMA->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+ui->REFA->setPlaceholderText("reference");
+ui->REFA->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+ui->comboV->clear();
+   QStringList list22;
+   list22<<"identifier"<<"Name"<<"reference";
+   ui->comboV->addItems(list22);
+}
+
+void Ressources_Humaines::on_francais_clicked()
+{
+    lang="fr";
+    ui->menu_rh->setText("Ressources Humaines");
+    ui->menu_rh->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->menu_fn->setText("Finance");
+    ui->menu_fn->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->pushButton_19->setText("Citoyens");
+    ui->pushButton_19->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->test->setText("Municipalité");
+    ui->test->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->code_encaissement->setPlaceholderText("Code");
+    ui->code_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->montant_encaissement->setPlaceholderText("Montant");
+    ui->montant_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->remarque_encaissement->setPlaceholderText("Remarque");
+    ui->remarque_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+    ui->combo_mehode_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->encaissement_pb->setText("Valider");
+    ui->encaissement_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->modifier_encaissement->setText("Modifier");
+    ui->modifier_encaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->supprimer_encaissement->setText("Supprimer");
+    ui->supprimer_encaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->trier_encaissement->setText("Trier");
+    ui->trier_encaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->chercher_encaissement->setPlaceholderText("Rechercher");
+    ui->chercher_encaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+
+    ui->le_reclamation->setPlaceholderText("Réclamation");
+    ui->le_reclamation->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->groupBox->setTitle("Ajouter/Modifier Réclamation");
+    ui->groupBox->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->groupBox_2->setTitle("Supprimer");
+    ui->groupBox_2->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->groupBox_3->setTitle("Affichage et Tri");
+    ui->groupBox_3->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->groupBox_4->setTitle("Exporter en PDF");
+    ui->groupBox_4->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->modifier_reclam_pb->setText("Modifier");
+    ui->modifier_reclam_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->ajouter_reclam_pb->setText("Ajouter");
+    ui->ajouter_reclam_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->supp_reclam_pb->setText("Supprimer");
+    ui->supp_reclam_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->chercher_reclam_pb->setText("Chercher");
+    ui->chercher_reclam_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->tri_pb_reclam->setText("Trier");
+    ui->tri_pb_reclam->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->export_reclam->setText("Exporter");
+    ui->export_reclam->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->ArduinoON->setText("Marche");
+    ui->ArduinoON->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->ArduinoOFF->setText("Arrêt");
+    ui->ArduinoOFF->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->label_7->setText("Emplacement");
+    ui->label_8->setText("Raison");
+
+
+    ui->code_decaissement->setPlaceholderText("Code");
+    ui->code_decaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->montant_decaissement->setPlaceholderText("Montant");
+    ui->montant_decaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->remarque_decaissement->setPlaceholderText("Remarque");
+    ui->remarque_decaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->chercher_decaissement->setPlaceholderText("Rechercher");
+    ui->chercher_decaissement->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->decaissement_pb_valider->setText("Valider");
+    ui->decaissement_pb_valider->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->modifier_decaissement->setText("Modifier");
+    ui->modifier_decaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->supprimer_decaissement->setText("Supprimer");
+    ui->supprimer_decaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->trier_decaissement->setText("Trier");
+    ui->trier_decaissement->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+
+
+
+    ui->trier_cit->setText("Trier");
+    ui->trier_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->export_cit->setText("Exporter en PDF");
+    ui->export_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->ajouter_cit->setText("Ajouter");
+    ui->ajouter_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->modifier_cit->setText("Modifier");
+    ui->modifier_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->supp_cit->setText("Supprimer");
+    ui->supp_cit->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->Bshow->setText("Afficher");
+    ui->Bshow->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->groupBox_6->setTitle("Ajout et Modification");
+    ui->groupBox_6->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->groupBox_8->setTitle("Supprimer");
+    ui->groupBox_8->setStyleSheet("background-color: rgb(41, 45, 56); border-radius: 5px;");
+    ui->nom_cit->setPlaceholderText("Nom");
+    ui->nom_cit->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->prenom_cit->setPlaceholderText("Prénom");
+    ui->prenom_cit->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->chercher_cit->setPlaceholderText("Chercher ID");
+    ui->chercher_cit->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+    ui->pb_suprrr->setText("Supprimer");
+    ui->pb_suprrr->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->Aj_mf_pb->setText("Ajouter/Modifier");
+    ui->Aj_mf_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->trinum_pb->setText("Trier par Numéro");
+    ui->trinum_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->trinom_pb->setText("Trier par Nom");
+    ui->trinom_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->triprenompb->setText("Trierpar Prénom");
+    ui->triprenompb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+    ui->le_recherche01->setPlaceholderText("Recherche");
+    ui->le_recherche01->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+    ui->le_supppr->setText("Supprimer");
+    ui->le_supppr->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+
+    ui->label_2->setText("Ajouter Employés");
+    ui->label_3->setText("Supprimer employés");
+    ui->label->setText("Tableau d'employés");
+    ui->label_4->setText("Ajouter Formation");
+    ui->label_5->setText("Supprimr Formation");
+    ui->label_6->setText("Tableau de Formation");
+     ui->observation->setText("observation");
+     ui->note->setText("note");
+     ui->ajouter->setText("Ajouter");
+     ui->ajouter->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->modifier->setText("Modifier");
+     ui->modifier->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_3->setText("Supprimer");
+     ui->pushButton_3->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_9->setText("Trier");
+     ui->pushButton_9->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pb_ajouterformation->setText("Ajouter");
+     ui->pb_ajouterformation->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pb_modifierformation->setText("Modifier");
+     ui->pb_modifierformation->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pb_supprimerformation->setText("Supprimer");
+     ui->pb_supprimerformation->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_12->setText("Trier");
+     ui->pushButton_12->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->ajout1_pb->setText("Ajouter");
+     ui->ajout1_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->modif1_pb->setText("Modifier");
+     ui->modif1_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->supprimerdeces_pb->setText("Supprimer");
+     ui->supprimerdeces_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->aj_mf_dec->setText("Ajouter/Modifier");
+     ui->aj_mf_dec->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_14->setText("Trier par le Nom");
+     ui->pushButton_14->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->pushButton_16->setText("Trier par le prénom");
+     ui->pushButton_16->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+     ui->le_nom->setPlaceholderText("Nom");
+     ui->le_nom->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_prenom->setPlaceholderText("Prénom");
+     ui->le_prenom->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_salaire->setPlaceholderText("Salaire");
+     ui->le_salaire->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_duree->setPlaceholderText("Durée");
+     ui->le_duree->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_searchformation->setPlaceholderText("rechercher");
+     ui->le_searchformation->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_idformation->setPlaceholderText("ID FOrmation");
+     ui->le_idformation->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_supprimerformation->setPlaceholderText("ID Formation");
+     ui->le_supprimerformation->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_nom1->setPlaceholderText("Nom");
+     ui->le_nom1->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_prenom1->setPlaceholderText("Prénom");
+     ui->le_prenom1->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_lieu->setPlaceholderText("Lieu");
+     ui->le_lieu->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_nomdupere->setPlaceholderText("Nom du Pére");
+     ui->le_nomdupere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_prenomdupere->setPlaceholderText("Prénom du Pére");
+     ui->le_prenomdupere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_nommere->setPlaceholderText("Nom de la mére");
+     ui->le_nommere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_prenommere->setPlaceholderText("Prénom de la Mére");
+     ui->le_prenommere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_nationalite->setPlaceholderText("Nationalité");
+     ui->le_nationalite->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_numeronaissance->setPlaceholderText("Numéro de naissance");
+     ui->le_numeronaissance->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->le_sexe->setPlaceholderText("Sexe");
+     ui->le_sexe->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->tribunal->setPlaceholderText("Tribunal");
+     ui->tribunal->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->recherche_deces->setPlaceholderText("Rechercher");
+     ui->recherche_deces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+     ui->supprimerdeces_pb->setText("Supprimer");
+     ui->supprimerdeces_pb->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+
+     ui->combo_mehode_encaissement->clear();
+        QStringList list1;
+        list1<<"Méthode de payement"<<"virement"<<"chéque"<<"carte bancaire"<<"éspéce";
+        ui->combo_mehode_encaissement->addItems(list1);
+
+        ui->combo_mehode_decaissement->clear();
+           QStringList list21;
+           list21<<"Méthode de payement"<<"virement"<<"chéque"<<"carte bancaire"<<"éspéce";
+           ui->combo_mehode_decaissement->addItems(list21);
+
+           ui->combobox_tri_decaissement->clear();
+              QStringList list3;
+              list3<<"code"<<"date"<<"montant"<<"méthode de payement"<<"ID employé"<<"remarque";
+              ui->combobox_tri_decaissement->addItems(list3);
+
+              ui->combobox_tri_encaissement->clear();
+                 QStringList list4;
+                 list4<<"code"<<"date"<<"montant"<<"méthode de payement"<<"ID employé"<<"remarque";
+                 ui->combobox_tri_encaissement->addItems(list4);
+
+
+                 ui->nomdeces->setPlaceholderText("Nom");
+                 ui->nomdeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_prenomdeces->setPlaceholderText("Prénom");
+                 ui->le_prenomdeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_lieudeces->setPlaceholderText("lieu");
+                 ui->le_lieudeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_nomperedeces->setPlaceholderText("Nom du pére");
+                 ui->le_nomperedeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_prenomperedeces->setPlaceholderText("prénom du pére");
+                 ui->le_prenomperedeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_nommeredeces->setPlaceholderText("Nom de la mére");
+                 ui->le_nommeredeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_prenommere->setPlaceholderText("prénom de la mére");
+                 ui->le_prenommere->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_nationalite_2->setPlaceholderText("Nationalité");
+                 ui->le_nationalite_2->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_numdeces->setPlaceholderText("Numéro décès");
+                 ui->le_numdeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_sexe_deces->setPlaceholderText("sexe");
+                 ui->le_sexe_deces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_tribunaldeces->setPlaceholderText("Tribunal");
+                 ui->le_tribunaldeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_idcdeces->setPlaceholderText("Identité de l'officier de l'état civile");
+                 ui->le_idcdeces->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_lieudeces_2->setPlaceholderText("lieu décès");
+                 ui->le_lieudeces_2->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->notedeces->setText("observation");
+                 ui->observationdeces->setText("note");
+                 ui->Ajouterdeces_pb->setText("Ajouter");
+                 ui->Ajouterdeces_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->modifierdeces_pb->setText("Modifier");
+                 ui->modifierdeces_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+
+
+
+
+                 ui->IdD->setPlaceholderText("ID demande");
+                 ui->IdD->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_etatD->setPlaceholderText("état demande");
+                 ui->le_etatD->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_prenomD->setPlaceholderText("Prénom");
+                 ui->le_prenomD->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->le_nomD->setPlaceholderText("Nom");
+                 ui->le_nomD->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->lineEdit_8->setPlaceholderText("ID demande");
+                 ui->lineEdit_8->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->pushButton_21->setText("Supprimer");
+                 ui->pushButton_21->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->recherche_dem->setPlaceholderText("recherche");
+                 ui->recherche_dem->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->numparcelleC->setPlaceholderText("numéro parcelle");
+                 ui->numparcelleC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->surfaceC->setPlaceholderText("Surface");
+                 ui->surfaceC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->nomC->setPlaceholderText("Nom");
+                 ui->nomC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->prenomC->setPlaceholderText("Prénom");
+                 ui->prenomC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->supp_numPC->setPlaceholderText("numéro parcelle");
+                 ui->supp_numPC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                 ui->rechercheC->setPlaceholderText("recherche");
+                 ui->rechercheC->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+                 ui->pushButton_17->setText("Modifier");
+                 ui->pushButton_17->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->Ajouter_demande_pb->setText("Ajouter");
+                 ui->Ajouter_demande_pb->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->pushButton_27->setText("Tri ASC");
+                 ui->pushButton_27->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->pushButton_26->setText("Tri DSC");
+                 ui->pushButton_26->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->AjouterC->setText("Ajouter");
+                 ui->AjouterC->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->modifierC->setText("Modifier");
+                 ui->modifierC->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                 ui->pushButton_18->setText("Urbanisme");
+                 ui->pushButton_18->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+
+                 ui->comboBox->clear();
+                    QStringList list16;
+                    list16<<"Salaire"<<"date"<<"Nom"<<"ID";
+                    ui->comboBox->addItems(list16);
+
+                    ui->combo_boxtri->clear();
+                       QStringList list15;
+                       list15<<"ID Formation"<<"ID Formateur"<<"Date"<<"Durée";
+                       ui->combo_boxtri->addItems(list15);
+
+                       ui->combobox_tri_encaissement->clear();
+                          QStringList list14;
+                          list14<<"Code"<<"date"<<"Méthode payement"<<"Montant"<<"remarque";
+                          ui->combobox_tri_encaissement->addItems(list14);
+
+                          ui->combobox_tri_decaissement->clear();
+                             QStringList list13;
+                             list13<<"Code"<<"date"<<"Montant"<<"Méthode payement"<<"remarque";
+                             ui->combobox_tri_decaissement->addItems(list13);
+
+                             ui->combo_reclam_tri->clear();
+                                QStringList list12;
+                                list12<<"ID"<<"Emplacement";
+                                ui->combo_reclam_tri->addItems(list12);
+
+                                ui->combocit->clear();
+                                   QStringList list11;
+                                   list11<<"Nom"<<"ID";
+                                   ui->combocit->addItems(list11);
+
+                                   ui->ajouterequi->setText("Ajouter");
+                                  ui->ajouterequi->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                                  ui->pushButton_25->setText("supprimer");
+                                  ui->pushButton_25->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+
+                                  ui->IDVS->setPlaceholderText("ID véhicvle");
+                                  ui->IDVS->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                                  ui->nomV->setPlaceholderText("véhicule Name");
+                                  ui->nomV->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                                  ui->refV->setPlaceholderText("réfèrence");
+                                  ui->refV->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                                  ui->idV->setPlaceholderText("ID véhicule");
+                                  ui->idV->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                                  ui->NOMA->setPlaceholderText("Name");
+                                  ui->NOMA->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                                  ui->REFA->setPlaceholderText("réfèrence");
+                                  ui->REFA->setStyleSheet("QLineEdit {background-color: rgb(27, 29, 35);borderradius:5px;border: 2px solid rgb(27, 29, 35);padding-left: 10px;} QLineEdit:hover {border: 2px solid rgb(64, 71, 88);} QLineEdit:focus {border: 2px solid rgb(91, 101, 124); }");
+                                  ui->comboV->clear();
+                                     QStringList list22;
+                                     list22<<"identifiant"<<"Name"<<"réfèrence";
+                                     ui->modifierV->setText("Modifier");
+                                     ui->modifierV->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");
+                                     ui->ajouterV->setText("Ajouter");
+                                     ui->ajouterV->setStyleSheet("QPushButton {border: 2px solid rgb(52, 59, 72); border-radius: 5px;	 background-color: rgb(52, 59, 72); } QPushButton:hover {background-color: rgb(57, 65, 80); border: 2px solid rgb(61, 70, 86);} QPushButton:pressed { background-color: rgb(35, 40, 49); border: 2px solid rgb(43, 50, 61);}");                      ui->comboV->addItems(list22);
+
+
+}
+
+void Ressources_Humaines::on_temp_clicked()
+{
+    ui->main_stacked->setCurrentIndex(1);
+    ui->stackedWidget_2->setCurrentIndex(14);
+
+}
+
+void Ressources_Humaines::on_ExcelEMP_clicked()
+{
+    QTableView *table;
+               table = ui->tableView;
+
+               QString filters("CSV files (.csv);;All files (.*)");
+               QString defaultFilter("CSV files (*.csv)");
+               QString fileName = QFileDialog::getSaveFileName(0, "Save file", QCoreApplication::applicationDirPath(),
+                                  filters, &defaultFilter);
+               QFile file(fileName);
+
+               QAbstractItemModel *model =  table->model();
+               if (file.open(QFile::WriteOnly | QFile::Truncate)) {
+                   QTextStream data(&file);
+                   QStringList strList;
+                   for (int i = 0; i < model->columnCount(); i++) {
+                       if (model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString().length() > 0)
+                           strList.append("\"" + model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString() + "\"");
+                       else
+                           strList.append("");
+                   }
+                   data << strList.join(";") << "\n";
+                   for (int i = 0; i < model->rowCount(); i++) {
+                       strList.clear();
+                       for (int j = 0; j < model->columnCount(); j++) {
+
+                           if (model->data(model->index(i, j)).toString().length() > 0)
+                               strList.append("\"" + model->data(model->index(i, j)).toString() + "\"");
+                           else
+                               strList.append("");
+                       }
+                       data << strList.join(";") + "\n";
+                   }
+                   file.close();
+                   QMessageBox::information(this,"Exporter To Excel","Exporter En Excel Avec Succées ");
+               }
+}
+
+void Ressources_Humaines::on_backA_clicked()
+{
+    ui->main_stacked->setCurrentIndex(0);
+    ui->side_stacked->setCurrentIndex(0);
+
+}
+
+void Ressources_Humaines::on_statEMP_clicked()
+{
+
+    statem=new lestat(this);
+    statem->show();
+}
+
+void Ressources_Humaines::on_STATA_clicked()
+{
+    stequi=new statequi(this);
+    stequi->show();
 }

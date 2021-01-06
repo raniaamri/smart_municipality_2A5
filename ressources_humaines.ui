@@ -334,7 +334,7 @@ QSlider::handle:vertical:pressed {
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_10">
        <widget class="QFrame" name="frame_52">
@@ -488,7 +488,7 @@ background-repeat:no-repeat;*/</string>
            </rect>
           </property>
           <property name="text">
-           <string>PushButton</string>
+           <string>equipements</string>
           </property>
          </widget>
          <widget class="QPushButton" name="disconnect">
@@ -504,6 +504,45 @@ background-repeat:no-repeat;*/</string>
            <string>se deconnecter</string>
           </property>
          </widget>
+        </widget>
+        <widget class="QPushButton" name="temp">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>291</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>temperature</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="anglais">
+         <property name="geometry">
+          <rect>
+           <x>792</x>
+           <y>0</y>
+           <width>41</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>AN</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="francais">
+         <property name="geometry">
+          <rect>
+           <x>792</x>
+           <y>40</y>
+           <width>41</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>FR</string>
+         </property>
         </widget>
        </widget>
        <widget class="QLabel" name="labelArduino">
@@ -568,7 +607,7 @@ background-repeat:no-repeat;*/</string>
          <string notr="true">background: transparent;</string>
         </property>
         <property name="currentIndex">
-         <number>13</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="RH">
          <widget class="QFrame" name="frame_4">
@@ -1337,13 +1376,41 @@ border-radius: 5px;
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>281</width>
+              <width>141</width>
               <height>61</height>
              </rect>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
 	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-description.png);
+	background-position: center;
+	background-repeat: no-reperat;
+	border: none;
+	background-color: rgb(40, 44, 52);
+}
+QPushButton:hover {
+	background-color: rgb(33, 37, 43);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="ExcelEMP">
+            <property name="geometry">
+             <rect>
+              <x>150</x>
+              <y>0</y>
+              <width>131</width>
+              <height>61</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-calendar-check.png);
 	background-position: center;
 	background-repeat: no-reperat;
 	border: none;
@@ -1391,6 +1458,34 @@ QPushButton:pressed {
             <string>ID</string>
            </property>
           </item>
+         </widget>
+         <widget class="QPushButton" name="statEMP">
+          <property name="geometry">
+           <rect>
+            <x>790</x>
+            <y>530</y>
+            <width>81</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-chart.png);
+	background-position: center;
+	background-repeat: no-reperat;
+	border: none;
+	background-color: rgb(40, 44, 52);
+}
+QPushButton:hover {
+	background-color: rgb(33, 37, 43);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
          </widget>
         </widget>
         <widget class="QWidget" name="page_2">
@@ -1872,9 +1967,9 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>40</x>
-            <y>30</y>
+            <y>0</y>
             <width>251</width>
-            <height>271</height>
+            <height>301</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -1892,7 +1987,7 @@ border-radius: 5px;
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>10</y>
+             <y>40</y>
              <width>221</width>
              <height>251</height>
             </rect>
@@ -2045,6 +2140,27 @@ QPushButton:pressed {
             </item>
            </layout>
           </widget>
+          <widget class="QLabel" name="label_10">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>5</y>
+             <width>191</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>ajouter encaissement</string>
+           </property>
+          </widget>
          </widget>
          <widget class="QFrame" name="frame_22">
           <property name="geometry">
@@ -2119,6 +2235,27 @@ QPushButton:pressed {
            </property>
            <property name="text">
             <string>supprimer</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_11">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>5</y>
+             <width>221</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Supprimer encaissement</string>
            </property>
           </widget>
          </widget>
@@ -2469,7 +2606,7 @@ QPushButton:pressed {
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-	
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-chart.png);
 	background-position: center;
 	background-repeat: no-reperat;
 	border: none;
@@ -2493,9 +2630,9 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>30</x>
-            <y>30</y>
+            <y>10</y>
             <width>251</width>
-            <height>271</height>
+            <height>301</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -2513,7 +2650,7 @@ border-radius: 5px;
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>10</y>
+             <y>40</y>
              <width>221</width>
              <height>251</height>
             </rect>
@@ -2665,6 +2802,27 @@ QPushButton:pressed {
              </widget>
             </item>
            </layout>
+          </widget>
+          <widget class="QLabel" name="label_12">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>5</y>
+             <width>211</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Ajouter decaissement</string>
+           </property>
           </widget>
          </widget>
          <widget class="QFrame" name="frame_29">
@@ -2935,6 +3093,26 @@ QPushButton:pressed {
            </property>
            <property name="text">
             <string>supprimer</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_13">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>5</y>
+             <width>211</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Supprimer decaissement</string>
            </property>
           </widget>
          </widget>
@@ -3262,10 +3440,18 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>10</y>
+            <y>20</y>
             <width>311</width>
             <height>311</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Segoe UI</family>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(41, 45, 56);
@@ -3477,13 +3663,21 @@ QPushButton:pressed {
             <height>91</height>
            </rect>
           </property>
+          <property name="font">
+           <font>
+            <family>Segoe UI</family>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(41, 45, 56);
 border-radius: 5px;
 </string>
           </property>
           <property name="title">
-           <string>Supprimer</string>
+           <string>Supprimer reclamation</string>
           </property>
           <widget class="QLineEdit" name="le_supprimer_reclam">
            <property name="geometry">
@@ -3535,6 +3729,14 @@ QPushButton:pressed {
             <width>511</width>
             <height>391</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Segoe UI</family>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(41, 45, 56);
@@ -3797,6 +3999,13 @@ QPushButton:pressed {
             <width>301</width>
             <height>91</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(41, 45, 56);
@@ -4178,6 +4387,13 @@ QPushButton:pressed {
             <width>291</width>
             <height>431</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(41, 45, 56);
@@ -4575,7 +4791,7 @@ QPushButton:pressed {
 }</string>
            </property>
            <property name="text">
-            <string/>
+            <string>pdf</string>
            </property>
           </widget>
          </widget>
@@ -5745,9 +5961,9 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>40</x>
-            <y>30</y>
+            <y>20</y>
             <width>251</width>
-            <height>231</height>
+            <height>241</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -5779,7 +5995,7 @@ QLineEdit:focus {
            <property name="geometry">
             <rect>
              <x>40</x>
-             <y>30</y>
+             <y>40</y>
              <width>181</width>
              <height>191</height>
             </rect>
@@ -5859,12 +6075,33 @@ QPushButton:pressed {
             </item>
            </layout>
           </widget>
+          <widget class="QLabel" name="label_14">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>10</y>
+             <width>181</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Ajouter demande</string>
+           </property>
+          </widget>
          </widget>
          <widget class="QFrame" name="frame_42">
           <property name="geometry">
            <rect>
             <x>40</x>
-            <y>270</y>
+            <y>290</y>
             <width>251</width>
             <height>71</height>
            </rect>
@@ -5898,7 +6135,7 @@ QLineEdit:focus {
            <property name="geometry">
             <rect>
              <x>150</x>
-             <y>30</y>
+             <y>40</y>
              <width>93</width>
              <height>28</height>
             </rect>
@@ -5926,13 +6163,34 @@ QPushButton:pressed {
            <property name="geometry">
             <rect>
              <x>20</x>
-             <y>30</y>
+             <y>40</y>
              <width>113</width>
              <height>22</height>
             </rect>
            </property>
            <property name="placeholderText">
             <string>id demande</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_15">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>0</y>
+             <width>161</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Supprimer demande</string>
            </property>
           </widget>
          </widget>
@@ -5975,8 +6233,8 @@ QLineEdit:focus {
             <rect>
              <x>20</x>
              <y>30</y>
-             <width>93</width>
-             <height>28</height>
+             <width>211</width>
+             <height>41</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -5998,88 +6256,32 @@ QPushButton:pressed {
             <string>pdf</string>
            </property>
           </widget>
-          <widget class="QPushButton" name="pushButton_23">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>110</y>
-             <width>93</width>
-             <height>28</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton {
-	border: 2px solid rgb(52, 59, 72);
-	border-radius: 5px;	
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:hover {
-	background-color: rgb(57, 65, 80);
-	border: 2px solid rgb(61, 70, 86);
-}
-QPushButton:pressed {	
-	background-color: rgb(35, 40, 49);
-	border: 2px solid rgb(43, 50, 61);
-}</string>
-           </property>
-           <property name="text">
-            <string>stat</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="pushButton_24">
-           <property name="geometry">
-            <rect>
-             <x>150</x>
-             <y>30</y>
-             <width>93</width>
-             <height>28</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton {
-	border: 2px solid rgb(52, 59, 72);
-	border-radius: 5px;	
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:hover {
-	background-color: rgb(57, 65, 80);
-	border: 2px solid rgb(61, 70, 86);
-}
-QPushButton:pressed {	
-	background-color: rgb(35, 40, 49);
-	border: 2px solid rgb(43, 50, 61);
-}</string>
-           </property>
-           <property name="text">
-            <string>excel</string>
-           </property>
-          </widget>
           <widget class="QPushButton" name="xxx">
            <property name="geometry">
             <rect>
-             <x>140</x>
-             <y>120</y>
-             <width>93</width>
-             <height>28</height>
+             <x>20</x>
+             <y>97</y>
+             <width>211</width>
+             <height>41</height>
             </rect>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
-	border: 2px solid rgb(52, 59, 72);
-	border-radius: 5px;	
-	background-color: rgb(52, 59, 72);
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-chart.png);
+	background-position: center;
+	background-repeat: no-reperat;
+	border: none;
+	background-color: rgb(40, 44, 52);
 }
 QPushButton:hover {
-	background-color: rgb(57, 65, 80);
-	border: 2px solid rgb(61, 70, 86);
+	background-color: rgb(33, 37, 43);
 }
 QPushButton:pressed {	
-	background-color: rgb(35, 40, 49);
-	border: 2px solid rgb(43, 50, 61);
+	background-color: rgb(85, 170, 255);
 }</string>
            </property>
            <property name="text">
-            <string>PushButton</string>
+            <string/>
            </property>
           </widget>
          </widget>
@@ -6480,14 +6682,35 @@ QPushButton:pressed {
             </item>
            </layout>
           </widget>
+          <widget class="QLabel" name="label_17">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>181</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Ajouter Parcelle</string>
+           </property>
+          </widget>
          </widget>
          <widget class="QFrame" name="frame_47">
           <property name="geometry">
            <rect>
             <x>50</x>
-            <y>320</y>
+            <y>349</y>
             <width>231</width>
-            <height>80</height>
+            <height>81</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -6519,7 +6742,7 @@ QLineEdit:focus {
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>30</y>
+             <y>40</y>
              <width>221</width>
              <height>30</height>
             </rect>
@@ -6556,12 +6779,33 @@ QPushButton:pressed {
             </item>
            </layout>
           </widget>
+          <widget class="QLabel" name="label_16">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>181</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Supprimer parcelle</string>
+           </property>
+          </widget>
          </widget>
          <widget class="QFrame" name="frame_48">
           <property name="geometry">
            <rect>
             <x>50</x>
-            <y>440</y>
+            <y>460</y>
             <width>231</width>
             <height>80</height>
            </rect>
@@ -6950,8 +7194,8 @@ QHeaderView::section::horizontal
             <rect>
              <x>30</x>
              <y>20</y>
-             <width>181</width>
-             <height>271</height>
+             <width>231</width>
+             <height>311</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -6980,13 +7224,34 @@ QLineEdit:focus {
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
+           <widget class="QLabel" name="label_18">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>-5</y>
+              <width>171</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Ajouter equipement</string>
+            </property>
+           </widget>
            <widget class="QWidget" name="">
             <property name="geometry">
              <rect>
               <x>11</x>
               <y>40</y>
-              <width>161</width>
-              <height>201</height>
+              <width>201</width>
+              <height>231</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -7061,10 +7326,10 @@ QPushButton:pressed {
           <widget class="QFrame" name="frame_59">
            <property name="geometry">
             <rect>
-             <x>30</x>
-             <y>320</y>
+             <x>20</x>
+             <y>360</y>
              <width>241</width>
-             <height>61</height>
+             <height>81</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -7096,8 +7361,8 @@ QLineEdit:focus {
            <widget class="QLineEdit" name="IDASUPP">
             <property name="geometry">
              <rect>
-              <x>20</x>
-              <y>20</y>
+              <x>10</x>
+              <y>50</y>
               <width>113</width>
               <height>22</height>
              </rect>
@@ -7110,7 +7375,7 @@ QLineEdit:focus {
             <property name="geometry">
              <rect>
               <x>150</x>
-              <y>20</y>
+              <y>50</y>
               <width>81</width>
               <height>28</height>
              </rect>
@@ -7134,14 +7399,35 @@ QPushButton:pressed {
              <string>supprimer</string>
             </property>
            </widget>
+           <widget class="QLabel" name="label_19">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>10</y>
+              <width>211</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Supprimer equipement</string>
+            </property>
+           </widget>
           </widget>
           <widget class="QFrame" name="frame_61">
            <property name="geometry">
             <rect>
-             <x>370</x>
+             <x>310</x>
              <y>20</y>
-             <width>481</width>
-             <height>421</height>
+             <width>541</width>
+             <height>521</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -7175,8 +7461,8 @@ QLineEdit:focus {
              <rect>
               <x>10</x>
               <y>30</y>
-              <width>451</width>
-              <height>371</height>
+              <width>521</width>
+              <height>471</height>
              </rect>
             </property>
             <property name="styleSheet">
@@ -7299,8 +7585,8 @@ QHeaderView::section::horizontal
           <widget class="QFrame" name="frame_62">
            <property name="geometry">
             <rect>
-             <x>40</x>
-             <y>420</y>
+             <x>20</x>
+             <y>450</y>
              <width>231</width>
              <height>91</height>
             </rect>
@@ -7352,8 +7638,23 @@ QPushButton:pressed {
               <height>28</height>
              </rect>
             </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-chart.png);
+	background-position: center;
+	background-repeat: no-reperat;
+	border: none;
+	background-color: rgb(40, 44, 52);
+}
+QPushButton:hover {
+	background-color: rgb(33, 37, 43);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+            </property>
             <property name="text">
-             <string>stat</string>
+             <string/>
             </property>
            </widget>
            <widget class="QPushButton" name="PDFA">
@@ -7369,19 +7670,19 @@ QPushButton:pressed {
              <string>pdf</string>
             </property>
            </widget>
-          </widget>
-          <widget class="QPushButton" name="MAILINGA">
-           <property name="geometry">
-            <rect>
-             <x>540</x>
-             <y>480</y>
-             <width>91</width>
-             <height>28</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>mailing</string>
-           </property>
+           <widget class="QPushButton" name="MAILINGA">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>10</y>
+              <width>91</width>
+              <height>28</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>mailing</string>
+            </property>
+           </widget>
           </widget>
          </widget>
         </widget>
@@ -7391,7 +7692,7 @@ QPushButton:pressed {
            <rect>
             <x>20</x>
             <y>50</y>
-            <width>161</width>
+            <width>281</width>
             <height>261</height>
            </rect>
           </property>
@@ -7433,78 +7734,81 @@ QPushButton:pressed {
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <widget class="QLineEdit" name="idV">
+          <widget class="QLabel" name="label_20">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>-1</y>
+             <width>231</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Ajouter vehicule</string>
+           </property>
+          </widget>
+          <widget class="QWidget" name="">
            <property name="geometry">
             <rect>
              <x>20</x>
              <y>30</y>
-             <width>113</width>
-             <height>22</height>
+             <width>251</width>
+             <height>221</height>
             </rect>
            </property>
-           <property name="placeholderText">
-            <string>id vehicule</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="nomV">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>90</y>
-             <width>113</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="placeholderText">
-            <string>nom vehicule</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="ajouterV">
-           <property name="geometry">
-            <rect>
-             <x>30</x>
-             <y>210</y>
-             <width>93</width>
-             <height>28</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Ajouter</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="refV">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>150</y>
-             <width>113</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="placeholderText">
-            <string>refferance </string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="modifierV">
-           <property name="geometry">
-            <rect>
-             <x>30</x>
-             <y>180</y>
-             <width>93</width>
-             <height>28</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>modifier</string>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_16">
+            <item>
+             <widget class="QLineEdit" name="idV">
+              <property name="placeholderText">
+               <string>id vehicule</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="nomV">
+              <property name="placeholderText">
+               <string>nom vehicule</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="refV">
+              <property name="placeholderText">
+               <string>refferance </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="modifierV">
+              <property name="text">
+               <string>modifier</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="ajouterV">
+              <property name="text">
+               <string>Ajouter</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </widget>
          <widget class="QFrame" name="frame_63">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>20</x>
             <y>350</y>
-            <width>281</width>
+            <width>271</width>
             <height>80</height>
            </rect>
           </property>
@@ -7549,8 +7853,8 @@ QPushButton:pressed {
           <widget class="QLineEdit" name="IDVS">
            <property name="geometry">
             <rect>
-             <x>30</x>
-             <y>30</y>
+             <x>20</x>
+             <y>40</y>
              <width>113</width>
              <height>22</height>
             </rect>
@@ -7563,7 +7867,7 @@ QPushButton:pressed {
            <property name="geometry">
             <rect>
              <x>160</x>
-             <y>30</y>
+             <y>40</y>
              <width>93</width>
              <height>28</height>
             </rect>
@@ -7572,14 +7876,35 @@ QPushButton:pressed {
             <string>supprimer</string>
            </property>
           </widget>
+          <widget class="QLabel" name="label_21">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>10</y>
+             <width>181</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Supprimer vehicule</string>
+           </property>
+          </widget>
          </widget>
          <widget class="QFrame" name="frame_64">
           <property name="geometry">
            <rect>
-            <x>400</x>
+            <x>330</x>
             <y>50</y>
-            <width>451</width>
-            <height>451</height>
+            <width>541</width>
+            <height>491</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -7635,7 +7960,7 @@ QPushButton:pressed {
             <rect>
              <x>20</x>
              <y>20</y>
-             <width>171</width>
+             <width>221</width>
              <height>22</height>
             </rect>
            </property>
@@ -7658,7 +7983,7 @@ QPushButton:pressed {
           <widget class="QCheckBox" name="checkV">
            <property name="geometry">
             <rect>
-             <x>360</x>
+             <x>440</x>
              <y>20</y>
              <width>83</width>
              <height>20</height>
@@ -7671,11 +7996,89 @@ QPushButton:pressed {
           <widget class="QLineEdit" name="searchV">
            <property name="geometry">
             <rect>
-             <x>210</x>
+             <x>280</x>
              <y>20</y>
              <width>113</width>
              <height>22</height>
             </rect>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="page_24">
+         <widget class="QFrame" name="frame_66">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>20</y>
+            <width>821</width>
+            <height>531</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame{
+background-color: rgb(41, 45, 56);
+border-radius: 5px;
+}
+
+QLineEdit {
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
+}
+QPushButton {
+	border: 2px solid rgb(52, 59, 72);
+	border-radius: 5px;	
+	background-color: rgb(52, 59, 72);
+}
+QPushButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 2px solid rgb(61, 70, 86);
+}
+QPushButton:pressed {	
+	background-color: rgb(35, 40, 49);
+	border: 2px solid rgb(43, 50, 61);
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QTableView" name="ard">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>70</y>
+             <width>771</width>
+             <height>421</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_9">
+           <property name="geometry">
+            <rect>
+             <x>320</x>
+             <y>0</y>
+             <width>221</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>26</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>temp/humi</string>
            </property>
           </widget>
          </widget>
@@ -8304,6 +8707,21 @@ QPushButton:pressed {
          <height>581</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	/*background-image: url(c:/Users/user/Documents/Ressources_Humaines/icons/16x16/cil-user.png);*/
+	background-position: center;
+	background-repeat: no-reperat;
+	border: none;
+	background-color: rgb(40, 44, 52);
+}
+QPushButton:hover {
+	background-color: rgb(33, 37, 43);
+}
+QPushButton:pressed {	
+	background-color: rgb(85, 170, 255);
+}</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
@@ -8313,27 +8731,40 @@ QPushButton:pressed {
        <widget class="QPushButton" name="toE">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>93</width>
-          <height>28</height>
+          <x>-8</x>
+          <y>27</y>
+          <width>101</width>
+          <height>51</height>
          </rect>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string/>
         </property>
        </widget>
        <widget class="QPushButton" name="toV">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>140</y>
-          <width>93</width>
-          <height>28</height>
+          <x>-8</x>
+          <y>100</y>
+          <width>101</width>
+          <height>51</height>
          </rect>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="backA">
+        <property name="geometry">
+         <rect>
+          <x>-8</x>
+          <y>487</y>
+          <width>101</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </widget>

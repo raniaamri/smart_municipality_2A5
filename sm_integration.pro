@@ -29,6 +29,7 @@ SOURCES += \
     encaissement.cpp \
     equipement.cpp \
     formation.cpp \
+    lestat.cpp \
     main.cpp \
     mainwindow.cpp \
     naissance.cpp \
@@ -36,6 +37,7 @@ SOURCES += \
     ressources_humaines.cpp \
     smtp.cpp \
     stat2.cpp \
+    statequi.cpp \
     statistique.cpp \
     vehicule.cpp
 
@@ -52,6 +54,7 @@ HEADERS += \
     encaissement.h \
     equipement.h \
     formation.h \
+    lestat.h \
     mainwindow.h \
     naissance.h \
     rec.h \
@@ -59,14 +62,17 @@ HEADERS += \
     smtp.h \
     stat2.h \
     state.h \
+    statequi.h \
     statistique.h \
     vehicule.h
 
 FORMS += \
     email.ui \
+    lestat.ui \
     mainwindow.ui \
     ressources_humaines.ui \
     stat2.ui \
+    statequi.ui \
     statistique.ui
 
 # Default rules for deployment.

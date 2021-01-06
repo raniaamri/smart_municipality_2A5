@@ -19,6 +19,8 @@
 #include "arduino.h"
 #include"equipement.h"
 #include"vehicule.h"
+#include"lestat.h"
+#include"statequi.h"
 namespace Ui {
 class Ressources_Humaines;
 }
@@ -278,6 +280,26 @@ private slots :
 
     void on_toE_clicked();
 
+
+    void on_anglais_clicked();
+
+    void on_francais_clicked();
+
+    void on_temp_clicked();
+
+    void on_ExcelEMP_clicked();
+private slots :
+    void update_label1();
+
+
+
+
+    void on_backA_clicked();
+
+    void on_statEMP_clicked();
+
+    void on_STATA_clicked();
+
 private:
     Ui::Ressources_Humaines *ui;
     Employe E;
@@ -296,6 +318,10 @@ private:
     QByteArray data;
     equipement e;
     vehicule v;
+QString lang="fr";
+QString temp="";
+    lestat *statem;
+    statequi *stequi;
 
 };
 
